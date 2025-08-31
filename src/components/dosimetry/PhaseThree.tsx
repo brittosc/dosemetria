@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Check, ChevronsUpDown, X } from "lucide-react";
+import { ChevronsUpDown, X } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { formatPena } from "@/lib/calculations";
 import { phaseThreeSchema } from "@/lib/schemas";
 

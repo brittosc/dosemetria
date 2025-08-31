@@ -8,7 +8,6 @@ import { phaseOneSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,

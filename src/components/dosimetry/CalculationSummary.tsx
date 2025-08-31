@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPena } from "@/lib/calculations";
+// CORREÇÃO: A importação agora usa o alias "@" para garantir que o estado seja compartilhado.
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 
 export function CalculationSummary() {
@@ -30,7 +31,7 @@ export function CalculationSummary() {
         <div>
           <p className="text-sm font-medium">1ª Fase - Pena-Base Fixada:</p>
           <p className="text-lg font-bold">
-            {results.penaPrimeiraFase
+            {results.penaPrimeiraFase != null
               ? formatPena(results.penaPrimeiraFase)
               : "--"}
           </p>
@@ -38,7 +39,9 @@ export function CalculationSummary() {
         <div>
           <p className="text-sm font-medium">2ª Fase - Pena Provisória:</p>
           <p className="text-lg font-bold">
-            {results.penaProvisoria ? formatPena(results.penaProvisoria) : "--"}
+            {results.penaProvisoria != null
+              ? formatPena(results.penaProvisoria)
+              : "--"}
           </p>
         </div>
         <div>
@@ -46,7 +49,9 @@ export function CalculationSummary() {
             3ª Fase - Pena Definitiva:
           </p>
           <p className="text-xl font-bold text-green-700">
-            {results.penaDefinitiva ? formatPena(results.penaDefinitiva) : "--"}
+            {results.penaDefinitiva != null
+              ? formatPena(results.penaDefinitiva)
+              : "--"}
           </p>
         </div>
       </CardContent>
