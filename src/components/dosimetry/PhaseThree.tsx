@@ -44,7 +44,10 @@ type Causa = {
   valor: { tipo: string; min?: number; max?: number; valor?: number };
 };
 
-type CausaAplicada = z.infer<typeof phaseThreeSchema>["causasAumento"][0];
+type CausaAplicada = {
+  id: string;
+  valorAplicado: number;
+};
 
 type PhaseThreeProps = {
   initialValues: z.infer<typeof phaseThreeSchema>;
@@ -105,10 +108,9 @@ export function PhaseThree({
     tipo: "aumento" | "diminuicao",
     value: number[]
   ) => {
-    // ADICIONE ESTA LINHA DE VERIFICAÇÃO
     if (!value || value.length === 0) return;
-
     const valorAplicado = value[0];
+
     if (tipo === "aumento") {
       setCausasAumento((prev) =>
         prev.map((c) => (c.id === id ? { ...c, valorAplicado } : c))
@@ -270,7 +272,7 @@ export function PhaseThree({
                 </PopoverContent>
               </Popover>
               <div className="space-y-4">
-                {causasDiminuicao.map((ca: CausaAplicada) => {
+                {causasDiminuicao.map((ca) => {
                   const causaInfo = causasData.find((c) => c.id === ca.id);
                   if (!causaInfo) return null;
                   return (

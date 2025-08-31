@@ -8,12 +8,11 @@ export const crimeSelectionSchema = z.object({
 // Esquema para a Primeira Fase
 export const phaseOneSchema = crimeSelectionSchema.extend({
   // CORREÇÃO APLICADA AQUI:
-  // Usar z.preprocess é a forma mais robusta de lidar com a conversão
-  // de input (string) para número, evitando conflitos de tipo.
-  penaBase: z.preprocess(
-    (val) => (val === "" ? undefined : Number(val)),
-    z.number().positive("A pena-base deve ser um número positivo.")
-  ),
+  // z.coerce.number() é a forma mais compatível de converter o input
+  // de string para número para o react-hook-form.
+  penaBase: z.coerce
+    .number()
+    .positive("A pena-base deve ser um número positivo."),
 
   circunstanciasJudiciais: z.array(z.string()).optional(),
 
