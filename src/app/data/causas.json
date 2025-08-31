@@ -1,0 +1,115 @@
+[
+  {
+    "id": "tentativa",
+    "artigo": "14",
+    "paragrafo": "Parágrafo único",
+    "descricao": "Tentativa",
+    "tipo": "diminuicao",
+    "aplicabilidade": ["todos"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6666
+    }
+  },
+  {
+    "id": "arrependimento_posterior",
+    "artigo": "16",
+    "paragrafo": null,
+    "descricao": "Arrependimento Posterior",
+    "tipo": "diminuicao",
+    "aplicabilidade": ["todos_sem_violencia"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6666
+    }
+  },
+  {
+    "id": "homicidio_privilegiado",
+    "artigo": "121",
+    "paragrafo": "1º",
+    "descricao": "Homicídio privilegiado",
+    "tipo": "diminuicao",
+    "aplicabilidade": ["homicidio_simples"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1666,
+      "max": 0.3333
+    }
+  },
+  {
+    "id": "homicidio_doloso_aumento",
+    "artigo": "121",
+    "paragrafo": "4º, parte 2",
+    "descricao": "Homicídio doloso vs <14 ou >60 anos",
+    "tipo": "aumento",
+    "aplicabilidade": ["homicidio_simples"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.3333
+    }
+  },
+  {
+    "id": "furto_noturno",
+    "artigo": "155",
+    "paragrafo": "1º",
+    "descricao": "Furto durante o repouso noturno",
+    "tipo": "aumento",
+    "aplicabilidade": ["furto_simples"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.3333
+    }
+  },
+  {
+    "id": "roubo_concurso_pessoas",
+    "artigo": "157",
+    "paragrafo": "2º, II",
+    "descricao": "Roubo com concurso de 2 ou mais pessoas",
+    "tipo": "aumento",
+    "aplicabilidade": ["roubo_simples"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5
+    }
+  },
+  {
+    "id": "roubo_arma_branca",
+    "artigo": "157",
+    "paragrafo": "2º, VII",
+    "descricao": "Roubo com emprego de arma branca",
+    "tipo": "aumento",
+    "aplicabilidade": ["roubo_simples"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5
+    }
+  },
+  {
+    "id": "roubo_arma_fogo",
+    "artigo": "157",
+    "paragrafo": "2º-A, I",
+    "descricao": "Roubo com emprego de arma de fogo",
+    "tipo": "aumento",
+    "aplicabilidade": ["roubo_simples"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.6666
+    }
+  },
+  {
+    "id": "roubo_arma_fogo_restrito",
+    "artigo": "157",
+    "paragrafo": "2º-B",
+    "descricao": "Roubo com arma de fogo de uso restrito",
+    "tipo": "aumento",
+    "aplicabilidade": ["roubo_simples"],
+    "valor": {
+      "tipo": "multiplicador",
+      "valor": 2
+    }
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "homicidio_simples",
+    "artigo": "121",
+    "nome": "Homicídio Simples",
+    "penaMinimaMeses": 72,
+    "penaMaximaMeses": 240
+  },
+  {
+    "id": "furto_simples",
+    "artigo": "155",
+    "nome": "Furto Simples",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "roubo_simples",
+    "artigo": "157",
+    "nome": "Roubo Simples",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "estelionato_simples",
+    "artigo": "171",
+    "nome": "Estelionato",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  }
+]
