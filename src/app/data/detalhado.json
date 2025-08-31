@@ -1,0 +1,462 @@
+[
+  {
+    "id": "homicidio_simples",
+    "artigo": "121",
+    "nome": "Homicídio Simples",
+    "penaMinimaMeses": 72,
+    "penaMaximaMeses": 240,
+    "qualificadoras": []
+  },
+  {
+    "id": "homicidio_privilegiado",
+    "artigo": "121, §1º",
+    "nome": "Homicídio Privilegiado",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      "Cometido por motivo de relevante valor social ou moral",
+      "Cometido sob violenta emoção logo após injusta provocação da vítima"
+    ]
+  },
+  {
+    "id": "homicidio_qualificado_por_paga",
+    "artigo": "121, §2º, I",
+    "nome": "Homicídio Qualificado por Paga ou Promessa de Recompensa",
+    "penaMinimaMeses": 144,
+    "penaMaximaMeses": 360,
+    "qualificadoras": []
+  },
+  {
+    "id": "homicidio_qualificado_por_meio_crueldade",
+    "artigo": "121, §2º, II",
+    "nome": "Homicídio Qualificado por Meio Cruel ou que Tormenta a Vítima",
+    "penaMinimaMeses": 144,
+    "penaMaximaMeses": 360,
+    "qualificadoras": []
+  },
+  {
+    "id": "homicidio_qualificado_por_dificultar_defesa",
+    "artigo": "121, §2º, III",
+    "nome": "Homicídio Qualificado para Garantir Impunidade de Outro Crime",
+    "penaMinimaMeses": 144,
+    "penaMaximaMeses": 360,
+    "qualificadoras": []
+  },
+  {
+    "id": "homicidio_qualificado_outros",
+    "artigo": "121, §2º, IV",
+    "nome": "Outras Hipóteses de Homicídio Qualificado",
+    "penaMinimaMeses": 144,
+    "penaMaximaMeses": 360,
+    "qualificadoras": [
+      "Mediante recurso que dificulte defesa da vítima",
+      "Para assegurar a execução, ocultação, impunidade ou vantagem de outro crime"
+    ]
+  },
+  {
+    "id": "lesao_corpora_simples",
+    "artigo": "129, caput",
+    "nome": "Lesão Corporal Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3,
+    "qualificadoras": []
+  },
+  {
+    "id": "lesao_corpora_grave",
+    "artigo": "129, §1º",
+    "nome": "Lesão Corporal Grave",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 96,
+    "qualificadoras": [
+      "Se resulta incapacidade para as ocupações habituais por mais de 30 dias",
+      "Se resulta perigo de vida",
+      "Se resulta debilidade permanente de membro, sentido ou função",
+      "Se resulta deformidade permanente"
+    ]
+  },
+  {
+    "id": "lesao_corpora_seguida_morte",
+    "artigo": "129, §3º",
+    "nome": "Lesão Corporal seguida de Morte",
+    "penaMinimaMeses": 120,
+    "penaMaximaMeses": 240,
+    "qualificadoras": [
+      "Se praticada com violência extrema ou crueldade",
+      "Se resultante de risco comum"
+    ]
+  },
+  {
+    "id": "lesao_corpora_morte_outros",
+    "artigo": "129, §2º",
+    "nome": "Lesão Corporal Privilegiada ou Qualificada",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      "Se praticada mediante recurso que dificulte defesa da vítima",
+      "Se cometida contra autoridade ou agente público no exercício da função"
+    ]
+  },
+  {
+    "id": "furto_simples",
+    "artigo": "155, caput",
+    "nome": "Furto Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 4,
+    "qualificadoras": []
+  },
+  {
+    "id": "furto_qualificado_violencia",
+    "artigo": "155, §4º, I",
+    "nome": "Furto Qualificado com Violência ou Arrombamento",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 8,
+    "qualificadoras": [
+      "Se cometido com destruição ou rompimento de obstáculo à subtração",
+      "Se cometido com abuso de confiança, fraude ou escalada"
+    ]
+  },
+  {
+    "id": "furto_familiares",
+    "artigo": "155, §3º",
+    "nome": "Furto contra Ascendente, Descendente, Cônjuge ou Companheiro",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 4,
+    "qualificadoras": []
+  },
+  {
+    "id": "roubo_simples",
+    "artigo": "157, caput",
+    "nome": "Roubo Simples",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 120,
+    "qualificadoras": []
+  },
+  {
+    "id": "roubo_qualificado",
+    "artigo": "157, §2º",
+    "nome": "Roubo Qualificado",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 180,
+    "qualificadoras": [
+      "Se resulta em lesão grave à vítima",
+      "Se cometido com emprego de arma de fogo ou explosivo",
+      "Se praticado durante o repouso noturno"
+    ]
+  },
+  {
+    "id": "extorsao_simples",
+    "artigo": "158, caput",
+    "nome": "Extorsão",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 144,
+    "qualificadoras": []
+  },
+  {
+    "id": "dano_simples",
+    "artigo": "163, caput",
+    "nome": "Dano Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6,
+    "qualificadoras": []
+  },
+  {
+    "id": "dano_qualificado",
+    "artigo": "163, §1º",
+    "nome": "Dano Qualificado",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      "Se praticado contra bem público ou coletivo",
+      "Se cometido com emprego de explosivo ou fogo"
+    ]
+  },
+  {
+    "id": "apropriacao_indebida",
+    "artigo": "168, caput",
+    "nome": "Apropriação Indébita",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": []
+  },
+  {
+    "id": "receptacao_simples",
+    "artigo": "180, caput",
+    "nome": "Receptação Simples",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": []
+  },
+  {
+    "id": "receptacao_qualificada",
+    "artigo": "180, §1º",
+    "nome": "Receptação Qualificada",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36,
+    "qualificadoras": ["Se o agente sabia que o bem provinham de crime"]
+  },
+  {
+    "id": "estupro",
+    "artigo": "213",
+    "nome": "Estupro",
+    "penaMinimaMeses": 72,
+    "penaMaximaMeses": 180,
+    "qualificadoras": [
+      "Se resulta em lesão grave ou morte",
+      "Se cometido com violência ou grave ameaça"
+    ]
+  },
+  {
+    "id": "estupro_de_vulneravel",
+    "artigo": "217-A",
+    "nome": "Estupro de Vulnerável",
+    "penaMinimaMeses": 96,
+    "penaMaximaMeses": 360,
+    "qualificadoras": [
+      "Se a vítima é menor de 14 anos",
+      "Se praticado por ascendente, tutor ou pessoa com autoridade sobre a vítima"
+    ]
+  },
+  {
+    "id": "assedio_sexual",
+    "artigo": "216-A",
+    "nome": "Assédio Sexual",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se cometido no ambiente de trabalho ou educacional",
+      "Se praticado por superior hierárquico"
+    ]
+  },
+  {
+    "id": "importunacao_sexual",
+    "artigo": "215-A",
+    "nome": "Importunação Sexual",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12,
+    "qualificadoras": [
+      "Se cometido com contato físico sem consentimento",
+      "Se cometido com exposição à situação humilhante ou constrangedora"
+    ]
+  },
+  {
+    "id": "violacao_de_domicilio_sexual",
+    "artigo": "213",
+    "nome": "Violação de Domicílio com Fim Sexual",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      "Se cometido com invasão de residência ou local de privacidade",
+      "Se praticado com ameaça ou violência"
+    ]
+  },
+  {
+    "id": "exploracao_sexual_infantil",
+    "artigo": "218-B",
+    "nome": "Exploração Sexual de Crianças e Adolescentes",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      "Se há participação de terceiro para exploração",
+      "Se envolve produção ou divulgação de material pornográfico"
+    ]
+  },
+  {
+    "id": "induzimento_a_prostituicao",
+    "artigo": "218",
+    "nome": "Induzimento ou Facilitação de Prostituição",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se praticado contra menor de 18 anos",
+      "Se praticado mediante fraude ou coação"
+    ]
+  },
+  {
+    "id": "abuso_fisico_crianca",
+    "artigo": "244",
+    "nome": "Abuso Físico contra Criança ou Adolescente",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 72,
+    "qualificadoras": [
+      "Se resulta lesão corporal grave",
+      "Se praticado por ascendente ou tutor"
+    ]
+  },
+  {
+    "id": "abandono_crianca",
+    "artigo": "249",
+    "nome": "Abandono de Criança ou Adolescente",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se expõe a vítima a risco de vida ou saúde",
+      "Se praticado por ascendente, tutor ou responsável"
+    ]
+  },
+  {
+    "id": "expor_saude_vida_crianca",
+    "artigo": "250",
+    "nome": "Expor a Perigo a Vida ou Saúde de Criança ou Adolescente",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      "Se ocorre risco concreto à integridade física ou psíquica",
+      "Se praticado por pessoa com dever de cuidado"
+    ]
+  },
+  {
+    "id": "induzir_crianca_a_prostituicao",
+    "artigo": "244-A",
+    "nome": "Induzir ou Auxiliar Criança ou Adolescente à Prostituição",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      "Se há participação de terceiro",
+      "Se envolve exploração financeira ou sexual"
+    ]
+  },
+  {
+    "id": "favorecer_exploracao_sexual",
+    "artigo": "244-B",
+    "nome": "Favorecer Exploração Sexual de Criança ou Adolescente",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      "Se permite ou facilita prostituição ou pornografia infantil",
+      "Se envolve cooperação de terceiros"
+    ]
+  },
+  {
+    "id": "violencia_fisica_maria_da_penha",
+    "artigo": "7º, I",
+    "nome": "Violência Física contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      "Se resulta lesão corporal leve, grave ou morte",
+      "Se praticada por ascendente, descendente ou cônjuge"
+    ]
+  },
+  {
+    "id": "violencia_psicologica_maria_da_penha",
+    "artigo": "7º, II",
+    "nome": "Violência Psicológica contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se há ameaça, humilhação, intimidação ou manipulação",
+      "Se ocorre em contexto familiar ou doméstico"
+    ]
+  },
+  {
+    "id": "violencia_sexual_maria_da_penha",
+    "artigo": "7º, III",
+    "nome": "Violência Sexual contra Mulher",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 180,
+    "qualificadoras": [
+      "Se praticada mediante coação, ameaça ou fraude",
+      "Se resulta em lesão grave ou morte"
+    ]
+  },
+  {
+    "id": "violencia_patrimonial_maria_da_penha",
+    "artigo": "7º, IV",
+    "nome": "Violência Patrimonial contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se envolve destruição, subtração ou retenção de bens",
+      "Se praticada com abuso de autoridade familiar"
+    ]
+  },
+  {
+    "id": "violencia_moral_maria_da_penha",
+    "artigo": "7º, V",
+    "nome": "Violência Moral contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      "Se praticada mediante difamação, calúnia ou injúria",
+      "Se ocorre em contexto de intimidação familiar ou doméstica"
+    ]
+  },
+  {
+    "id": "abandono_idoso",
+    "artigo": "98",
+    "nome": "Abandono de Idoso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      "Se expõe o idoso a risco de vida ou saúde",
+      "Se praticado por ascendente, tutor ou responsável"
+    ]
+  },
+  {
+    "id": "negligencia_idoso",
+    "artigo": "96",
+    "nome": "Negligência contra Idoso",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      "Se resulta em sofrimento físico ou psíquico",
+      "Se praticado por quem tem dever de cuidado"
+    ]
+  },
+  {
+    "id": "maus_tratos_idoso",
+    "artigo": "96",
+    "nome": "Maus-Tratos contra Idoso",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      "Se praticado com violência física ou psicológica",
+      "Se resulta lesão grave ou morte"
+    ]
+  },
+  {
+    "id": "exploracao_financeira_idoso",
+    "artigo": "99",
+    "nome": "Exploração Financeira de Idoso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      "Se o agente obtém vantagem econômica ilícita",
+      "Se ocorre mediante fraude ou abuso de confiança"
+    ]
+  },
+  {
+    "id": "trafico_drogas",
+    "artigo": "33",
+    "nome": "Tráfico de Drogas",
+    "penaMinimaMeses": 60,
+    "penaMaximaMeses": 240,
+    "qualificadoras": [
+      "Se envolve venda ou transporte para terceiros",
+      "Se praticado em organização criminosa",
+      "Se há grave ameaça ou violência associada"
+    ]
+  },
+  {
+    "id": "associacao_para_trafico",
+    "artigo": "35",
+    "nome": "Associação para Tráfico de Drogas",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 144,
+    "qualificadoras": [
+      "Se participa de grupo permanente para traficar drogas",
+      "Se há divisão de funções entre os membros"
+    ]
+  },
+  {
+    "id": "uso_infracao_drogas",
+    "artigo": "28",
+    "nome": "Uso Indevido de Drogas (infração penal leve)",
+    "penaMinimaMeses": 0,
+    "penaMaximaMeses": 0,
+    "qualificadoras": [
+      "Se consumo é pessoal e não envolve tráfico",
+      "Medidas educativas substituem pena privativa de liberdade"
+    ]
+  }
+]

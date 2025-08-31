@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 import { DosimetryProvider } from "./contexts/DosimetryProvider";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Calculadora de Dosimetria da Pena",
-  description: "Calcule a dosimetria da pena de forma fácil",
+  description: "Calcule a dosimetria da pena de forma fácil e intuitiva.",
 };
 
 export default function RootLayout({
@@ -28,7 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <DosimetryProvider>{children}</DosimetryProvider>
+        <DosimetryProvider>
+          {children}
+          <Toaster />
+        </DosimetryProvider>
       </body>
     </html>
   );

@@ -7,24 +7,290 @@
     "penaMaximaMeses": 240
   },
   {
-    "id": "furto_simples",
-    "artigo": "155",
-    "nome": "Furto Simples",
-    "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "id": "homicidio_qualificado",
+    "artigo": "121, §2º",
+    "nome": "Homicídio Qualificado",
+    "penaMinimaMeses": 144,
+    "penaMaximaMeses": 360
   },
   {
-    "id": "roubo_simples",
-    "artigo": "157",
-    "nome": "Roubo Simples",
+    "id": "homicidio_privilegiado",
+    "artigo": "121, §1º",
+    "nome": "Homicídio Privilegiado",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 120
   },
   {
-    "id": "estelionato_simples",
-    "artigo": "171",
-    "nome": "Estelionato",
+    "id": "induzimento_suicidio",
+    "artigo": "122",
+    "nome": "Induzimento, Instigação ou Auxílio a Suicídio",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "lesao_corpora_simples",
+    "artigo": "129, caput",
+    "nome": "Lesão Corporal Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3
+  },
+  {
+    "id": "lesao_corpora_grave",
+    "artigo": "129, §1º",
+    "nome": "Lesão Corporal Grave",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "lesao_corpora_morte",
+    "artigo": "129, §3º",
+    "nome": "Lesão Corporal seguida de Morte",
+    "penaMinimaMeses": 120,
+    "penaMaximaMeses": 240
+  },
+  {
+    "id": "furto_simples",
+    "artigo": "155, caput",
+    "nome": "Furto Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 4
+  },
+  {
+    "id": "furto_qualificado",
+    "artigo": "155, §4º",
+    "nome": "Furto Qualificado",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 8
+  },
+  {
+    "id": "furto_familiares",
+    "artigo": "155, §3º",
+    "nome": "Furto contra Ascendente, Descendente ou Cônjuge",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 4
+  },
+  {
+    "id": "roubo_simples",
+    "artigo": "157, caput",
+    "nome": "Roubo Simples",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "roubo_qualificado",
+    "artigo": "157, §2º",
+    "nome": "Roubo Qualificado",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "extorsao",
+    "artigo": "158",
+    "nome": "Extorsão",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "dano_simples",
+    "artigo": "163, caput",
+    "nome": "Dano Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "dano_qualificado",
+    "artigo": "163, §1º",
+    "nome": "Dano Qualificado",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "apropriacao_indebida",
+    "artigo": "168, caput",
+    "nome": "Apropriação Indébita",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "receptacao_simples",
+    "artigo": "180, caput",
+    "nome": "Receptação Simples",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "receptacao_qualificada",
+    "artigo": "180, §1º",
+    "nome": "Receptação Qualificada",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "estupro",
+    "artigo": "213",
+    "nome": "Estupro",
+    "penaMinimaMeses": 72,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "estupro_de_vulneravel",
+    "artigo": "217-A",
+    "nome": "Estupro de Vulnerável",
+    "penaMinimaMeses": 96,
+    "penaMaximaMeses": 360
+  },
+  {
+    "id": "assedio_sexual",
+    "artigo": "216-A",
+    "nome": "Assédio Sexual",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "importunacao_sexual",
+    "artigo": "215-A",
+    "nome": "Importunação Sexual",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "violacao_de_domicilio_sexual",
+    "artigo": "213",
+    "nome": "Violação de Domicílio com Fim Sexual",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "exploracao_sexual_infantil",
+    "artigo": "218-B",
+    "nome": "Exploração Sexual de Crianças e Adolescentes",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "induzimento_a_prostituicao",
+    "artigo": "218",
+    "nome": "Induzimento ou Facilitação de Prostituição",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "abuso_fisico_crianca",
+    "artigo": "244",
+    "nome": "Abuso Físico contra Criança ou Adolescente",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "abandono_crianca",
+    "artigo": "249",
+    "nome": "Abandono de Criança ou Adolescente",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "expor_saude_vida_crianca",
+    "artigo": "250",
+    "nome": "Expor a Perigo a Vida ou Saúde de Criança ou Adolescente",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "induzir_crianca_a_prostituicao",
+    "artigo": "244-A",
+    "nome": "Induzir ou Auxiliar Criança ou Adolescente à Prostituição",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "favorecer_exploracao_sexual",
+    "artigo": "244-B",
+    "nome": "Favorecer Exploração Sexual de Criança ou Adolescente",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "violencia_fisica_maria_da_penha",
+    "artigo": "7º, I",
+    "nome": "Violência Física contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "violencia_psicologica_maria_da_penha",
+    "artigo": "7º, II",
+    "nome": "Violência Psicológica contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "violencia_sexual_maria_da_penha",
+    "artigo": "7º, III",
+    "nome": "Violência Sexual contra Mulher",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "violencia_patrimonial_maria_da_penha",
+    "artigo": "7º, IV",
+    "nome": "Violência Patrimonial contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "violencia_moral_maria_da_penha",
+    "artigo": "7º, V",
+    "nome": "Violência Moral contra Mulher",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "abandono_idoso",
+    "artigo": "98",
+    "nome": "Abandono de Idoso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "negligencia_idoso",
+    "artigo": "96",
+    "nome": "Negligência contra Idoso",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "maus_tratos_idoso",
+    "artigo": "96",
+    "nome": "Maus-Tratos contra Idoso",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "exploracao_financeira_idoso",
+    "artigo": "99",
+    "nome": "Exploração Financeira de Idoso",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60
+  },
+  {
+    "id": "trafico_drogas",
+    "artigo": "33",
+    "nome": "Tráfico de Drogas",
+    "penaMinimaMeses": 60,
+    "penaMaximaMeses": 240
+  },
+  {
+    "id": "associacao_para_trafico",
+    "artigo": "35",
+    "nome": "Associação para Tráfico de Drogas",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "uso_infracao_drogas",
+    "artigo": "28",
+    "nome": "Uso Indevido de Drogas (infração penal leve)",
+    "penaMinimaMeses": 0,
+    "penaMaximaMeses": 0
   }
 ]

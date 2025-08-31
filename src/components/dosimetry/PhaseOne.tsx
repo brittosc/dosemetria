@@ -4,6 +4,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -35,8 +36,10 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { Checkbox } from "../ui/checkbox";
 
-// Tipagem manual para os valores do formulário
 export interface PhaseOneFormValues {
   crimeId: string;
   penaBase: number;
@@ -44,7 +47,6 @@ export interface PhaseOneFormValues {
   dataCrime: Date;
 }
 
-// Props
 interface Crime {
   id: string;
   nome: string;
@@ -61,7 +63,6 @@ interface PhaseOneProps {
   onFormSubmit: (data: PhaseOneFormValues) => void;
 }
 
-// Circunstâncias do Art. 59
 const circunstanciasJudiciaisOptions = [
   "Culpabilidade",
   "Antecedentes",
@@ -80,21 +81,18 @@ export function PhaseOne({
   onSelectCrime,
   onFormSubmit,
 }: PhaseOneProps) {
-  const form = useForm<PhaseOneFormValues>({
-    defaultValues: initialValues,
-  });
+  const form = useForm<PhaseOneFormValues>({ defaultValues: initialValues });
+  const isMobile = useIsMobile();
 
   const handleCrimeChange = (crimeId: string) => {
     onSelectCrime(crimeId);
     form.setValue("crimeId", crimeId);
-
     const crime = crimesData.find((c) => c.id === crimeId);
     if (crime) form.setValue("penaBase", crime.penaMinimaMeses);
   };
 
-  const onSubmit: SubmitHandler<PhaseOneFormValues> = (data) => {
+  const onSubmit: SubmitHandler<PhaseOneFormValues> = (data) =>
     onFormSubmit(data);
-  };
 
   return (
     <Card className="w-full">
@@ -107,141 +105,183 @@ export function PhaseOne({
       </CardHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Seleção do Crime */}
-          <FormItem>
-            <FormLabel>Crime</FormLabel>
-            <Controller
-              name="crimeId"
-              control={form.control}
-              render={({ field }) => (
-                <Select
-                  defaultValue={field.value}
-                  onValueChange={handleCrimeChange}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o crime..." />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {crimesData.map((crime) => (
-                      <SelectItem key={crime.id} value={crime.id}>
-                        {crime.nome} (Art. {crime.artigo})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            <FormMessage>{form.formState.errors.crimeId?.message}</FormMessage>
-          </FormItem>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6 p-1 md:p-0"
+        >
+          <CardContent className="space-y-6">
+            <FormItem>
+              <FormLabel>Crime</FormLabel>
+              <Controller
+                name="crimeId"
+                control={form.control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={handleCrimeChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o crime..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {crimesData.map((crime) => (
+                        <SelectItem key={crime.id} value={crime.id}>
+                          {crime.nome} (Art. {crime.artigo})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage>
+                {form.formState.errors.crimeId?.message}
+              </FormMessage>
+            </FormItem>
 
-          {selectedCrime && (
-            <>
-              {/* Pena Base */}
-              <FormItem>
-                <FormLabel>Pena-Base (em meses)</FormLabel>
-                <Controller
-                  name="penaBase"
-                  control={form.control}
-                  render={({ field }) => <Input type="number" {...field} />}
-                />
-                <FormDescription>
-                  Pena entre {selectedCrime.penaMinimaMeses} (mínima) e{" "}
-                  {selectedCrime.penaMaximaMeses} (máxima).
-                </FormDescription>
-                <FormMessage>
-                  {form.formState.errors.penaBase?.message}
-                </FormMessage>
-              </FormItem>
+            {selectedCrime && (
+              <>
+                <FormItem>
+                  <FormLabel>Pena-Base (em meses)</FormLabel>
+                  <Controller
+                    name="penaBase"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Input
+                        type="number"
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10))
+                        }
+                      />
+                    )}
+                  />
+                  <FormDescription>
+                    Pena entre {selectedCrime.penaMinimaMeses} (mínima) e{" "}
+                    {selectedCrime.penaMaximaMeses} (máxima).
+                  </FormDescription>
+                  <FormMessage>
+                    {form.formState.errors.penaBase?.message}
+                  </FormMessage>
+                </FormItem>
 
-              {/* Circunstâncias Judiciais */}
-              <FormItem>
-                <FormLabel>Circunstâncias Judiciais (Art. 59)</FormLabel>
-                <FormDescription>
-                  Selecione as que forem desfavoráveis. Cada uma aumenta a pena
-                  em 1/6.
-                </FormDescription>
-                <div className="grid grid-cols-2 gap-4 pt-2">
-                  {circunstanciasJudiciaisOptions.map((option) => (
-                    <Controller
-                      key={option}
-                      name="circunstanciasJudiciais"
-                      control={form.control}
-                      render={({ field }) => {
-                        const checked = field.value?.includes(option) ?? false;
-                        return (
-                          <div className="flex flex-row items-start space-x-3">
+                <FormItem>
+                  <FormLabel>Circunstâncias Judiciais (Art. 59)</FormLabel>
+                  <FormDescription>
+                    Selecione as que forem desfavoráveis. Cada uma aumenta a
+                    pena em 1/6.
+                  </FormDescription>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                    {circunstanciasJudiciaisOptions.map((option) => (
+                      <Controller
+                        key={option}
+                        name="circunstanciasJudiciais"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3">
                             <FormControl>
-                              <input
-                                type="checkbox"
-                                className="form-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                                checked={checked}
-                                onChange={(e) => {
-                                  const newValues = e.target.checked
-                                    ? [...(field.value || []), option]
-                                    : field.value?.filter((v) => v !== option);
-                                  field.onChange(newValues);
+                              <Checkbox
+                                checked={field.value?.includes(option)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([
+                                        ...(field.value || []),
+                                        option,
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== option
+                                        )
+                                      );
                                 }}
                               />
                             </FormControl>
-                            <FormLabel className="font-normal">
+                            <FormLabel className="font-normal cursor-pointer flex-1">
                               {option}
                             </FormLabel>
-                          </div>
-                        );
-                      }}
-                    />
-                  ))}
-                </div>
-              </FormItem>
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
+                </FormItem>
 
-              {/* Data do Crime */}
-              <FormItem>
-                <FormLabel>Data do Crime</FormLabel>
-                <Controller
-                  name="dataCrime"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? format(field.value, "PPP", { locale: ptBR })
-                            : "Escolha uma data"}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  )}
-                />
-                <FormMessage>
-                  {form.formState.errors.dataCrime?.message}
-                </FormMessage>
-              </FormItem>
-            </>
-          )}
-
+                <FormItem className="flex flex-col">
+                  <FormLabel>Data do Crime</FormLabel>
+                  <Controller
+                    name="dataCrime"
+                    control={form.control}
+                    render={({ field }) =>
+                      isMobile ? (
+                        <Drawer>
+                          <DrawerTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-full justify-start text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {field.value ? (
+                                format(field.value, "PPP", { locale: ptBR })
+                              ) : (
+                                <span>Escolha uma data</span>
+                              )}
+                            </Button>
+                          </DrawerTrigger>
+                          <DrawerContent>
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </DrawerContent>
+                        </Drawer>
+                      ) : (
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-[240px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? format(field.value, "PPP", { locale: ptBR })
+                                : "Escolha uma data"}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={(date) =>
+                                date > new Date() ||
+                                date < new Date("1900-01-01")
+                              }
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      )
+                    }
+                  />
+                  <FormMessage>
+                    {form.formState.errors.dataCrime?.message}
+                  </FormMessage>
+                </FormItem>
+              </>
+            )}
+          </CardContent>
           <CardFooter>
-            <Button type="submit" disabled={!selectedCrime}>
+            <Button
+              type="submit"
+              disabled={!selectedCrime}
+              className="w-full md:w-auto"
+            >
               Calcular Pena-Base e Avançar
             </Button>
           </CardFooter>

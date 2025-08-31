@@ -31,6 +31,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 
 type Causa = {
   id: string;
@@ -73,6 +81,7 @@ export function PhaseThree({
 }: PhaseThreeProps) {
   const [openAumento, setOpenAumento] = useState(false);
   const [openDiminuicao, setOpenDiminuicao] = useState(false);
+  const isMobile = useIsMobile();
 
   const [causasAumento, setCausasAumento] = useState<CausaAplicada[]>(
     initialValues.causasAumento || []
@@ -117,7 +126,6 @@ export function PhaseThree({
   ) => {
     if (!value || value.length === 0) return;
     const valorAplicado = value[0];
-
     if (tipo === "aumento") {
       setCausasAumento((prev) =>
         prev.map((c) => (c.id === id ? { ...c, valorAplicado } : c))
@@ -142,6 +150,71 @@ export function PhaseThree({
       !causasDiminuicao.some((sel) => sel.id === c.id)
   );
 
+  const renderCommandList = (tipo: "aumento" | "diminuicao") => (
+    <Command>
+      <CommandInput placeholder="Buscar causa..." />
+      <CommandList>
+        <CommandEmpty>Nenhuma causa encontrada.</CommandEmpty>
+        <CommandGroup>
+          {(tipo === "aumento" ? availableAumentos : availableDiminuicoes).map(
+            (causa) => (
+              <CommandItem
+                key={causa.id}
+                onSelect={() => handleSelectCausa(causa.id, tipo)}
+              >
+                {causa.descricao} ({causa.artigo})
+              </CommandItem>
+            )
+          )}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
+
+  const CausaSelector = ({ tipo }: { tipo: "aumento" | "diminuicao" }) => {
+    const open = tipo === "aumento" ? openAumento : openDiminuicao;
+    const setOpen = tipo === "aumento" ? setOpenAumento : setOpenDiminuicao;
+    const triggerText = `Adicionar causa de ${tipo}...`;
+
+    if (isMobile) {
+      return (
+        <Drawer open={open} onOpenChange={setOpen}>
+          <DrawerTrigger asChild>
+            <Button variant="outline" className="w-full justify-between">
+              {triggerText}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Selecione a Causa de {tipo}</DrawerTitle>
+            </DrawerHeader>
+            <div className="p-4">{renderCommandList(tipo)}</div>
+          </DrawerContent>
+        </Drawer>
+      );
+    }
+
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between"
+          >
+            {triggerText}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+          {renderCommandList(tipo)}
+        </PopoverContent>
+      </Popover>
+    );
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -154,44 +227,11 @@ export function PhaseThree({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-8">
-            {/* Causas de Aumento */}
             <div className="space-y-4">
               <Label className="text-base font-semibold">
                 Causas de Aumento de Pena
               </Label>
-              <Popover open={openAumento} onOpenChange={setOpenAumento}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={openAumento}
-                    className="w-full justify-between"
-                  >
-                    Adicionar causa de aumento...
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                  <Command>
-                    <CommandInput placeholder="Buscar causa..." />
-                    <CommandList>
-                      <CommandEmpty>Nenhuma causa encontrada.</CommandEmpty>
-                      <CommandGroup>
-                        {availableAumentos.map((causa) => (
-                          <CommandItem
-                            key={causa.id}
-                            onSelect={() =>
-                              handleSelectCausa(causa.id, "aumento")
-                            }
-                          >
-                            {causa.descricao} ({causa.artigo})
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <CausaSelector tipo="aumento" />
               <div className="space-y-4">
                 {causasAumento.map((ca) => {
                   const causaInfo = causasData.find((c) => c.id === ca.id);
@@ -230,44 +270,11 @@ export function PhaseThree({
               </div>
             </div>
 
-            {/* Causas de Diminuição */}
             <div className="space-y-4">
               <Label className="text-base font-semibold">
                 Causas de Diminuição de Pena
               </Label>
-              <Popover open={openDiminuicao} onOpenChange={setOpenDiminuicao}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={openDiminuicao}
-                    className="w-full justify-between"
-                  >
-                    Adicionar causa de diminuição...
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                  <Command>
-                    <CommandInput placeholder="Buscar causa..." />
-                    <CommandList>
-                      <CommandEmpty>Nenhuma causa encontrada.</CommandEmpty>
-                      <CommandGroup>
-                        {availableDiminuicoes.map((causa) => (
-                          <CommandItem
-                            key={causa.id}
-                            onSelect={() =>
-                              handleSelectCausa(causa.id, "diminuicao")
-                            }
-                          >
-                            {causa.descricao} ({causa.artigo})
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <CausaSelector tipo="diminuicao" />
               <div className="space-y-4">
                 {causasDiminuicao.map((ca) => {
                   const causaInfo = causasData.find((c) => c.id === ca.id);
@@ -304,11 +311,18 @@ export function PhaseThree({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button type="button" variant="outline" onClick={onGoBack}>
+          <CardFooter className="flex flex-col md:flex-row gap-2 justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onGoBack}
+              className="w-full md:w-auto"
+            >
               Voltar para 2ª Fase
             </Button>
-            <Button type="submit">Calcular Pena Definitiva</Button>
+            <Button type="submit" className="w-full md:w-auto">
+              Calcular Pena Definitiva
+            </Button>
           </CardFooter>
         </form>
       </Form>
