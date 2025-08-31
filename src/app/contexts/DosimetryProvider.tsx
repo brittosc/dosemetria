@@ -109,12 +109,8 @@ function dosimetryReducer(
 
     case "CALCULATE_AND_PROCEED": {
       if (state.currentPhase === 1) {
-        const crime = crimesData.find((c) => c.id === state.selectedCrimeId);
-        if (!crime) return state;
-
         const penaPrimeiraFase = calculatePhaseOne(
-          crime.penaMinimaMeses,
-          crime.penaMaximaMeses,
+          state.phaseOneData.penaBase,
           state.phaseOneData.circunstanciasJudiciais
         );
         return {

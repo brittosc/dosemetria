@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { ChevronsUpDown, X } from "lucide-react";
 
 import { formatPena } from "@/lib/calculations";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,7 +37,13 @@ type Causa = {
   artigo: string;
   descricao: string;
   tipo: string;
-  valor: { tipo: string; min?: number; max?: number; valor?: number };
+  valor: {
+    tipo: string;
+    min?: number;
+    max?: number;
+    valor?: number;
+    fracao?: string;
+  };
 };
 
 type CausaAplicada = {
@@ -46,7 +51,6 @@ type CausaAplicada = {
   valorAplicado: number;
 };
 
-// Tipagem manual para os valores do formulário
 export interface PhaseThreeFormValues {
   causasAumento: CausaAplicada[];
   causasDiminuicao: CausaAplicada[];
@@ -209,26 +213,16 @@ export function PhaseThree({
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
+                      <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
                       {causaInfo.valor.tipo === "range" && (
-                        <div>
-                          <Label>
-                            Fração:{" "}
-                            {(
-                              (causaInfo.valor.min || 0) +
-                              ((causaInfo.valor.max || 0) -
-                                (causaInfo.valor.min || 0)) *
-                                ca.valorAplicado
-                            ).toFixed(2)}
-                          </Label>
-                          <Slider
-                            defaultValue={[0.5]}
-                            max={1}
-                            step={0.01}
-                            onValueChange={(v: number[]) =>
-                              handleSliderChange(ca.id, "aumento", v)
-                            }
-                          />
-                        </div>
+                        <Slider
+                          defaultValue={[0.5]}
+                          max={1}
+                          step={0.01}
+                          onValueChange={(v: number[]) =>
+                            handleSliderChange(ca.id, "aumento", v)
+                          }
+                        />
                       )}
                     </div>
                   );
@@ -293,26 +287,16 @@ export function PhaseThree({
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
+                      <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
                       {causaInfo.valor.tipo === "range" && (
-                        <div>
-                          <Label>
-                            Fração de Redução:{" "}
-                            {(
-                              (causaInfo.valor.min || 0) +
-                              ((causaInfo.valor.max || 0) -
-                                (causaInfo.valor.min || 0)) *
-                                ca.valorAplicado
-                            ).toFixed(2)}
-                          </Label>
-                          <Slider
-                            defaultValue={[0.5]}
-                            max={1}
-                            step={0.01}
-                            onValueChange={(v: number[]) =>
-                              handleSliderChange(ca.id, "diminuicao", v)
-                            }
-                          />
-                        </div>
+                        <Slider
+                          defaultValue={[0.5]}
+                          max={1}
+                          step={0.01}
+                          onValueChange={(v: number[]) =>
+                            handleSliderChange(ca.id, "diminuicao", v)
+                          }
+                        />
                       )}
                     </div>
                   );
