@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPena } from "@/lib/calculations";
-import { useDosimetryCalculator } from "../../hooks/useDosimetryCalculator";
+import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 
 export function CalculationSummary() {
   const { state, selectedCrime } = useDosimetryCalculator();
