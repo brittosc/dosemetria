@@ -18,20 +18,24 @@ export type CausaAplicada = {
 
 /**
  * Calcula a pena-base considerando as circunstâncias judiciais.
- * Aumenta a pena em 1/8 por circunstância desfavorável.
+ * Aumenta a pena em 1/6 do termo médio (diferença entre pena máxima e mínima)
+ * por circunstância desfavorável.
  */
 export function calculatePhaseOne(
-  penaBase: number,
+  penaMinima: number,
+  penaMaxima: number,
   circunstancias: string[]
 ): number {
-  const aumentoPorCircunstancia = 1 / 8;
-  const totalAumento = circunstancias.length * aumentoPorCircunstancia;
-  return penaBase * (1 + totalAumento);
+  const termoMedio = penaMaxima - penaMinima;
+  const aumentoPorCircunstancia = termoMedio / 6;
+  const aumentoTotal = circunstancias.length * aumentoPorCircunstancia;
+
+  return penaMinima + aumentoTotal;
 }
 
 /**
  * Calcula a pena provisória aplicando agravantes e atenuantes.
- * Aumenta ou diminui a pena em 1/6 para cada fator.
+ * Aumenta ou diminui a pena em 1/6 para cada fator, com base na pena da primeira fase.
  */
 export function calculatePhaseTwo(
   penaPrimeiraFase: number,
