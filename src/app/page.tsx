@@ -1,23 +1,21 @@
 "use client";
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { PhaseOne } from "@/components/dosimetry/PhaseOne";
-import { PhaseTwo } from "@/components/dosimetry/PhaseTwo";
-import { PhaseThree } from "@/components/dosimetry/PhaseThree";
+import { PhaseOne, PhaseOneFormValues } from "@/components/dosimetry/PhaseOne";
+import { PhaseTwo, PhaseTwoFormValues } from "@/components/dosimetry/PhaseTwo";
+import {
+  PhaseThree,
+  PhaseThreeFormValues,
+} from "@/components/dosimetry/PhaseThree";
+
 import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
-import {
-  phaseOneSchema,
-  phaseTwoSchema,
-  phaseThreeSchema,
-} from "@/lib/schemas";
-import { z } from "zod";
 
 export default function Home() {
   const { state, actions, crimesData, selectedCrime, causasData } =
     useDosimetryCalculator();
 
-  const handlePhaseOneSubmit = (data: z.infer<typeof phaseOneSchema>) => {
+  const handlePhaseOneSubmit = (data: PhaseOneFormValues) => {
     actions.updatePhaseOne({
       penaBase: data.penaBase,
       circunstanciasJudiciais: data.circunstanciasJudiciais || [],
@@ -26,7 +24,7 @@ export default function Home() {
     actions.calculateAndProceed();
   };
 
-  const handlePhaseTwoSubmit = (data: z.infer<typeof phaseTwoSchema>) => {
+  const handlePhaseTwoSubmit = (data: PhaseTwoFormValues) => {
     actions.updatePhaseTwo({
       agravantes: data.agravantes || [],
       atenuantes: data.atenuantes || [],
@@ -34,7 +32,7 @@ export default function Home() {
     actions.calculateAndProceed();
   };
 
-  const handlePhaseThreeSubmit = (data: z.infer<typeof phaseThreeSchema>) => {
+  const handlePhaseThreeSubmit = (data: PhaseThreeFormValues) => {
     actions.updatePhaseThree({
       causasAumento: data.causasAumento || [],
       causasDiminuicao: data.causasDiminuicao || [],
@@ -54,7 +52,6 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* CORREÇÃO: Corrigido erro de digitação de "md-col-span-2" para "md:col-span-2" */}
         <div className="md:col-span-2">
           {state.currentPhase === 1 && (
             <PhaseOne

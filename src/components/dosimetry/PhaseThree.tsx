@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { ChevronsUpDown, X } from "lucide-react";
 
 import { formatPena } from "@/lib/calculations";
-import { phaseThreeSchema } from "@/lib/schemas";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -48,11 +46,17 @@ type CausaAplicada = {
   valorAplicado: number;
 };
 
+// Tipagem manual para os valores do formulário
+export interface PhaseThreeFormValues {
+  causasAumento: CausaAplicada[];
+  causasDiminuicao: CausaAplicada[];
+}
+
 type PhaseThreeProps = {
-  initialValues: z.infer<typeof phaseThreeSchema>;
+  initialValues: PhaseThreeFormValues;
   penaProvisoria: number;
   causasData: Causa[];
-  onFormSubmit: (data: z.infer<typeof phaseThreeSchema>) => void;
+  onFormSubmit: (data: PhaseThreeFormValues) => void;
   onGoBack: () => void;
 };
 

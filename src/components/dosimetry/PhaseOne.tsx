@@ -1,10 +1,6 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { phaseOneSchema } from "@/lib/schemas";
-
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,14 +26,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale";
 
-// Tipagem derivada do schema
-type PhaseOneFormValues = z.infer<typeof phaseOneSchema>;
+// Tipagem manual para os valores do formulário
+export interface PhaseOneFormValues {
+  crimeId: string;
+  penaBase: number;
+  circunstanciasJudiciais: string[];
+  dataCrime: Date;
+}
 
 // Props
 interface Crime {
@@ -76,7 +81,6 @@ export function PhaseOne({
   onFormSubmit,
 }: PhaseOneProps) {
   const form = useForm<PhaseOneFormValues>({
-    resolver: zodResolver(phaseOneSchema) as unknown as (values: unknown) => Promise<{ values: PhaseOneFormValues; errors: any }>,
     defaultValues: initialValues,
   });
 
@@ -88,17 +92,22 @@ export function PhaseOne({
     if (crime) form.setValue("penaBase", crime.penaMinimaMeses);
   };
 
+  const onSubmit: SubmitHandler<PhaseOneFormValues> = (data) => {
+    onFormSubmit(data);
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>1ª Fase: Fixação da Pena-Base</CardTitle>
         <CardDescription>
-          Defina o crime e as circunstâncias judiciais do Art. 59 do Código Penal.
+          Defina o crime e as circunstâncias judiciais do Art. 59 do Código
+          Penal.
         </CardDescription>
       </CardHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Seleção do Crime */}
           <FormItem>
             <FormLabel>Crime</FormLabel>
@@ -106,7 +115,10 @@ export function PhaseOne({
               name="crimeId"
               control={form.control}
               render={({ field }) => (
-                <Select defaultValue={field.value} onValueChange={handleCrimeChange}>
+                <Select
+                  defaultValue={field.value}
+                  onValueChange={handleCrimeChange}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione o crime..." />
@@ -136,16 +148,20 @@ export function PhaseOne({
                   render={({ field }) => <Input type="number" {...field} />}
                 />
                 <FormDescription>
-                  Pena entre {selectedCrime.penaMinimaMeses} (mínima) e {selectedCrime.penaMaximaMeses} (máxima).
+                  Pena entre {selectedCrime.penaMinimaMeses} (mínima) e{" "}
+                  {selectedCrime.penaMaximaMeses} (máxima).
                 </FormDescription>
-                <FormMessage>{form.formState.errors.penaBase?.message}</FormMessage>
+                <FormMessage>
+                  {form.formState.errors.penaBase?.message}
+                </FormMessage>
               </FormItem>
 
               {/* Circunstâncias Judiciais */}
               <FormItem>
                 <FormLabel>Circunstâncias Judiciais (Art. 59)</FormLabel>
                 <FormDescription>
-                  Selecione as que forem desfavoráveis. Cada uma aumenta a pena em 1/6.
+                  Selecione as que forem desfavoráveis. Cada uma aumenta a pena
+                  em 1/6.
                 </FormDescription>
                 <div className="grid grid-cols-2 gap-4 pt-2">
                   {circunstanciasJudiciaisOptions.map((option) => (
@@ -170,7 +186,9 @@ export function PhaseOne({
                                 }}
                               />
                             </FormControl>
-                            <FormLabel className="font-normal">{option}</FormLabel>
+                            <FormLabel className="font-normal">
+                              {option}
+                            </FormLabel>
                           </div>
                         );
                       }}
@@ -190,9 +208,14 @@ export function PhaseOne({
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
-                          className={cn("w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
                         >
-                          {field.value ? format(field.value, "PPP", { locale: ptBR }) : "Escolha uma data"}
+                          {field.value
+                            ? format(field.value, "PPP", { locale: ptBR })
+                            : "Escolha uma data"}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </PopoverTrigger>
@@ -201,14 +224,18 @@ export function PhaseOne({
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
                           initialFocus
                         />
                       </PopoverContent>
                     </Popover>
                   )}
                 />
-                <FormMessage>{form.formState.errors.dataCrime?.message}</FormMessage>
+                <FormMessage>
+                  {form.formState.errors.dataCrime?.message}
+                </FormMessage>
               </FormItem>
             </>
           )}
