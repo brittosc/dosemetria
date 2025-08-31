@@ -9,21 +9,9 @@
     "valor": {
       "tipo": "range",
       "min": 0.3333,
-      "max": 0.6666
+      "max": 0.6666,
+      "fracao": "1/3 a 2/3"
     }
-  },
-  {
-    "id": "crimes_sexuais_gravidez",
-    "artigo": "226",
-    "paragrafo": "III",
-    "descricao": "Crimes contra dignidade sexual que resultam em gravidez",
-    "tipo": "aumento",
-    "aplicabilidade": ["dignidade_sexual"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.5
-    },
-    "lei": "Código Penal"
   },
   {
     "id": "arrependimento_posterior",
@@ -35,694 +23,102 @@
     "valor": {
       "tipo": "range",
       "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "erro_sobre_ilicitude_evitavel",
-    "artigo": "21",
-    "paragrafo": null,
-    "descricao": "Erro sobre a ilicitude do fato, se evitável",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.3333
-    }
-  },
-  {
-    "id": "estado_necessidade_razoavel",
-    "artigo": "24",
-    "paragrafo": "§2º",
-    "descricao": "Estado de necessidade com sacrifício razoável",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "perturbacao_mental",
-    "artigo": "26",
-    "paragrafo": "Parágrafo único",
-    "descricao": "Perturbação da saúde mental ou desenvolvimento mental incompleto",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "embriaguez_fortuito",
-    "artigo": "28",
-    "paragrafo": "§2º",
-    "descricao": "Embriaguez por caso fortuito ou força maior",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "participacao_menor_importancia",
-    "artigo": "29",
-    "paragrafo": "§1º",
-    "descricao": "Participação de menor importância",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.3333
-    }
-  },
-  {
-    "id": "coautor_crime_menos_grave",
-    "artigo": "29",
-    "paragrafo": "§2º",
-    "descricao": "Coautor pretendia crime menos grave, aumento se resultado mais grave previsível",
-    "tipo": "aumento",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0,
-      "max": 0.5
-    }
-  },
-  {
-    "id": "aumento_multa",
-    "artigo": "60",
-    "paragrafo": "§1º",
-    "descricao": "Aumento da multa em razão da situação econômica do réu",
-    "tipo": "aumento",
-    "aplicabilidade": ["todos_multas"],
-    "valor": {
-      "tipo": "range",
-      "min": 1,
-      "max": 3
-    }
-  },
-  {
-    "id": "concurso_formal",
-    "artigo": "70",
-    "paragrafo": null,
-    "descricao": "Concurso formal",
-    "tipo": "aumento",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.5
-    }
-  },
-  {
-    "id": "crime_continuado",
-    "artigo": "71",
-    "paragrafo": null,
-    "descricao": "Crime continuado",
-    "tipo": "aumento",
-    "aplicabilidade": ["todos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "aborto_lesao_grave",
-    "artigo": "127",
-    "paragrafo": null,
-    "descricao": "Aborto com lesão corporal grave na gestante",
-    "tipo": "aumento",
-    "aplicabilidade": ["aborto"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "aborto_morte",
-    "artigo": "127",
-    "paragrafo": null,
-    "descricao": "Aborto com morte da gestante",
-    "tipo": "aumento",
-    "aplicabilidade": ["aborto"],
-    "valor": {
-      "tipo": "multiplicador",
-      "valor": 2
-    }
-  },
-  {
-    "id": "lesao_corporal_motivo_futil",
-    "artigo": "129",
-    "paragrafo": "§7º",
-    "descricao": "Lesão corporal com motivo fútil ou recurso que dificulte defesa",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "lesao_corporal_violencia_domestica",
-    "artigo": "129",
-    "paragrafo": "§10",
-    "descricao": "Lesão corporal em contexto de violência doméstica nos §§1º a 3º",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "lesao_corporal_deficiente",
-    "artigo": "129",
-    "paragrafo": "§11",
-    "descricao": "Lesão corporal contra portador de deficiência no §9º",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "lesao_corporal_contra_autoridade",
-    "artigo": "129",
-    "paragrafo": "§12, I, a",
-    "descricao": "Lesão corporal contra autoridade ou agente público",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "lesao_corporal_contra_judiciario",
-    "artigo": "129",
-    "paragrafo": "§12, I, b",
-    "descricao": "Lesão corporal contra membro do Judiciário ou MP",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "lesao_corporal_em_instituicao_ensino",
-    "artigo": "129",
-    "paragrafo": "§12, I, c",
-    "descricao": "Lesão corporal em dependências de instituição de ensino",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    }
-  },
-  {
-    "id": "lesao_corporal_em_ensino_deficiente",
-    "artigo": "129",
-    "paragrafo": "§12, II, a",
-    "descricao": "Lesão corporal em ensino contra pessoa com deficiência",
-    "tipo": "aumento",
-    "aplicabilidade": ["lesao_corporal"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.6666,
-      "max": 2
+      "max": 0.6666,
+      "fracao": "1/3 a 2/3"
     }
   },
   {
     "id": "homicidio_privilegiado",
     "artigo": "121",
-    "paragrafo": "§1º",
+    "paragrafo": "1º",
     "descricao": "Homicídio privilegiado",
     "tipo": "diminuicao",
     "aplicabilidade": ["homicidio_simples"],
     "valor": {
       "tipo": "range",
       "min": 0.1666,
-      "max": 0.3333
+      "max": 0.3333,
+      "fracao": "1/6 a 1/3"
     }
   },
   {
     "id": "homicidio_doloso_aumento",
     "artigo": "121",
-    "paragrafo": "§4º, parte 2",
-    "descricao": "Homicídio doloso contra menor de 14 ou maior de 60 anos",
+    "paragrafo": "4º, parte 2",
+    "descricao": "Homicídio doloso vs <14 ou >60 anos",
     "tipo": "aumento",
     "aplicabilidade": ["homicidio_simples"],
     "valor": {
       "tipo": "fracao",
-      "valor": 0.3333
+      "valor": 0.3333,
+      "fracao": "1/3"
     }
   },
   {
     "id": "furto_noturno",
     "artigo": "155",
-    "paragrafo": "§1º",
+    "paragrafo": "1º",
     "descricao": "Furto durante o repouso noturno",
     "tipo": "aumento",
     "aplicabilidade": ["furto_simples"],
     "valor": {
       "tipo": "fracao",
-      "valor": 0.3333
+      "valor": 0.3333,
+      "fracao": "1/3"
     }
   },
   {
     "id": "roubo_concurso_pessoas",
     "artigo": "157",
-    "paragrafo": "§2º, II",
+    "paragrafo": "2º, II",
     "descricao": "Roubo com concurso de 2 ou mais pessoas",
     "tipo": "aumento",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "range",
       "min": 0.3333,
-      "max": 0.5
-    }
-  },
-  {
-    "id": "roubo_vitima_transporte_valores",
-    "artigo": "157",
-    "paragrafo": "§2º, III",
-    "descricao": "Roubo contra vítima em transporte de valores",
-    "tipo": "aumento",
-    "aplicabilidade": ["roubo_simples"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.5
-    }
-  },
-  {
-    "id": "roubo_veiculo_para_outro_estado",
-    "artigo": "157",
-    "paragrafo": "§2º, IV",
-    "descricao": "Roubo com subtração de veículo para outro estado ou exterior",
-    "tipo": "aumento",
-    "aplicabilidade": ["roubo_simples"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.5
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
     }
   },
   {
     "id": "roubo_arma_branca",
     "artigo": "157",
-    "paragrafo": "§2º, VII",
+    "paragrafo": "2º, VII",
     "descricao": "Roubo com emprego de arma branca",
     "tipo": "aumento",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "range",
       "min": 0.3333,
-      "max": 0.5
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
     }
   },
   {
     "id": "roubo_arma_fogo",
     "artigo": "157",
-    "paragrafo": "§2º-A, I",
+    "paragrafo": "2º-A, I",
     "descricao": "Roubo com emprego de arma de fogo",
     "tipo": "aumento",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "fracao",
-      "valor": 0.6666
+      "valor": 0.6666,
+      "fracao": "2/3"
     }
   },
   {
     "id": "roubo_arma_fogo_restrito",
     "artigo": "157",
-    "paragrafo": "§2º-B",
+    "paragrafo": "2º-B",
     "descricao": "Roubo com arma de fogo de uso restrito",
     "tipo": "aumento",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "multiplicador",
-      "valor": 2
+      "valor": 2,
+      "fracao": "Dobro"
     }
-  },
-  {
-    "id": "apropriacao_indebita_funcionario_publico",
-    "artigo": "168",
-    "paragrafo": "§1º",
-    "descricao": "Apropriação indébita por funcionário público",
-    "tipo": "aumento",
-    "aplicabilidade": ["apropriacao_indebita"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.1666
-    }
-  },
-  {
-    "id": "estelionato_contra_publico",
-    "artigo": "171",
-    "paragrafo": "§3º",
-    "descricao": "Estelionato contra entidade pública ou similar",
-    "tipo": "aumento",
-    "aplicabilidade": ["estelionato"],
-    "valor": {
-      "tipo": "multiplicador",
-      "valor": 2
-    }
-  },
-  {
-    "id": "estelionato_contra_idoso",
-    "artigo": "171",
-    "paragrafo": "§4º",
-    "descricao": "Estelionato contra idoso",
-    "tipo": "aumento",
-    "aplicabilidade": ["estelionato"],
-    "valor": {
-      "tipo": "multiplicador",
-      "valor": 2
-    }
-  },
-  {
-    "id": "receptacao_bens_publicos",
-    "artigo": "180",
-    "paragrafo": "§6º",
-    "descricao": "Receptação de bens públicos",
-    "tipo": "aumento",
-    "aplicabilidade": ["receptacao"],
-    "valor": {
-      "tipo": "multiplicador",
-      "valor": 2
-    }
-  },
-  {
-    "id": "frustracao_direito_trabalhista_vulneravel",
-    "artigo": "203",
-    "paragrafo": "§2º",
-    "descricao": "Frustração de direito trabalhista contra vulnerável",
-    "tipo": "aumento",
-    "aplicabilidade": ["frustracao_trabalhista"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.3333
-    }
-  },
-  {
-    "id": "aliciamento_trabalhadores_vulneravel",
-    "artigo": "207",
-    "paragrafo": "§2º",
-    "descricao": "Aliciamento de trabalhadores contra vulnerável",
-    "tipo": "aumento",
-    "aplicabilidade": ["aliciamento_trabalhadores"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.3333
-    }
-  },
-  {
-    "id": "ultraje_culto_violencia",
-    "artigo": "208",
-    "paragrafo": "Parágrafo único",
-    "descricao": "Ultraje a culto com emprego de violência",
-    "tipo": "aumento",
-    "aplicabilidade": ["ultraje_culto"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "perturbacao_funeraria_violencia",
-    "artigo": "209",
-    "paragrafo": "Parágrafo único",
-    "descricao": "Perturbação de cerimônia funerária com violência",
-    "tipo": "aumento",
-    "aplicabilidade": ["perturbacao_funeraria"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.3333
-    }
-  },
-  {
-    "id": "assedio_sexual_menor",
-    "artigo": "216-A",
-    "paragrafo": "§2º",
-    "descricao": "Assédio sexual contra menor de 18 anos",
-    "tipo": "aumento",
-    "aplicabilidade": ["assedio_sexual"],
-    "valor": {
-      "tipo": "range",
-      "min": 0,
-      "max": 0.3333
-    }
-  },
-  {
-    "id": "crimes_sexuais_concurso_pessoas",
-    "artigo": "226",
-    "paragrafo": "I",
-    "descricao": "Crimes contra dignidade sexual com concurso de pessoas",
-    "tipo": "aumento",
-    "aplicabilidade": ["dignidade_sexual"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.25
-    }
-  },
-  {
-    "id": "crimes_sexuais_autoridade_sobre_vitima",
-    "artigo": "226",
-    "paragrafo": "II",
-    "descricao": "Crimes contra dignidade sexual por agente com autoridade sobre vítima",
-    "tipo": "aumento",
-    "aplicabilidade": ["dignidade_sexual"],
-    "valor": {
-      "tipo": "fracao",
-      "valor": 0.5
-    }
-  },
-  {
-    "id": "trafico_privilegiado",
-    "artigo": "33",
-    "paragrafo": "§4º",
-    "descricao": "Tráfico de drogas por primário, bons antecedentes e sem organização criminosa",
-    "tipo": "diminuicao",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "trafico_menor_14_ou_incapacitado",
-    "artigo": "40",
-    "paragrafo": "IV",
-    "descricao": "Tráfico de drogas envolvendo menor de 14 anos ou pessoa incapacitada",
-    "tipo": "aumento",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.5,
-      "max": 1
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "trafico_transnacional",
-    "artigo": "40",
-    "paragrafo": "I",
-    "descricao": "Tráfico de drogas com caráter transnacional",
-    "tipo": "aumento",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "trafico_organizacao_criminosa",
-    "artigo": "40",
-    "paragrafo": "II",
-    "descricao": "Tráfico de drogas com envolvimento de organização criminosa",
-    "tipo": "aumento",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "trafico_arma_fogo",
-    "artigo": "40",
-    "paragrafo": "VI",
-    "descricao": "Tráfico de drogas com uso de arma de fogo",
-    "tipo": "aumento",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "trafico_transporte_publico",
-    "artigo": "40",
-    "paragrafo": "V",
-    "descricao": "Tráfico de drogas em transporte público ou proximidade de escolas",
-    "tipo": "aumento",
-    "aplicabilidade": ["trafico_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "11.343/2006"
-  },
-  {
-    "id": "lavagem_dinheiro_reiteracao",
-    "artigo": "1",
-    "paragrafo": "§4º",
-    "descricao": "Lavagem de dinheiro com reiteração delitiva",
-    "tipo": "aumento",
-    "aplicabilidade": ["lavagem_dinheiro"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "9.613/1998"
-  },
-  {
-    "id": "crimes_hediondos_violencia",
-    "artigo": "2",
-    "paragrafo": null,
-    "descricao": "Crimes hediondos com violência ou grave ameaça",
-    "tipo": "aumento",
-    "aplicabilidade": ["crimes_hediondos"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1666,
-      "max": 0.6666
-    },
-    "lei": "8.072/1990"
-  },
-  {
-    "id": "organizacao_criminosa_arma_fogo",
-    "artigo": "2",
-    "paragrafo": "§2º",
-    "descricao": "Organização criminosa com uso de arma de fogo",
-    "tipo": "aumento",
-    "aplicabilidade": ["organizacao_criminosa"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.5,
-      "max": 1
-    },
-    "lei": "12.850/2013"
-  },
-  {
-    "id": "organizacao_criminosa_funcionario_publico",
-    "artigo": "2",
-    "paragrafo": "§3º",
-    "descricao": "Organização criminosa com participação de funcionário público",
-    "tipo": "aumento",
-    "aplicabilidade": ["organizacao_criminosa"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "12.850/2013"
-  },
-  {
-    "id": "organizacao_criminosa_menor",
-    "artigo": "2",
-    "paragrafo": "§4º, II",
-    "descricao": "Organização criminosa com envolvimento de menor de idade",
-    "tipo": "aumento",
-    "aplicabilidade": ["organizacao_criminosa"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "12.850/2013"
-  },
-  {
-    "id": "genocidio_meio_cruel",
-    "artigo": "2",
-    "paragrafo": null,
-    "descricao": "Genocídio com meios cruéis",
-    "tipo": "aumento",
-    "aplicabilidade": ["genocidio"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "2.889/1956"
-  },
-  {
-    "id": "violencia_domestica_lesao",
-    "artigo": "7",
-    "paragrafo": "II",
-    "descricao": "Violência doméstica com lesão corporal de natureza grave",
-    "tipo": "aumento",
-    "aplicabilidade": ["violencia_domestica"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "11.340/2006"
-  },
-  {
-    "id": "violencia_domestica_menor_idoso",
-    "artigo": "7",
-    "paragrafo": "III",
-    "descricao": "Violência doméstica contra menor de 14 anos, maior de 60 anos ou pessoa com deficiência",
-    "tipo": "aumento",
-    "aplicabilidade": ["violencia_domestica"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "11.340/2006"
-  },
-  {
-    "id": "violencia_domestica_presenca_menor",
-    "artigo": "7",
-    "paragrafo": "IV",
-    "descricao": "Violência doméstica na presença de menor de 14 anos",
-    "tipo": "aumento",
-    "aplicabilidade": ["violencia_domestica"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6666
-    },
-    "lei": "11.340/2006"
   }
 ]

@@ -37,55 +37,29 @@ const agravantesOptions = [
   { id: "motivo_futil_torpe", label: "Motivo fútil ou torpe (Art. 61, II, a)" },
   {
     id: "facilitar_crime",
-    label:
-      "Para facilitar/assegurar execução, ocultação, impunidade ou vantagem de outro crime (Art. 61, II, b)",
+    label: "Para facilitar/assegurar outro crime (Art. 61, II, b)",
   },
   {
     id: "traicao_emboscada",
-    label:
-      "Traição, emboscada, dissimulação ou recurso que dificultou/impediu defesa da vítima (Art. 61, II, c)",
+    label: "Traição, emboscada, dissimulação (Art. 61, II, c)",
   },
   {
     id: "meio_cruel",
-    label:
-      "Emprego de veneno, fogo, explosivo, tortura ou outro meio insidioso/cruel, ou que podia causar perigo comum (Art. 61, II, d)",
+    label: "Emprego de veneno, fogo, tortura (Art. 61, II, d)",
   },
   {
     id: "contra_familia",
     label: "Contra ascendente, descendente, irmão ou cônjuge (Art. 61, II, e)",
   },
+  { id: "abuso_autoridade", label: "Com abuso de autoridade (Art. 61, II, f)" },
   {
-    id: "abuso_autoridade_domestica",
+    id: "contra_crianca_idoso",
     label:
-      "Com abuso de autoridade, prevalecendo-se de relações domésticas, de coabitação ou hospitalidade, ou com violência contra a mulher (Art. 61, II, f)",
+      "Contra criança, maior de 60 anos, enfermo ou grávida (Art. 61, II, h)",
   },
   {
-    id: "abuso_poder_profissao",
-    label:
-      "Com abuso de poder ou violação de dever inerente a cargo, ofício, ministério ou profissão (Art. 61, II, g)",
-  },
-  {
-    id: "contra_vulneravel",
-    label:
-      "Contra criança, maior de 60 anos, enfermo ou mulher grávida (Art. 61, II, h)",
-  },
-  {
-    id: "sob_protecao_autoridade",
-    label:
-      "Quando o ofendido estava sob imediata proteção da autoridade (Art. 61, II, i)",
-  },
-  {
-    id: "calamidade_publica",
-    label:
-      "Em ocasião de incêndio, naufrágio, inundação, calamidade pública ou desgraça particular da vítima (Art. 61, II, j)",
-  },
-  {
-    id: "embriaguez_preordenada",
-    label: "Em estado de embriaguez preordenada (Art. 61, II, l)",
-  },
-  {
-    id: "instituicao_ensino",
-    label: "Nas dependências de instituição de ensino (Art. 61, II, m)",
+    id: "organiza_cooperacao",
+    label: "Organiza a cooperação no crime (Art. 62, I)",
   },
 ];
 
@@ -93,37 +67,23 @@ const atenuantesOptions = [
   {
     id: "menor_21_maior_70",
     label:
-      "Agente menor de 21 anos (na data do fato) ou maior de 70 anos (na data da sentença), salvo crimes de violência sexual contra a mulher (Art. 65, I)",
+      "Agente menor de 21 (no fato) ou maior de 70 (na sentença) (Art. 65, I)",
   },
   { id: "desconhecimento_lei", label: "Desconhecimento da lei (Art. 65, II)" },
   {
     id: "relevante_valor",
-    label: "Motivo de relevante valor social ou moral (Art. 65, III, a)",
+    label: "Relevante valor social ou moral (Art. 65, III, a)",
+  },
+  { id: "confissao", label: "Confissão espontânea (Art. 65, III, d)" },
+  {
+    id: "influencia_emocao",
+    label:
+      "Sob influência de violenta emoção, provocada por ato injusto da vítima (Art. 65, III, c)",
   },
   {
-    id: "reparacao_dano",
+    id: "outra_relevante",
     label:
-      "Espontânea vontade e eficiência em evitar ou minorar as consequências do crime, ou reparação do dano antes do julgamento (Art. 65, III, b)",
-  },
-  {
-    id: "coacao_ou_ordem",
-    label:
-      "Crime cometido sob coação resistível, em cumprimento de ordem de autoridade superior, ou sob influência de violenta emoção provocada por ato injusto da vítima (Art. 65, III, c)",
-  },
-  {
-    id: "confissao",
-    label:
-      "Confissão espontânea perante a autoridade da autoria do crime (Art. 65, III, d)",
-  },
-  {
-    id: "influencia_multidao",
-    label:
-      "Crime cometido sob influência de multidão em tumulto, se não o provocou (Art. 65, III, e)",
-  },
-  {
-    id: "circunstancia_relevante",
-    label:
-      "Existência de circunstância relevante, anterior ou posterior ao crime, ainda que não prevista expressamente em lei (Art. 66)",
+      "Circunstância relevante, anterior ou posterior ao crime (Inominada) (Art. 66)",
   },
 ];
 
