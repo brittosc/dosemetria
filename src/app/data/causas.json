@@ -45,7 +45,7 @@
     "id": "homicidio_doloso_aumento",
     "artigo": "121",
     "paragrafo": "4º, parte 2",
-    "descricao": "Homicídio doloso vs <14 ou >60 anos",
+    "descricao": "Homicídio doloso contra menor de 14 ou maior 60 anos",
     "tipo": "aumento",
     "aplicabilidade": ["homicidio_simples"],
     "valor": {
