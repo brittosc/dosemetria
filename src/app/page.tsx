@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { formatPena } from "@/lib/calculations";
 
 export default function Home() {
   const { state, actions, crimesData, selectedCrime, causasData } =
