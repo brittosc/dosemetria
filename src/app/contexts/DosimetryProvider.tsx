@@ -13,13 +13,14 @@ import {
 
 // --- TIPOS E INTERFACES ---
 
-interface DosimetryState {
+export interface DosimetryState {
   currentPhase: number;
   selectedCrimeId?: string;
   phaseOneData: {
     penaBase: number;
     circunstanciasJudiciais: string[];
     dataCrime?: Date;
+    selectedQualificadoraId?: string; // Adicionado
   };
   phaseTwoData: {
     agravantes: string[];
@@ -38,6 +39,7 @@ interface DosimetryState {
 
 type Action =
   | { type: "SET_CRIME"; payload: string }
+  | { type: "SET_QUALIFICADORA"; payload: string | undefined } // Adicionado
   | {
       type: "UPDATE_PHASE_ONE";
       payload: Partial<DosimetryState["phaseOneData"]>;
@@ -61,6 +63,7 @@ const initialState: DosimetryState = {
     penaBase: 0,
     circunstanciasJudiciais: [],
     dataCrime: new Date(),
+    selectedQualificadoraId: undefined,
   },
   phaseTwoData: { agravantes: [], atenuantes: [] },
   phaseThreeData: { causasAumento: [], causasDiminuicao: [] },
@@ -75,7 +78,7 @@ function dosimetryReducer(
     case "RESET":
       return initialState;
 
-    case "SET_CRIME":
+    case "SET_CRIME": {
       const crime = crimesData.find((c) => c.id === action.payload);
       return {
         ...initialState,
@@ -85,6 +88,23 @@ function dosimetryReducer(
           penaBase: crime?.penaMinimaMeses ?? 0,
         },
       };
+    }
+
+    case "SET_QUALIFICADORA": {
+      const crime = crimesData.find((c) => c.id === state.selectedCrimeId);
+      const qualificadora = crime?.qualificadoras?.find(
+        (q) => q.id === action.payload
+      );
+      return {
+        ...state,
+        phaseOneData: {
+          ...state.phaseOneData,
+          selectedQualificadoraId: action.payload,
+          penaBase:
+            qualificadora?.penaMinimaMeses ?? crime?.penaMinimaMeses ?? 0,
+        },
+      };
+    }
 
     case "UPDATE_PHASE_ONE":
       return {

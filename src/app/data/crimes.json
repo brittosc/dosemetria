@@ -5,7 +5,38 @@
     "nome": "Homicídio Simples",
     "penaMinimaMeses": 72,
     "penaMaximaMeses": 240,
-    "qualificadoras": []
+    "qualificadoras": [
+      {
+        "id": "motivo_torpe",
+        "nome": "I - mediante paga ou promessa de recompensa, ou por outro motivo torpe",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      },
+      {
+        "id": "motivo_futil",
+        "nome": "II - por motivo futil",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      },
+      {
+        "id": "veneno_fogo_etc",
+        "nome": "III - com emprego de veneno, fogo, explosivo, asfixia, tortura ou outro meio insidioso ou cruel, ou de que possa resultar perigo comum",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      },
+      {
+        "id": "traicao_emboscada",
+        "nome": "IV - à traição, de emboscada, ou mediante dissimulação ou outro recurso que dificulte ou torne impossivel a defesa do ofendido",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      },
+      {
+        "id": "assegurar_execucao",
+        "nome": "V - para assegurar a execução, a ocultação, a impunidade ou vantagem de outro crime",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      }
+    ]
   },
   {
     "id": "homicidio_privilegiado",
@@ -45,6 +76,55 @@
     "nome": "Induzimento, instigação ou auxílio a suicídio ou a automutilação ",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "qualificadoras": []
+    "qualificadoras": [
+      {
+        "id": "induzimento_1_qualificadora",
+        "nome": "CP, Art. 122, §1º, 12 a 36 meses",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 36
+      },
+      {
+        "id": "induzimento_2_qualificadora",
+        "nome": "CP, Art. 122, §2º, 24 a 76 meses",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 72
+      },
+      {
+        "id": "induzimento_3_qualificadora",
+        "nome": "CP, Art. 122, §3, I, 12 a 48 meses",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      },
+      {
+        "id": "induzimento_4_qualificadora",
+        "nome": "CP, Art. 122, §3, II, 12 a 48 meses",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      },
+      {
+        "id": "induzimento_5_qualificadora",
+        "nome": "CP, Art. 122, §4, 12 a 48 meses (dobro)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      },
+      {
+        "id": "induzimento_6_qualificadora",
+        "nome": "CP, Art. 122, §5, 12 a 48 meses (dobro)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      },
+      {
+        "id": "induzimento_7_qualificadora",
+        "nome": "CP, Art. 122, §6, 6 a 12 meses",
+        "penaMinimaMeses": 6,
+        "penaMaximaMeses": 24
+      },
+      {
+        "id": "induzimento_8_qualificadora",
+        "nome": "CP, Art. 122, §7, 6 a 12 meses",
+        "penaMinimaMeses": 6,
+        "penaMaximaMeses": 24
+      }
+    ]
   }
 ]

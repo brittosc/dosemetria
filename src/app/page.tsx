@@ -79,8 +79,10 @@ export default function Home() {
               circunstanciasJudiciais:
                 state.phaseOneData.circunstanciasJudiciais,
               dataCrime: state.phaseOneData.dataCrime || new Date(),
+              qualificadoraId: state.phaseOneData.selectedQualificadoraId,
             }}
             onSelectCrime={actions.setCrime}
+            onSelectQualificadora={actions.setQualificadora}
             onFormSubmit={handlePhaseOneSubmit}
           />
         );

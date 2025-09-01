@@ -45,6 +45,7 @@ export interface PhaseOneFormValues {
   penaBase: number;
   circunstanciasJudiciais: string[];
   dataCrime: Date;
+  qualificadoraId?: string;
 }
 
 interface Crime {
@@ -53,6 +54,12 @@ interface Crime {
   artigo: string;
   penaMinimaMeses: number;
   penaMaximaMeses: number;
+  qualificadoras?: {
+    id: string;
+    nome: string;
+    penaMinimaMeses: number;
+    penaMaximaMeses: number;
+  }[];
 }
 
 interface PhaseOneProps {
@@ -60,6 +67,7 @@ interface PhaseOneProps {
   selectedCrime?: Crime;
   initialValues: PhaseOneFormValues;
   onSelectCrime: (crimeId: string) => void;
+  onSelectQualificadora: (qualificadoraId?: string) => void;
   onFormSubmit: (data: PhaseOneFormValues) => void;
 }
 
@@ -79,20 +87,48 @@ export function PhaseOne({
   selectedCrime,
   initialValues,
   onSelectCrime,
+  onSelectQualificadora,
   onFormSubmit,
 }: PhaseOneProps) {
   const form = useForm<PhaseOneFormValues>({ defaultValues: initialValues });
   const isMobile = useIsMobile();
+  const selectedQualificadoraId = form.watch("qualificadoraId");
 
   const handleCrimeChange = (crimeId: string) => {
     onSelectCrime(crimeId);
     form.setValue("crimeId", crimeId);
+    form.setValue("qualificadoraId", undefined);
     const crime = crimesData.find((c) => c.id === crimeId);
-    if (crime) form.setValue("penaBase", crime.penaMinimaMeses);
+    if (crime) {
+      form.setValue("penaBase", crime.penaMinimaMeses);
+      onSelectQualificadora(undefined);
+    }
+  };
+
+  const handleQualificadoraChange = (qualificadoraId: string) => {
+    const finalId =
+      qualificadoraId === "sem-qualificadora" ? undefined : qualificadoraId;
+    onSelectQualificadora(finalId);
+    form.setValue("qualificadoraId", finalId);
+
+    if (selectedCrime) {
+      const qualificadora = selectedCrime.qualificadoras?.find(
+        (q) => q.id === finalId
+      );
+      form.setValue(
+        "penaBase",
+        qualificadora?.penaMinimaMeses ?? selectedCrime.penaMinimaMeses
+      );
+    }
   };
 
   const onSubmit: SubmitHandler<PhaseOneFormValues> = (data) =>
     onFormSubmit(data);
+
+  const activePena =
+    selectedCrime?.qualificadoras?.find(
+      (q) => q.id === selectedQualificadoraId
+    ) || selectedCrime;
 
   return (
     <Card className="w-full">
@@ -116,10 +152,13 @@ export function PhaseOne({
                 name="crimeId"
                 control={form.control}
                 render={({ field }) => (
-                  <Select value={field.value} onValueChange={handleCrimeChange}>
+                  <Select
+                    value={field.value || ""}
+                    onValueChange={handleCrimeChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione o crime..." />
+                        <SelectValue placeholder="Selecione o crime" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -137,6 +176,40 @@ export function PhaseOne({
               </FormMessage>
             </FormItem>
 
+            {selectedCrime &&
+              selectedCrime.qualificadoras &&
+              selectedCrime.qualificadoras.length > 0 && (
+                <FormItem>
+                  <FormLabel>Qualificadora</FormLabel>
+                  <Controller
+                    name="qualificadoraId"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value || ""}
+                        onValueChange={handleQualificadoraChange}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione uma qualificadora" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="sem-qualificadora">
+                            Nenhuma (Crime Simples)
+                          </SelectItem>
+                          {selectedCrime.qualificadoras?.map((q) => (
+                            <SelectItem key={q.id} value={q.id}>
+                              {q.nome}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </FormItem>
+              )}
+
             {selectedCrime && (
               <>
                 <FormItem>
@@ -149,15 +222,17 @@ export function PhaseOne({
                         type="number"
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
+                          field.onChange(parseInt(e.target.value, 10) || 0)
                         }
                       />
                     )}
                   />
-                  <FormDescription>
-                    Pena entre {selectedCrime.penaMinimaMeses} (mínima) e{" "}
-                    {selectedCrime.penaMaximaMeses} (máxima).
-                  </FormDescription>
+                  {activePena && (
+                    <FormDescription>
+                      Pena entre {activePena.penaMinimaMeses} (mínima) e{" "}
+                      {activePena.penaMaximaMeses} (máxima).
+                    </FormDescription>
+                  )}
                   <FormMessage>
                     {form.formState.errors.penaBase?.message}
                   </FormMessage>
