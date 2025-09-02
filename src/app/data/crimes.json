@@ -7,124 +7,2384 @@
     "penaMaximaMeses": 240,
     "qualificadoras": [
       {
-        "id": "motivo_torpe",
-        "nome": "I - mediante paga ou promessa de recompensa, ou por outro motivo torpe",
-        "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
-      },
-      {
-        "id": "motivo_futil",
-        "nome": "II - por motivo futil",
-        "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
-      },
-      {
-        "id": "veneno_fogo_etc",
-        "nome": "III - com emprego de veneno, fogo, explosivo, asfixia, tortura ou outro meio insidioso ou cruel, ou de que possa resultar perigo comum",
-        "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
-      },
-      {
-        "id": "traicao_emboscada",
-        "nome": "IV - à traição, de emboscada, ou mediante dissimulação ou outro recurso que dificulte ou torne impossivel a defesa do ofendido",
-        "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
-      },
-      {
-        "id": "assegurar_execucao",
-        "nome": "V - para assegurar a execução, a ocultação, a impunidade ou vantagem de outro crime",
+        "id": "homicidio_qualificado",
+        "nome": "Homicídio Qualificado (§ 2º)",
+        "descricao": "Qualificadoras de motivo torpe, fútil, meio cruel, recurso que dificultou defesa, para assegurar outro crime, contra autoridade, com arma de uso restrito, contra menor de 14 anos ou em instituição de ensino.",
         "penaMinimaMeses": 144,
         "penaMaximaMeses": 360
       }
     ]
-  },
-  {
-    "id": "homicidio_privilegiado",
-    "artigo": "121, §1º",
-    "nome": "Homicídio Privilegiado",
-    "penaMinimaMeses": 72,
-    "penaMaximaMeses": 240,
-    "qualificadoras": []
-  },
-  {
-    "id": "homicidio_qualificado",
-    "artigo": "121, §2º",
-    "nome": "Homicídio Qualificado",
-    "penaMinimaMeses": 144,
-    "penaMaximaMeses": 360,
-    "qualificadoras": []
-  },
-  {
-    "id": "homicidio_culposo",
-    "artigo": "121, §3º",
-    "nome": "Homicídio Culposo",
-    "penaMinimaMeses": 12,
-    "penaMaximaMeses": 36,
-    "qualificadoras": []
   },
   {
     "id": "feminicidio",
     "artigo": "121-A",
-    "nome": "Feminicidio",
+    "nome": "Feminicídio",
     "penaMinimaMeses": 240,
-    "penaMaximaMeses": 480,
-    "qualificadoras": []
+    "penaMaximaMeses": 480
   },
   {
-    "id": "induzimento_instigacao_auxilio_a_suicidio_ou_automutilacao",
+    "id": "induzimento_suicidio_automutilacao",
     "artigo": "122",
-    "nome": "Induzimento, instigação ou auxílio a suicídio ou a automutilação ",
+    "nome": "Induzimento, instigação ou auxílio a suicídio ou a automutilação",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
     "qualificadoras": [
       {
-        "id": "induzimento_1_qualificadora",
-        "nome": "CP, Art. 122, §1º, 12 a 36 meses",
+        "id": "resultado_lesao_grave",
+        "nome": "Resultado Lesão Corporal Grave ou Gravíssima (§ 1º)",
         "penaMinimaMeses": 12,
         "penaMaximaMeses": 36
       },
       {
-        "id": "induzimento_2_qualificadora",
-        "nome": "CP, Art. 122, §2º, 24 a 76 meses",
+        "id": "resultado_morte",
+        "nome": "Resultado Morte (§ 2º)",
         "penaMinimaMeses": 24,
         "penaMaximaMeses": 72
-      },
+      }
+    ]
+  },
+  {
+    "id": "infanticidio",
+    "artigo": "123",
+    "nome": "Infanticídio",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "aborto_consentido",
+    "artigo": "124",
+    "nome": "Aborto provocado pela gestante ou com seu consentimento",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "aborto_sem_consentimento",
+    "artigo": "125",
+    "nome": "Aborto provocado por terceiro, sem consentimento",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "aborto_com_consentimento_terceiro",
+    "artigo": "126",
+    "nome": "Aborto provocado por terceiro, com consentimento",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
       {
-        "id": "induzimento_3_qualificadora",
-        "nome": "CP, Art. 122, §3, I, 12 a 48 meses",
+        "id": "aborto_com_consentimento_incapaz",
+        "nome": "Qualificado se a gestante é menor de 14, alienada, ou consentimento obtido por fraude/violência (Parágrafo único)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 120
+      }
+    ]
+  },
+  {
+    "id": "lesao_corporal_simples",
+    "artigo": "129",
+    "nome": "Lesão Corporal Simples",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "lesao_corporal_grave",
+    "artigo": "129, § 1º",
+    "nome": "Lesão Corporal de Natureza Grave",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "lesao_corporal_gravissima",
+    "artigo": "129, § 2º",
+    "nome": "Lesão Corporal de Natureza Gravíssima",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "lesao_corporal_seguida_de_morte",
+    "artigo": "129, § 3º",
+    "nome": "Lesão Corporal Seguida de Morte",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "lesao_corporal_culposa",
+    "artigo": "129, § 6º",
+    "nome": "Lesão Corporal Culposa",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "lesao_corporal_violencia_domestica",
+    "artigo": "129, § 9º",
+    "nome": "Lesão Corporal (Violência Doméstica)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "lesao_corporal_razoes_sexo_feminino",
+    "artigo": "129, § 13",
+    "nome": "Lesão Corporal contra a mulher por razões da condição do sexo feminino",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "perigo_contagio_venereo",
+    "artigo": "130",
+    "nome": "Perigo de Contágio Venéreo",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12,
+    "qualificadoras": [
+      {
+        "id": "intencao_transmitir_doenca",
+        "nome": "Intenção de transmitir a moléstia (§ 1º)",
         "penaMinimaMeses": 12,
         "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "perigo_contagio_molestia_grave",
+    "artigo": "131",
+    "nome": "Perigo de Contágio de Moléstia Grave",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "perigo_vida_saude_outrem",
+    "artigo": "132",
+    "nome": "Perigo para a vida ou saúde de outrem",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "abandono_incapaz",
+    "artigo": "133",
+    "nome": "Abandono de Incapaz",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "abandono_resultado_lesao_grave",
+        "nome": "Resultado Lesão Corporal Grave (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 84
       },
       {
-        "id": "induzimento_4_qualificadora",
-        "nome": "CP, Art. 122, §3, II, 12 a 48 meses",
+        "id": "abandono_resultado_morte",
+        "nome": "Resultado Morte (§ 2º)",
+        "penaMinimaMeses": 96,
+        "penaMaximaMeses": 168
+      }
+    ]
+  },
+  {
+    "id": "exposicao_abandono_recem_nascido",
+    "artigo": "134",
+    "nome": "Exposição ou abandono de recém-nascido",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "exposicao_resultado_lesao_grave",
+        "nome": "Resultado Lesão Corporal Grave (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 36
       },
       {
-        "id": "induzimento_5_qualificadora",
-        "nome": "CP, Art. 122, §4, 12 a 48 meses (dobro)",
-        "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "id": "exposicao_resultado_morte",
+        "nome": "Resultado Morte (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 72
+      }
+    ]
+  },
+  {
+    "id": "omissao_socorro",
+    "artigo": "135",
+    "nome": "Omissão de Socorro",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "condicionamento_atendimento_emergencial",
+    "artigo": "135-A",
+    "nome": "Condicionamento de atendimento médico-hospitalar emergencial",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "maus_tratos",
+    "artigo": "136",
+    "nome": "Maus-tratos",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "maus_tratos_resultado_lesao_grave",
+        "nome": "Resultado Lesão Corporal Grave (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 84
       },
       {
-        "id": "induzimento_6_qualificadora",
-        "nome": "CP, Art. 122, §5, 12 a 48 meses (dobro)",
-        "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
-      },
+        "id": "maus_tratos_resultado_morte",
+        "nome": "Resultado Morte (§ 2º)",
+        "penaMinimaMeses": 96,
+        "penaMaximaMeses": 168
+      }
+    ]
+  },
+  {
+    "id": "rixa",
+    "artigo": "137",
+    "nome": "Rixa",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 2,
+    "qualificadoras": [
       {
-        "id": "induzimento_7_qualificadora",
-        "nome": "CP, Art. 122, §6, 6 a 12 meses",
-        "penaMinimaMeses": 6,
-        "penaMaximaMeses": 24
-      },
-      {
-        "id": "induzimento_8_qualificadora",
-        "nome": "CP, Art. 122, §7, 6 a 12 meses",
+        "id": "rixa_qualificada",
+        "nome": "Resultado morte ou lesão corporal grave (Parágrafo único)",
         "penaMinimaMeses": 6,
         "penaMaximaMeses": 24
       }
     ]
+  },
+  {
+    "id": "calunia",
+    "artigo": "138",
+    "nome": "Calúnia",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "difamacao",
+    "artigo": "139",
+    "nome": "Difamação",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "injuria_simples",
+    "artigo": "140",
+    "nome": "Injúria Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6,
+    "qualificadoras": [
+      {
+        "id": "injuria_real",
+        "nome": "Injúria com violência ou vias de fato (Injúria Real) (§ 2º)",
+        "penaMinimaMeses": 3,
+        "penaMaximaMeses": 12
+      },
+      {
+        "id": "injuria_preconceituosa",
+        "nome": "Injúria por religião, condição de idoso ou pessoa com deficiência (§ 3º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 36
+      }
+    ]
+  },
+  {
+    "id": "constrangimento_ilegal",
+    "artigo": "146",
+    "nome": "Constrangimento Ilegal",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "ameaca",
+    "artigo": "147",
+    "nome": "Ameaça",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "perseguicao",
+    "artigo": "147-A",
+    "nome": "Perseguição (Stalking)",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "violencia_psicologica_mulher",
+    "artigo": "147-B",
+    "nome": "Violência Psicológica contra a Mulher",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "sequestro_carcere_privado",
+    "artigo": "148",
+    "nome": "Sequestro e Cárcere Privado",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      {
+        "id": "sequestro_qualificado_paragrafo_1",
+        "nome": "Qualificado por vítima vulnerável, internação, duração ou fins libidinosos (§ 1º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      },
+      {
+        "id": "sequestro_qualificado_paragrafo_2",
+        "nome": "Qualificado por grave sofrimento físico ou moral (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "reducao_condicao_analoga_escravo",
+    "artigo": "149",
+    "nome": "Redução a condição análoga à de escravo",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "trafico_de_pessoas",
+    "artigo": "149-A",
+    "nome": "Tráfico de Pessoas",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "violacao_de_domicilio",
+    "artigo": "150",
+    "nome": "Violação de domicílio",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3,
+    "qualificadoras": [
+      {
+        "id": "violacao_domicilio_qualificada",
+        "nome": "Qualificada por período noturno, lugar ermo, violência, arma ou concurso de pessoas (§ 1º)",
+        "penaMinimaMeses": 6,
+        "penaMaximaMeses": 24
+      }
+    ]
+  },
+  {
+    "id": "violacao_de_correspondencia",
+    "artigo": "151",
+    "nome": "Violação de correspondência",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "abuso_correspondencia_comercial",
+    "artigo": "152",
+    "nome": "Abuso de correspondência comercial",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "divulgacao_de_segredo",
+    "artigo": "153",
+    "nome": "Divulgação de segredo",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6,
+    "qualificadoras": [
+      {
+        "id": "divulgacao_informacoes_sigilosas_adm_publica",
+        "nome": "Divulgação de informações sigilosas ou reservadas da Administração Pública (§ 1º-A)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "violacao_segredo_profissional",
+    "artigo": "154",
+    "nome": "Violação do segredo profissional",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "invasao_dispositivo_informatico",
+    "artigo": "154-A",
+    "nome": "Invasão de dispositivo informático",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      {
+        "id": "invasao_com_obtencao_de_conteudo",
+        "nome": "Qualificada pela obtenção de conteúdo de comunicações eletrônicas privadas, segredos, etc. (§ 3º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      }
+    ]
+  },
+  {
+    "id": "furto_simples",
+    "artigo": "155",
+    "nome": "Furto Simples",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      {
+        "id": "furto_qualificado",
+        "nome": "Furto Qualificado (§ 4º - rompimento de obstáculo, abuso de confiança, concurso de pessoas, etc.)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 96
+      },
+      {
+        "id": "furto_com_explosivo",
+        "nome": "Furto Qualificado com emprego de explosivo (§ 4º-A)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 120
+      },
+      {
+        "id": "furto_mediante_fraude_eletronica",
+        "nome": "Furto Qualificado mediante fraude eletrônica (§ 4º-B)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 96
+      },
+      {
+        "id": "furto_veiculo_outro_estado",
+        "nome": "Furto Qualificado de veículo automotor transportado para outro Estado ou exterior (§ 5º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 96
+      },
+      {
+        "id": "furto_de_semovente",
+        "nome": "Furto Qualificado de semovente domesticável de produção (Abigeato) (§ 6º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      },
+      {
+        "id": "furto_substancias_explosivas",
+        "nome": "Furto Qualificado de substâncias explosivas ou acessórios (§ 7º)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 120
+      },
+      {
+        "id": "furto_equipamentos_servico_publico",
+        "nome": "Furto Qualificado de fios, cabos ou equipamentos de serviços públicos (§ 8º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "furto_coisa_comum",
+    "artigo": "156",
+    "nome": "Furto de coisa comum",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "roubo_simples",
+    "artigo": "157",
+    "nome": "Roubo Simples",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      {
+        "id": "roubo_bens_servicos_essenciais",
+        "nome": "Roubo Qualificado contra bens que comprometam serviços públicos essenciais (§ 1º-A)",
+        "penaMinimaMeses": 72,
+        "penaMaximaMeses": 144
+      },
+      {
+        "id": "roubo_com_lesao_grave",
+        "nome": "Roubo Qualificado com resultado lesão corporal grave (§ 3º, I)",
+        "penaMinimaMeses": 84,
+        "penaMaximaMeses": 216
+      },
+      {
+        "id": "roubo_com_morte_latrocinio",
+        "nome": "Roubo Qualificado com resultado morte (Latrocínio) (§ 3º, II)",
+        "penaMinimaMeses": 240,
+        "penaMaximaMeses": 360
+      }
+    ]
+  },
+  {
+    "id": "extorsao_simples",
+    "artigo": "158",
+    "nome": "Extorsão",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      {
+        "id": "extorsao_com_restricao_liberdade",
+        "nome": "Extorsão qualificada pela restrição da liberdade da vítima (§ 3º)",
+        "penaMinimaMeses": 72,
+        "penaMaximaMeses": 144
+      }
+    ]
+  },
+  {
+    "id": "extorsao_mediante_sequestro",
+    "artigo": "159",
+    "nome": "Extorsão mediante sequestro",
+    "penaMinimaMeses": 96,
+    "penaMaximaMeses": 180,
+    "qualificadoras": [
+      {
+        "id": "sequestro_qualificado_duracao_vitima_bando",
+        "nome": "Qualificado pela duração, idade da vítima ou por ser cometido por bando ou quadrilha (§ 1º)",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 240
+      },
+      {
+        "id": "sequestro_resultado_lesao_grave",
+        "nome": "Qualificado pelo resultado lesão corporal de natureza grave (§ 2º)",
+        "penaMinimaMeses": 192,
+        "penaMaximaMeses": 288
+      },
+      {
+        "id": "sequestro_resultado_morte",
+        "nome": "Qualificado pelo resultado morte (§ 3º)",
+        "penaMinimaMeses": 288,
+        "penaMaximaMeses": 360
+      }
+    ]
+  },
+  {
+    "id": "extorsao_indireta",
+    "artigo": "160",
+    "nome": "Extorsão indireta",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "alteracao_de_limites",
+    "artigo": "161",
+    "nome": "Alteração de limites",
+    "descricao": "Inclui as modalidades de usurpação de águas e esbulho possessório.",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "supressao_alteracao_marca_animais",
+    "artigo": "162",
+    "nome": "Supressão ou alteração de marca em animais",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "dano_simples",
+    "artigo": "163",
+    "nome": "Dano Simples",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6,
+    "qualificadoras": [
+      {
+        "id": "dano_qualificado",
+        "nome": "Dano Qualificado (Parágrafo único)",
+        "descricao": "Cometido com violência à pessoa ou grave ameaça; com emprego de substância inflamável ou explosiva; contra o patrimônio da União, Estado, etc.; por motivo egoístico ou com prejuízo considerável para a vítima.",
+        "penaMinimaMeses": 6,
+        "penaMaximaMeses": 36
+      }
+    ]
+  },
+  {
+    "id": "introducao_abandono_animais",
+    "artigo": "164",
+    "nome": "Introdução ou abandono de animais em propriedade alheia",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "dano_coisa_valor_artistico",
+    "artigo": "165",
+    "nome": "Dano em coisa de valor artístico, arqueológico ou histórico",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "alteracao_local_protegido",
+    "artigo": "166",
+    "nome": "Alteração de local especialmente protegido",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "apropriacao_indebita",
+    "artigo": "168",
+    "nome": "Apropriação indébita",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "apropriacao_indebita_previdenciaria",
+    "artigo": "168-A",
+    "nome": "Apropriação indébita previdenciária",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "apropriacao_coisa_havida_erro",
+    "artigo": "169",
+    "nome": "Apropriação de coisa havida por erro, caso fortuito ou força da natureza",
+    "descricao": "Inclui as modalidades de apropriação de tesouro e apropriação de coisa achada.",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "estelionato_simples",
+    "artigo": "171",
+    "nome": "Estelionato",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "estelionato_fraude_eletronica",
+        "nome": "Fraude eletrônica (§ 2º-A)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "fraude_ativos_virtuais",
+    "artigo": "171-A",
+    "nome": "Fraude com ativos virtuais, valores mobiliários ou ativos financeiros",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "duplicata_simulada",
+    "artigo": "172",
+    "nome": "Duplicata simulada",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "abuso_de_incapazes",
+    "artigo": "173",
+    "nome": "Abuso de incapazes",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "induzimento_especulacao",
+    "artigo": "174",
+    "nome": "Induzimento à especulação",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "fraude_no_comercio",
+    "artigo": "175",
+    "nome": "Fraude no comércio",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "fraude_no_comercio_metais_pedras",
+        "nome": "Fraude com metais ou pedras preciosas (§ 1º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 60
+      }
+    ]
+  },
+  {
+    "id": "outras_fraudes",
+    "artigo": "176",
+    "nome": "Outras fraudes (Tomar refeição, alojar-se em hotel, etc. sem pagar)",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 2
+  },
+  {
+    "id": "fraudes_abuso_sociedade_acoes",
+    "artigo": "177",
+    "nome": "Fraudes e abusos na fundação ou administração de sociedade por ações",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "emissao_irregular_warrant",
+    "artigo": "178",
+    "nome": "Emissão irregular de conhecimento de depósito ou warrant",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "fraude_execucao",
+    "artigo": "179",
+    "nome": "Fraude à execução",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "receptacao_simples",
+    "artigo": "180",
+    "nome": "Receptação Simples",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      {
+        "id": "receptacao_qualificada",
+        "nome": "Receptação Qualificada (no exercício de atividade comercial ou industrial) (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "receptacao_culposa",
+    "artigo": "180",
+    "paragrafo": "3º",
+    "nome": "Receptação Culposa",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "receptacao_de_animal",
+    "artigo": "180-A",
+    "nome": "Receptação de animal (Abigeato)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "violacao_direito_autoral_simples",
+    "artigo": "184",
+    "nome": "Violação de direito autoral (caput)",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12,
+    "qualificadoras": [
+      {
+        "id": "violacao_direito_autoral_lucro_reproducao_distribuicao",
+        "nome": "Violação de direito autoral qualificada com intuito de lucro (reprodução, distribuição, etc.) (§ 1º e § 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 48
+      },
+      {
+        "id": "violacao_direito_autoral_lucro_oferecimento_publico",
+        "nome": "Violação de direito autoral qualificada com intuito de lucro (oferecimento ao público via cabo, fibra, etc.) (§ 3º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "atentado_liberdade_trabalho_exercicio",
+    "artigo": "197, I",
+    "nome": "Atentado contra a liberdade de trabalho (exercer ou não profissão)",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "atentado_liberdade_trabalho_estabelecimento",
+    "artigo": "197, II",
+    "nome": "Atentado contra a liberdade de trabalho (abrir/fechar estabelecimento ou participar de paralisação)",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "atentado_liberdade_contrato_trabalho",
+    "artigo": "198",
+    "nome": "Atentado contra a liberdade de contrato de trabalho e boicotagem violenta",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "atentado_liberdade_associacao",
+    "artigo": "199",
+    "nome": "Atentado contra a liberdade de associação",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "paralisacao_trabalho_com_violencia",
+    "artigo": "200",
+    "nome": "Paralisação de trabalho, seguida de violência ou perturbação da ordem",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "paralisacao_trabalho_interesse_coletivo",
+    "artigo": "201",
+    "nome": "Paralisação de trabalho de interesse coletivo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "invasao_estabelecimento_sabotagem",
+    "artigo": "202",
+    "nome": "Invasão de estabelecimento industrial, comercial ou agrícola (Sabotagem)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "frustracao_direito_trabalhista",
+    "artigo": "203",
+    "nome": "Frustração de direito assegurado por lei trabalhista",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "frustracao_lei_nacionalizacao_trabalho",
+    "artigo": "204",
+    "nome": "Frustração de lei sobre a nacionalização do trabalho",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "exercicio_atividade_com_infracao",
+    "artigo": "205",
+    "nome": "Exercício de atividade com infração de decisão administrativa",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "aliciamento_para_emigracao",
+    "artigo": "206",
+    "nome": "Aliciamento para o fim de emigração",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "aliciamento_trabalhadores_intermunicipal",
+    "artigo": "207",
+    "nome": "Aliciamento de trabalhadores de um local para outro do território nacional",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "ultraje_a_culto",
+    "artigo": "208",
+    "nome": "Ultraje a culto e impedimento ou perturbação de ato a ele relativo",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "impedimento_cerimonia_funeraria",
+    "artigo": "209",
+    "nome": "Impedimento ou perturbação de cerimônia funerária",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "violacao_de_sepultura",
+    "artigo": "210",
+    "nome": "Violação de sepultura",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "destruicao_subtracao_ocultacao_cadaver",
+    "artigo": "211",
+    "nome": "Destruição, subtração ou ocultação de cadáver",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "vilipendio_a_cadaver",
+    "artigo": "212",
+    "nome": "Vilipêndio a cadáver",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "estupro",
+    "artigo": "213",
+    "nome": "Estupro",
+    "penaMinimaMeses": 72,
+    "penaMaximaMeses": 120,
+    "qualificadoras": [
+      {
+        "id": "estupro_com_lesao_grave_ou_vitima_menor",
+        "nome": "Qualificado por lesão corporal grave ou se a vítima é menor de 18 e maior de 14 anos (§ 1º)",
+        "penaMinimaMeses": 96,
+        "penaMaximaMeses": 144
+      },
+      {
+        "id": "estupro_com_resultado_morte",
+        "nome": "Qualificado pelo resultado morte (§ 2º)",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      }
+    ]
+  },
+  {
+    "id": "violacao_sexual_mediante_fraude",
+    "artigo": "215",
+    "nome": "Violação sexual mediante fraude",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "importunacao_sexual",
+    "artigo": "215-A",
+    "nome": "Importunação sexual",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "assedio_sexual",
+    "artigo": "216-A",
+    "nome": "Assédio sexual",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "registro_nao_autorizado_intimidade_sexual",
+    "artigo": "216-B",
+    "nome": "Registro não autorizado da intimidade sexual",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "estupro_de_vulneravel",
+    "artigo": "217-A",
+    "nome": "Estupro de vulnerável",
+    "penaMinimaMeses": 96,
+    "penaMaximaMeses": 180,
+    "qualificadoras": [
+      {
+        "id": "estupro_vulneravel_com_lesao_grave",
+        "nome": "Qualificado por resultado lesão corporal de natureza grave (§ 3º)",
+        "penaMinimaMeses": 120,
+        "penaMaximaMeses": 240
+      },
+      {
+        "id": "estupro_vulneravel_com_morte",
+        "nome": "Qualificado pelo resultado morte (§ 4º)",
+        "penaMinimaMeses": 144,
+        "penaMaximaMeses": 360
+      }
+    ]
+  },
+  {
+    "id": "corrupcao_de_menores_218",
+    "artigo": "218",
+    "nome": "Corrupção de menores (Induzir menor de 14 a satisfazer lascívia de outrem)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "satisfacao_lascivia_presenca_menor",
+    "artigo": "218-A",
+    "nome": "Satisfação de lascívia mediante presença de criança ou adolescente",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "favorecimento_prostituicao_vulneravel",
+    "artigo": "218-B",
+    "nome": "Favorecimento da prostituição ou de outra forma de exploração sexual de vulnerável",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "divulgacao_cena_estupro_sexo",
+    "artigo": "218-C",
+    "nome": "Divulgação de cena de estupro, de sexo ou de pornografia",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "mediacao_para_servir_lascivia",
+    "artigo": "227",
+    "nome": "Mediação para servir a lascívia de outrem",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      {
+        "id": "mediacao_lascivia_qualificada_vitima_ou_agente",
+        "nome": "Qualificada pela idade da vítima ou pela condição do agente (ascendente, etc.) (§ 1º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      },
+      {
+        "id": "mediacao_lascivia_qualificada_violencia_fraude",
+        "nome": "Qualificada pelo emprego de violência, grave ameaça ou fraude (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "favorecimento_prostituicao",
+    "artigo": "228",
+    "nome": "Favorecimento da prostituição ou outra forma de exploração sexual",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "favorecimento_prostituicao_qualificada_agente",
+        "nome": "Qualificada pela condição do agente (ascendente, etc.) (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 96
+      },
+      {
+        "id": "favorecimento_prostituicao_qualificada_violencia_fraude",
+        "nome": "Qualificada pelo emprego de violência, grave ameaça ou fraude (§ 2º)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 120
+      }
+    ]
+  },
+  {
+    "id": "casa_de_prostituicao",
+    "artigo": "229",
+    "nome": "Casa de prostituição",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "rufianismo",
+    "artigo": "230",
+    "nome": "Rufianismo",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      {
+        "id": "rufianismo_qualificado_vitima_ou_agente",
+        "nome": "Qualificado pela idade da vítima ou pela condição do agente (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 72
+      },
+      {
+        "id": "rufianismo_qualificado_violencia_fraude",
+        "nome": "Qualificado por violência, grave ameaça, fraude ou outro meio que impeça a livre manifestação da vontade da vítima (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "promocao_migracao_ilegal",
+    "artigo": "232-A",
+    "nome": "Promoção de migração ilegal",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "ato_obsceno",
+    "artigo": "233",
+    "nome": "Ato obsceno",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "escrito_ou_objeto_obsceno",
+    "artigo": "234",
+    "nome": "Escrito ou objeto obsceno",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "bigamia",
+    "artigo": "235",
+    "nome": "Bigamia",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72,
+    "qualificadoras": [
+      {
+        "id": "bigamia_participacao_nao_casado",
+        "nome": "Participação de pessoa não casada em casamento com pessoa casada (§ 1º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 36
+      }
+    ]
+  },
+  {
+    "id": "induzimento_erro_essencial_casamento",
+    "artigo": "236",
+    "nome": "Induzimento a erro essencial e ocultação de impedimento para casamento",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "casamento_conhecendo_impedimento",
+    "artigo": "237",
+    "nome": "Contrair casamento conhecendo a existência de impedimento",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "simulacao_autoridade_casamento",
+    "artigo": "238",
+    "nome": "Simulação de autoridade para celebração de casamento",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "simulacao_de_casamento",
+    "artigo": "239",
+    "nome": "Simulação de casamento",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "registro_nascimento_inexistente",
+    "artigo": "241",
+    "nome": "Registro de nascimento inexistente",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "parto_suposto_sonegacao_estado_civil",
+    "artigo": "242",
+    "nome": "Parto suposto, supressão ou alteração de direito inerente ao estado civil de recém-nascido",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72,
+    "qualificadoras": [
+      {
+        "id": "parto_suposto_privilegiado",
+        "nome": "Forma privilegiada por motivo de reconhecida nobreza (Parágrafo único)",
+        "descricao": "Neste caso, o juiz pode inclusive deixar de aplicar a pena.",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 24
+      }
+    ]
+  },
+  {
+    "id": "sonegacao_estado_filiacao",
+    "artigo": "243",
+    "nome": "Sonegação de estado de filiação",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "abandono_material",
+    "artigo": "244",
+    "nome": "Abandono material",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "entrega_filho_menor_pessoa_inidonea",
+    "artigo": "245",
+    "nome": "Entrega de filho menor a pessoa inidônea",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "entrega_filho_qualificada_lucro_exterior",
+        "nome": "Qualificada se o crime é praticado para obter lucro, ou se o menor é enviado para o exterior (§ 1º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "abandono_intelectual",
+    "artigo": "246",
+    "nome": "Abandono intelectual",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 1
+  },
+  {
+    "id": "permitir_menor_local_perigoso",
+    "artigo": "247",
+    "nome": "Permitir que menor de 18 anos frequente lugar perigoso ou conviva com pessoa viciosa",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3
+  },
+  {
+    "id": "induzimento_fuga_sonegacao_incapazes",
+    "artigo": "248",
+    "nome": "Induzimento a fuga, entrega arbitrária ou sonegação de incapazes",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "subtracao_de_incapazes",
+    "artigo": "249",
+    "nome": "Subtração de incapazes",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "incendio",
+    "artigo": "250",
+    "nome": "Incêndio",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "incendio_culposo",
+    "artigo": "250, § 2º",
+    "nome": "Incêndio Culposo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "explosao_dinamite",
+    "artigo": "251",
+    "nome": "Explosão (com dinamite ou análogo)",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "explosao_outras_substancias",
+    "artigo": "251, § 1º",
+    "nome": "Explosão (sem dinamite ou análogo)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "explosao_culposa_dinamite",
+    "artigo": "251, § 3º",
+    "nome": "Explosão Culposa (com dinamite ou análogo)",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "explosao_culposa_outras_substancias",
+    "artigo": "251, § 3º",
+    "nome": "Explosão Culposa (sem dinamite ou análogo)",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "uso_gas_toxico",
+    "artigo": "252",
+    "nome": "Uso de gás tóxico ou asfixiante",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "uso_gas_toxico_culposo",
+    "artigo": "252, Parágrafo único",
+    "nome": "Uso de gás tóxico ou asfixiante Culposo",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "posse_transporte_explosivos",
+    "artigo": "253",
+    "nome": "Fabrico, fornecimento, aquisição, posse ou transporte de explosivos ou gás",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "inundacao_dolosa",
+    "artigo": "254",
+    "nome": "Inundação Dolosa",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "inundacao_culposa",
+    "artigo": "254",
+    "nome": "Inundação Culposa",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "perigo_de_inundacao",
+    "artigo": "255",
+    "nome": "Perigo de inundação",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "desabamento_doloso",
+    "artigo": "256",
+    "nome": "Desabamento ou desmoronamento Doloso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "desabamento_culposo",
+    "artigo": "256, Parágrafo único",
+    "nome": "Desabamento ou desmoronamento Culposo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "subtracao_material_salvamento",
+    "artigo": "257",
+    "nome": "Subtração, ocultação ou inutilização de material de salvamento",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "difusao_doenca_ou_praga",
+    "artigo": "259",
+    "nome": "Difusão de doença ou praga",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "difusao_doenca_ou_praga_culposa",
+    "artigo": "259, Parágrafo único",
+    "nome": "Difusão de doença ou praga Culposa",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "perigo_desastre_ferroviario",
+    "artigo": "260",
+    "nome": "Perigo de desastre ferroviário",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "desastre_ferroviario_doloso",
+        "nome": "Qualificado se resulta desastre (§ 1º)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 144
+      }
+    ]
+  },
+  {
+    "id": "desastre_ferroviario_culposo",
+    "artigo": "260, § 2º",
+    "nome": "Desastre ferroviário Culposo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "atentado_seguranca_transporte_maritimo_fluvial_aereo",
+    "artigo": "261",
+    "nome": "Atentado contra a segurança de transporte marítimo, fluvial ou aéreo",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60,
+    "qualificadoras": [
+      {
+        "id": "sinistro_transporte_maritimo_fluvial_aereo_doloso",
+        "nome": "Qualificado se resulta sinistro (naufrágio, queda de aeronave, etc.) (§ 1º)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 144
+      }
+    ]
+  },
+  {
+    "id": "sinistro_transporte_maritimo_fluvial_aereo_culposo",
+    "artigo": "261, § 3º",
+    "nome": "Sinistro em transporte marítimo, fluvial ou aéreo Culposo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "atentado_seguranca_outro_transporte",
+    "artigo": "262",
+    "nome": "Atentado contra a segurança de outro meio de transporte",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "desastre_outro_transporte_doloso",
+        "nome": "Qualificado se resulta desastre (§ 1º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      }
+    ]
+  },
+  {
+    "id": "desastre_outro_transporte_culposo",
+    "artigo": "262, § 2º",
+    "nome": "Desastre com outro meio de transporte Culposo",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "arremesso_de_projetil",
+    "artigo": "264",
+    "nome": "Arremesso de projétil",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "atentado_seguranca_servico_utilidade_publica",
+    "artigo": "265",
+    "nome": "Atentado contra a segurança de serviço de utilidade pública",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "interrupcao_servico_telegrafico_telefonico",
+    "artigo": "266",
+    "nome": "Interrupção ou perturbação de serviço telegráfico, telefônico, informático, etc.",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "epidemia_dolosa",
+    "artigo": "267",
+    "nome": "Causar epidemia (doloso)",
+    "penaMinimaMeses": 120,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "epidemia_culposa",
+    "artigo": "267, § 2º",
+    "nome": "Causar epidemia (culposo)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "epidemia_culposa_com_morte",
+        "nome": "Qualificada pelo resultado morte",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "infracao_medida_sanitaria_preventiva",
+    "artigo": "268",
+    "nome": "Infração de medida sanitária preventiva",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "omissao_notificacao_doenca",
+    "artigo": "269",
+    "nome": "Omissão de notificação de doença",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "envenenamento_agua_alimento_doloso",
+    "artigo": "270",
+    "nome": "Envenenamento de água potável ou de substância alimentícia ou medicinal (doloso)",
+    "penaMinimaMeses": 120,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "envenenamento_agua_alimento_culposo",
+    "artigo": "270, § 2º",
+    "nome": "Envenenamento de água potável ou de substância alimentícia ou medicinal (culposo)",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "corrupcao_poluicao_agua_dolosa",
+    "artigo": "271",
+    "nome": "Corrupção ou poluição de água potável (doloso)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "corrupcao_poluicao_agua_culposa",
+    "artigo": "271, Parágrafo único",
+    "nome": "Corrupção ou poluição de água potável (culposo)",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "falsificacao_produto_alimenticio_dolosa",
+    "artigo": "272",
+    "nome": "Falsificação, corrupção, adulteração ou alteração de produtos alimentícios (doloso)",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "falsificacao_produto_alimenticio_culposa",
+    "artigo": "272, § 2º",
+    "nome": "Falsificação, corrupção, adulteração ou alteração de produtos alimentícios (culposo)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "falsificacao_produto_terapeutico_dolosa",
+    "artigo": "273",
+    "nome": "Falsificação, corrupção, adulteração ou alteração de produto destinado a fins terapêuticos ou medicinais (doloso)",
+    "penaMinimaMeses": 120,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "falsificacao_produto_terapeutico_culposa",
+    "artigo": "273, § 2º",
+    "nome": "Falsificação, corrupção, adulteração ou alteração de produto destinado a fins terapêuticos ou medicinais (culposo)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "emprego_processo_proibido_substancia_nao_permitida",
+    "artigo": "274",
+    "nome": "Emprego de processo proibido ou de substância não permitida",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "involucro_recipiente_falsa_indicacao",
+    "artigo": "275",
+    "nome": "Invólucro ou recipiente com falsa indicação",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "venda_produto_condicoes_274_275",
+    "artigo": "276",
+    "nome": "Venda de produto em condições dos arts. 274 e 275",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "venda_substancia_destinada_falsificacao",
+    "artigo": "277",
+    "nome": "Venda de substância destinada à falsificação de produtos",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "venda_substancia_nociva_saude_dolosa",
+    "artigo": "278",
+    "nome": "Venda de coisa ou substância nociva à saúde (doloso)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "venda_substancia_nociva_saude_culposa",
+    "artigo": "278, Parágrafo único",
+    "nome": "Venda de coisa ou substância nociva à saúde (culposo)",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "medicamento_desacordo_receita_doloso",
+    "artigo": "280",
+    "nome": "Fornecer substância medicinal em desacordo com receita médica (doloso)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "medicamento_desacordo_receita_culposo",
+    "artigo": "280, Parágrafo único",
+    "nome": "Fornecer substância medicinal em desacordo com receita médica (culposo)",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "exercicio_ilegal_medicina_arte_dentaria_farmaceutica",
+    "artigo": "282",
+    "nome": "Exercício ilegal da medicina, arte dentária ou farmacêutica",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "charlatanismo",
+    "artigo": "283",
+    "nome": "Charlatanismo",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "curandeirismo",
+    "artigo": "284",
+    "nome": "Curandeirismo",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "incitacao_ao_crime",
+    "artigo": "286",
+    "nome": "Incitação ao crime",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "apologia_de_crime",
+    "artigo": "287",
+    "nome": "Apologia de crime ou criminoso",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "associacao_criminosa",
+    "artigo": "288",
+    "nome": "Associação Criminosa",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "constituicao_milicia_privada",
+    "artigo": "288-A",
+    "nome": "Constituição de milícia privada",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "moeda_falsa",
+    "artigo": "289",
+    "nome": "Moeda Falsa",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 144,
+    "qualificadoras": [
+      {
+        "id": "moeda_falsa_qualificada_funcionario_publico",
+        "nome": "Qualificada se cometida por funcionário público de banco de emissão (§ 3º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 180
+      }
+    ]
+  },
+  {
+    "id": "moeda_falsa_privilegiada",
+    "artigo": "289, § 2º",
+    "nome": "Moeda Falsa (Forma Privilegiada - restituição à circulação após recebimento de boa-fé)",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "crimes_assimilados_moeda_falsa",
+    "artigo": "290",
+    "nome": "Crimes assimilados ao de moeda falsa (formar cédula com fragmentos, etc.)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 96,
+    "qualificadoras": [
+      {
+        "id": "assimilados_moeda_falsa_qualificado_funcionario",
+        "nome": "Qualificado se cometido por funcionário da repartição (Parágrafo único)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 144
+      }
+    ]
+  },
+  {
+    "id": "petrechos_falsificacao_moeda",
+    "artigo": "291",
+    "nome": "Petrechos para falsificação de moeda",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "emissao_titulo_portador_ilegal",
+    "artigo": "292",
+    "nome": "Emissão de título ao portador sem permissão legal",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "uso_titulo_portador_ilegal",
+    "artigo": "292, Parágrafo único",
+    "nome": "Uso de título ao portador emitido ilegalmente",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 3
+  },
+  {
+    "id": "falsificacao_papeis_publicos",
+    "artigo": "293",
+    "nome": "Falsificação de papéis públicos",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 96,
+    "qualificadoras": [
+      {
+        "id": "falsificacao_papeis_publicos_supressao_carimbo",
+        "nome": "Supressão de carimbo ou sinal de inutilização (§ 2º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "uso_papel_publico_falso_apos_boa_fe",
+    "artigo": "293, § 4º",
+    "nome": "Uso de papel público falso após conhecimento da falsidade (recebido de boa-fé)",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "petrechos_falsificacao_papeis_publicos",
+    "artigo": "294",
+    "nome": "Petrechos de falsificação (Papéis Públicos)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "falsificacao_selo_sinal_publico",
+    "artigo": "296",
+    "nome": "Falsificação do selo ou sinal público",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "falsificacao_documento_publico",
+    "artigo": "297",
+    "nome": "Falsificação de documento público",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "falsificacao_documento_particular",
+    "artigo": "298",
+    "nome": "Falsificação de documento particular (inclui cartão de crédito ou débito)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "falsidade_ideologica_doc_publico",
+    "artigo": "299",
+    "nome": "Falsidade ideológica (documento público)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "falsidade_ideologica_doc_particular",
+    "artigo": "299",
+    "nome": "Falsidade ideológica (documento particular)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "falso_reconhecimento_firma_doc_publico",
+    "artigo": "300",
+    "nome": "Falso reconhecimento de firma ou letra (documento público)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "falso_reconhecimento_firma_doc_particular",
+    "artigo": "300",
+    "nome": "Falso reconhecimento de firma ou letra (documento particular)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "certidao_atestado_ideologicamente_falso",
+    "artigo": "301",
+    "nome": "Atestado ou certidão ideologicamente falso",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "falsidade_material_atestado_certidao",
+    "artigo": "301, § 1º",
+    "nome": "Falsidade material de atestado ou certidão",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "falsidade_atestado_medico",
+    "artigo": "302",
+    "nome": "Falsidade de atestado médico",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "reproducao_adulteracao_selo_filatelico",
+    "artigo": "303",
+    "nome": "Reprodução ou adulteração de selo ou peça filatélica",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "uso_documento_falso",
+    "artigo": "304",
+    "nome": "Uso de documento falso",
+    "descricao": "A pena é a cominada à falsificação ou à alteração do documento utilizado (arts. 297 a 302). A calculadora deve buscar a pena do crime correspondente.",
+    "penaMinimaMeses": null,
+    "penaMaximaMeses": null
+  },
+  {
+    "id": "supressao_documento_publico",
+    "artigo": "305",
+    "nome": "Supressão de documento (público)",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "supressao_documento_particular",
+    "artigo": "305",
+    "nome": "Supressão de documento (particular)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "falsificacao_sinal_contraste_metal",
+    "artigo": "306",
+    "nome": "Falsificação do sinal empregado no contraste de metal precioso ou na fiscalização alfandegária",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "falsa_identidade",
+    "artigo": "307",
+    "nome": "Falsa identidade",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "uso_documento_identidade_alheio",
+    "artigo": "308",
+    "nome": "Uso de documento de identidade alheia",
+    "penaMinimaMeses": 4,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "fraude_lei_sobre_estrangeiro_uso_nome_falso",
+    "artigo": "309",
+    "nome": "Fraude de lei sobre estrangeiro (uso de nome falso)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "fraude_lei_sobre_estrangeiro_falsa_qualidade",
+    "artigo": "309, Parágrafo único",
+    "nome": "Fraude de lei sobre estrangeiro (atribuir falsa qualidade)",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "adulteracao_sinal_identificador_veiculo",
+    "artigo": "311",
+    "nome": "Adulteração de sinal identificador de veículo automotor",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 72,
+    "qualificadoras": [
+      {
+        "id": "adulteracao_sinal_veiculo_comercial_industrial",
+        "nome": "Qualificada se praticada no exercício de atividade comercial ou industrial (§ 3º)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 96
+      }
+    ]
+  },
+  {
+    "id": "fraudes_certames_interesse_publico",
+    "artigo": "311-A",
+    "nome": "Fraudes em certames de interesse público",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48,
+    "qualificadoras": [
+      {
+        "id": "fraude_certame_com_dano_adm_publica",
+        "nome": "Qualificada se da ação ou omissão resulta dano à administração pública (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 72
+      }
+    ]
+  },
+  {
+    "id": "peculato",
+    "artigo": "312",
+    "nome": "Peculato",
+    "descricao": "Inclui Peculato-apropriação, Peculato-desvio e Peculato-furto.",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "peculato_culposo",
+    "artigo": "312, § 2º",
+    "nome": "Peculato culposo",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "peculato_mediante_erro_de_outrem",
+    "artigo": "313",
+    "nome": "Peculato mediante erro de outrem",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "insercao_dados_falsos_sistema",
+    "artigo": "313-A",
+    "nome": "Inserção de dados falsos em sistema de informações",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "modificacao_nao_autorizada_sistema",
+    "artigo": "313-B",
+    "nome": "Modificação ou alteração não autorizada de sistema de informações",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "extravio_sonegacao_documento",
+    "artigo": "314",
+    "nome": "Extravio, sonegação ou inutilização de livro ou documento",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "emprego_irregular_verbas_publicas",
+    "artigo": "315",
+    "nome": "Emprego irregular de verbas ou rendas públicas",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3
+  },
+  {
+    "id": "concussao",
+    "artigo": "316",
+    "nome": "Concussão",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 144,
+    "qualificadoras": [
+      {
+        "id": "excesso_de_exacao",
+        "nome": "Excesso de exação (§ 1º)",
+        "penaMinimaMeses": 36,
+        "penaMaximaMeses": 96
+      },
+      {
+        "id": "excesso_de_exacao_com_desvio",
+        "nome": "Excesso de exação com desvio em proveito próprio ou de outrem (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 144
+      }
+    ]
+  },
+  {
+    "id": "corrupcao_passiva",
+    "artigo": "317",
+    "nome": "Corrupção passiva",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "corrupcao_passiva_privilegiada",
+    "artigo": "317, § 2º",
+    "nome": "Corrupção passiva privilegiada (cedendo a pedido ou influência de outrem)",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "facilitacao_contrabando_descaminho",
+    "artigo": "318",
+    "nome": "Facilitação de contrabando ou descaminho",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "prevaricacao",
+    "artigo": "319",
+    "nome": "Prevaricação",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "prevaricacao_impropria_prisional",
+    "artigo": "319-A",
+    "nome": "Deixar de vedar ao preso o acesso a aparelho telefônico, de rádio ou similar",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "condescendencia_criminosa",
+    "artigo": "320",
+    "nome": "Condescendência criminosa",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 1
+  },
+  {
+    "id": "advocacia_administrativa",
+    "artigo": "321",
+    "nome": "Advocacia administrativa",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 3,
+    "qualificadoras": [
+      {
+        "id": "advocacia_administrativa_interesse_ilegitimo",
+        "nome": "Qualificada se o interesse é ilegítimo (Parágrafo único)",
+        "penaMinimaMeses": 3,
+        "penaMaximaMeses": 12
+      }
+    ]
+  },
+  {
+    "id": "violencia_arbitraria",
+    "artigo": "322",
+    "nome": "Violência arbitrária",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "abandono_de_funcao",
+    "artigo": "323",
+    "nome": "Abandono de função",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 1,
+    "qualificadoras": [
+      {
+        "id": "abandono_funcao_com_prejuizo_publico",
+        "nome": "Qualificado se do fato resulta prejuízo público (§ 1º)",
+        "penaMinimaMeses": 3,
+        "penaMaximaMeses": 12
+      },
+      {
+        "id": "abandono_funcao_faixa_fronteira",
+        "nome": "Qualificado se o fato ocorre em lugar compreendido na faixa de fronteira (§ 2º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 36
+      }
+    ]
+  },
+  {
+    "id": "exercicio_funcional_ilegal",
+    "artigo": "324",
+    "nome": "Exercício funcional ilegalmente antecipado ou prolongado",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 1
+  },
+  {
+    "id": "violacao_sigilo_funcional",
+    "artigo": "325",
+    "nome": "Violação de sigilo funcional",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "violacao_sigilo_funcional_com_dano",
+        "nome": "Qualificada se da ação ou omissão resulta dano à Administração Pública ou a outrem (§ 2º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 72
+      }
+    ]
+  },
+  {
+    "id": "violacao_sigilo_proposta_concorrencia",
+    "artigo": "326",
+    "nome": "Violação do sigilo de proposta de concorrência",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "usurpacao_funcao_publica",
+    "artigo": "328",
+    "nome": "Usurpação de função pública",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "usurpacao_funcao_publica_com_vantagem",
+        "nome": "Qualificada se o agente aufere vantagem (Parágrafo único)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 60
+      }
+    ]
+  },
+  {
+    "id": "resistencia",
+    "artigo": "329",
+    "nome": "Resistência",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "resistencia_qualificada",
+        "nome": "Qualificada se o ato, em razão da resistência, não se executa (§ 1º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 36
+      }
+    ]
+  },
+  {
+    "id": "desobediencia",
+    "artigo": "330",
+    "nome": "Desobediência",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "desacato",
+    "artigo": "331",
+    "nome": "Desacato",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "trafico_de_influencia",
+    "artigo": "332",
+    "nome": "Tráfico de Influência",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "corrupcao_ativa",
+    "artigo": "333",
+    "nome": "Corrupção ativa",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 144
+  },
+  {
+    "id": "descaminho",
+    "artigo": "334",
+    "nome": "Descaminho",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "contrabando",
+    "artigo": "334-A",
+    "nome": "Contrabando",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "impedimento_fraude_concorrencia",
+    "artigo": "335",
+    "nome": "Impedimento, perturbação ou fraude de concorrência",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "inutilizacao_edital_sinal",
+    "artigo": "336",
+    "nome": "Inutilização de edital ou de sinal",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "subtracao_inutilizacao_livro_documento",
+    "artigo": "337",
+    "nome": "Subtração ou inutilização de livro ou documento",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "sonegacao_contribuicao_previdenciaria",
+    "artigo": "337-A",
+    "nome": "Sonegação de contribuição previdenciária",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "corrupcao_ativa_transacao_internacional",
+    "artigo": "337-B",
+    "nome": "Corrupção ativa em transação comercial internacional",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "trafico_influencia_transacao_internacional",
+    "artigo": "337-C",
+    "nome": "Tráfico de influência em transação comercial internacional",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "contratacao_direta_ilegal",
+    "artigo": "337-E",
+    "nome": "Contratação direta ilegal",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "frustracao_carater_competitivo_licitacao",
+    "artigo": "337-F",
+    "nome": "Frustração do caráter competitivo de licitação",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "patrocinio_contratacao_indevida",
+    "artigo": "337-G",
+    "nome": "Patrocínio de contratação indevida",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "modificacao_pagamento_irregular_contrato_adm",
+    "artigo": "337-H",
+    "nome": "Modificação ou pagamento irregular em contrato administrativo",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "perturbacao_processo_licitatorio",
+    "artigo": "337-I",
+    "nome": "Perturbação de processo licitatório",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "violacao_sigilo_licitacao",
+    "artigo": "337-J",
+    "nome": "Violação de sigilo em licitação",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "afastamento_licitante",
+    "artigo": "337-K",
+    "nome": "Afastamento de licitante",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "fraude_em_licitacao_ou_contrato",
+    "artigo": "337-L",
+    "nome": "Fraude em licitação ou contrato",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "contratacao_inidonea_admitir",
+    "artigo": "337-M",
+    "nome": "Admitir à licitação empresa ou profissional declarado inidôneo",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "contratacao_inidonea_celebrar",
+    "artigo": "337-M, § 1º",
+    "nome": "Celebrar contrato com empresa ou profissional declarado inidôneo",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "impedimento_indevido_cadastro_licitacao",
+    "artigo": "337-N",
+    "nome": "Impedimento indevido de inscrição em registros cadastrais",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "omissao_grave_dados_projetista_licitacao",
+    "artigo": "337-O",
+    "nome": "Omissão grave de dado ou de informação por projetista",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "reingresso_estrangeiro_expulso",
+    "artigo": "338",
+    "nome": "Reingresso de estrangeiro expulso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "denunciacao_caluniosa",
+    "artigo": "339",
+    "nome": "Denunciação caluniosa",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "comunicacao_falsa_crime",
+    "artigo": "340",
+    "nome": "Comunicação falsa de crime ou de contravenção",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "autoacusacao_falsa",
+    "artigo": "341",
+    "nome": "Auto-acusação falsa",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "falso_testemunho_ou_falsa_pericia",
+    "artigo": "342",
+    "nome": "Falso testemunho ou falsa perícia",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "coacao_no_curso_do_processo",
+    "artigo": "344",
+    "nome": "Coação no curso do processo",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "exercicio_arbitrario_proprias_razoes",
+    "artigo": "345",
+    "nome": "Exercício arbitrário das próprias razões",
+    "penaMinimaMeses": 0.5,
+    "penaMaximaMeses": 1
+  },
+  {
+    "id": "fraude_processual",
+    "artigo": "347",
+    "nome": "Fraude processual",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "favorecimento_pessoal",
+    "artigo": "348",
+    "nome": "Favorecimento pessoal",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "favorecimento_real",
+    "artigo": "349",
+    "nome": "Favorecimento real",
+    "penaMinimaMeses": 1,
+    "penaMaximaMeses": 6
+  },
+  {
+    "id": "entrada_aparelho_telefonico_prisao",
+    "artigo": "349-A",
+    "nome": "Ingressar, promover, intermediar, auxiliar ou facilitar a entrada de aparelho telefônico em estabelecimento prisional",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "fuga_pessoa_presa",
+    "artigo": "351",
+    "nome": "Fuga de pessoa presa ou submetida a medida de segurança",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24,
+    "qualificadoras": [
+      {
+        "id": "fuga_presa_qualificada_meios",
+        "nome": "Qualificada se praticada à mão armada, por mais de uma pessoa, ou mediante arrombamento (§ 1º)",
+        "penaMinimaMeses": 24,
+        "penaMaximaMeses": 72
+      },
+      {
+        "id": "fuga_presa_qualificada_agente_custodia",
+        "nome": "Qualificada se o crime é praticado por pessoa sob cuja custódia ou guarda está o preso (§ 3º)",
+        "penaMinimaMeses": 12,
+        "penaMaximaMeses": 48
+      }
+    ]
+  },
+  {
+    "id": "evasao_mediante_violencia_contra_pessoa",
+    "artigo": "352",
+    "nome": "Evasão mediante violência contra a pessoa",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "arrebatamento_de_preso",
+    "artigo": "353",
+    "nome": "Arrebatamento de preso",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 48
+  },
+  {
+    "id": "motim_de_presos",
+    "artigo": "354",
+    "nome": "Motim de presos",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "patrocinio_infiel",
+    "artigo": "355",
+    "nome": "Patrocínio infiel",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "exploracao_de_prestigio",
+    "artigo": "357",
+    "nome": "Exploração de prestígio",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 60
+  },
+  {
+    "id": "violencia_fraude_arrematacao_judicial",
+    "artigo": "358",
+    "nome": "Violência ou fraude em arrematação judicial",
+    "penaMinimaMeses": 2,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "desobediencia_decisao_judicial",
+    "artigo": "359",
+    "nome": "Desobediência a decisão judicial sobre perda ou suspensão de direito",
+    "penaMinimaMeses": 3,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "abolicao_violenta_estado_democratico_direito",
+    "artigo": "359-L",
+    "nome": "Abolição violenta do Estado Democrático de Direito",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 96
+  },
+  {
+    "id": "golpe_de_estado",
+    "artigo": "359-M",
+    "nome": "Golpe de Estado",
+    "penaMinimaMeses": 48,
+    "penaMaximaMeses": 144
   }
 ]
