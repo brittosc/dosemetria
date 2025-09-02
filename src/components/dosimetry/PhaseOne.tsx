@@ -32,12 +32,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown, HelpCircle } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import { Checkbox } from "../ui/checkbox";
 import {
   Command,
@@ -46,7 +52,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command";
+} from "@/components/ui/command";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import { useState } from "react";
 import { Crime } from "@/types/crime";
 export interface PhaseOneFormValues {
@@ -88,7 +100,10 @@ export function PhaseOne({
   const form = useForm<PhaseOneFormValues>({ defaultValues: initialValues });
   const isMobile = useIsMobile();
   const selectedQualificadoraId = form.watch("qualificadoraId");
-  const [open, setOpen] = useState(false);
+  const [openCrimeSelector, setOpenCrimeSelector] = useState(false);
+  const [openQualificadoraSelector, setOpenQualificadoraSelector] =
+    useState(false);
+
   const handleCrimeChange = (crimeId: string) => {
     onSelectCrime(crimeId);
     form.setValue("crimeId", crimeId);
@@ -125,6 +140,167 @@ export function PhaseOne({
       (q) => q.id === selectedQualificadoraId
     ) || selectedCrime;
 
+  const renderCrimeSelector = () => {
+    const content = (
+      <Command>
+        <CommandInput
+          placeholder="Buscar crime..."
+          onFocus={(e) => {
+            if (isMobile) {
+              e.target.readOnly = true;
+            }
+          }}
+        />
+        <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
+        <CommandGroup>
+          <CommandList>
+            {crimesData.map((crime) => (
+              <CommandItem
+                value={`${crime.nome} ${crime.artigo}`}
+                key={crime.id}
+                onSelect={() => {
+                  handleCrimeChange(crime.id);
+                  setOpenCrimeSelector(false);
+                }}
+              >
+                <Check
+                  className={cn(
+                    "mr-2 h-4 w-4",
+                    crime.id === selectedCrime?.id ? "opacity-100" : "opacity-0"
+                  )}
+                />
+                {crime.nome} (Art. {crime.artigo})
+              </CommandItem>
+            ))}
+          </CommandList>
+        </CommandGroup>
+      </Command>
+    );
+
+    if (isMobile) {
+      return (
+        <Drawer open={openCrimeSelector} onOpenChange={setOpenCrimeSelector}>
+          <DrawerTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              className={cn(
+                "w-full justify-between",
+                !selectedCrime && "text-muted-foreground"
+              )}
+            >
+              {selectedCrime
+                ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
+                : "Selecione o crime"}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Selecione o Crime</DrawerTitle>
+            </DrawerHeader>
+            <div className="p-4">{content}</div>
+          </DrawerContent>
+        </Drawer>
+      );
+    }
+
+    return (
+      <Popover open={openCrimeSelector} onOpenChange={setOpenCrimeSelector}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            className={cn(
+              "w-full justify-between",
+              !selectedCrime && "text-muted-foreground"
+            )}
+          >
+            {selectedCrime
+              ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
+              : "Selecione o crime"}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+          {content}
+        </PopoverContent>
+      </Popover>
+    );
+  };
+
+  const renderQualificadoraSelector = () => {
+    const content = (
+      <Select
+        value={selectedQualificadoraId || "sem-qualificadora"}
+        onValueChange={(value) => {
+          handleQualificadoraChange(value);
+          if (isMobile) setOpenQualificadoraSelector(false);
+        }}
+      >
+        <SelectContent>
+          <SelectItem value="sem-qualificadora">
+            Nenhuma (Crime Simples)
+          </SelectItem>
+          {selectedCrime?.qualificadoras?.map((q) => (
+            <SelectItem key={q.id} value={q.id}>
+              {q.nome}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    );
+
+    if (isMobile) {
+      return (
+        <Drawer
+          open={openQualificadoraSelector}
+          onOpenChange={setOpenQualificadoraSelector}
+        >
+          <DrawerTrigger asChild>
+            <Button variant="outline" className="w-full justify-between">
+              {selectedQualificadoraId
+                ? selectedCrime?.qualificadoras?.find(
+                    (q) => q.id === selectedQualificadoraId
+                  )?.nome
+                : "Nenhuma (Crime Simples)"}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Selecione a Qualificadora</DrawerTitle>
+            </DrawerHeader>
+            <div className="p-4">{content}</div>
+          </DrawerContent>
+        </Drawer>
+      );
+    }
+
+    return (
+      <Select
+        value={selectedQualificadoraId || "sem-qualificadora"}
+        onValueChange={handleQualificadoraChange}
+      >
+        <FormControl>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione uma qualificadora" />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          <SelectItem value="sem-qualificadora">
+            Nenhuma (Crime Simples)
+          </SelectItem>
+          {selectedCrime?.qualificadoras?.map((q) => (
+            <SelectItem key={q.id} value={q.id}>
+              {q.nome}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    );
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -143,55 +319,7 @@ export function PhaseOne({
           <CardContent className="space-y-6">
             <FormItem className="flex flex-col">
               <FormLabel>Crime</FormLabel>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-full justify-between",
-                        !selectedCrime && "text-muted-foreground"
-                      )}
-                    >
-                      {selectedCrime
-                        ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
-                        : "Selecione o crime"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-                  <Command>
-                    <CommandInput placeholder="Buscar crime..." />
-                    <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
-                    <CommandGroup>
-                      <CommandList>
-                        {crimesData.map((crime) => (
-                          <CommandItem
-                            value={`${crime.nome} ${crime.artigo}`}
-                            key={crime.id}
-                            onSelect={() => {
-                              handleCrimeChange(crime.id);
-                              setOpen(false);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                crime.id === selectedCrime?.id
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {crime.nome} (Art. {crime.artigo})
-                          </CommandItem>
-                        ))}
-                      </CommandList>
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <FormControl>{renderCrimeSelector()}</FormControl>
               <FormMessage />
             </FormItem>
 
@@ -200,32 +328,7 @@ export function PhaseOne({
               selectedCrime.qualificadoras.length > 0 && (
                 <FormItem>
                   <FormLabel>Qualificadora</FormLabel>
-                  <Controller
-                    name="qualificadoraId"
-                    control={form.control}
-                    render={({ field }) => (
-                      <Select
-                        value={field.value || ""}
-                        onValueChange={handleQualificadoraChange}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione uma qualificadora" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="sem-qualificadora">
-                            Nenhuma (Crime Simples)
-                          </SelectItem>
-                          {selectedCrime.qualificadoras?.map((q) => (
-                            <SelectItem key={q.id} value={q.id}>
-                              {q.nome}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
+                  <FormControl>{renderQualificadoraSelector()}</FormControl>
                 </FormItem>
               )}
 
@@ -258,11 +361,22 @@ export function PhaseOne({
                 </FormItem>
 
                 <FormItem>
-                  <FormLabel>Circunstâncias Judiciais (Art. 59)</FormLabel>
-                  <FormDescription>
-                    Selecione as que forem desfavoráveis. Cada uma aumenta a
-                    pena em 1/6.
-                  </FormDescription>
+                  <div className="flex items-center gap-2">
+                    <FormLabel>Circunstâncias Judiciais (Art. 59)</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>
+                            Selecione as que forem desfavoráveis. Cada uma
+                            aumenta a pena em 1/6.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                     {circunstanciasJudiciaisOptions.map((option) => (
                       <Controller

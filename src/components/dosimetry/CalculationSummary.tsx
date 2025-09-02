@@ -16,13 +16,19 @@ import {
 } from "@/lib/calculations";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { toast } from "sonner";
-import { Copy } from "lucide-react";
+import { Copy, HelpCircle } from "lucide-react";
 import causasData from "@/app/data/causas.json";
 import { Label } from "../ui/label";
 import { useEffect, useMemo, useState } from "react";
 import { Slider } from "../ui/slider";
 import { formatCurrency } from "@/lib/utils";
 import { Input } from "../ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const agravantesOptions = [
   { id: "reincidencia", label: "Reincidência (Art. 61, I)" },
@@ -279,6 +285,7 @@ export function CalculationSummary() {
   const selectedQualificadora = selectedCrime?.qualificadoras?.find(
     (q) => q.id === state.phaseOneData.selectedQualificadoraId
   );
+  const activePena = selectedQualificadora || selectedCrime;
 
   return (
     <Card className="w-full">
@@ -296,16 +303,16 @@ export function CalculationSummary() {
             <p>{selectedQualificadora.nome}</p>
           </div>
         )}
-        {selectedCrime && (
+        {activePena && (
           <div>
             <p className="font-semibold">Pena em Abstrato:</p>
             <p>{`Mínima: ${
-              selectedCrime.penaMinimaMeses !== null
-                ? formatPena(selectedCrime.penaMinimaMeses)
+              activePena.penaMinimaMeses !== null
+                ? formatPena(activePena.penaMinimaMeses)
                 : "--"
             } / Máxima: ${
-              selectedCrime.penaMaximaMeses !== null
-                ? formatPena(selectedCrime.penaMaximaMeses)
+              activePena.penaMaximaMeses !== null
+                ? formatPena(activePena.penaMaximaMeses)
                 : "--"
             }`}</p>
           </div>
@@ -435,7 +442,23 @@ export function CalculationSummary() {
         </div>
         {selectedCrime?.temMulta && (
           <div className="space-y-4 pt-4 border-t">
-            <h3 className="text-lg font-semibold">Cálculo da Multa</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold">Cálculo da Multa</h3>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>
+                      A pena de multa consiste no pagamento ao fundo
+                      penitenciário da quantia fixada na sentença e calculada em
+                      dias-multa.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <div className="space-y-2">
               <Label>Dias-multa: {phaseThreeData.diasMulta}</Label>
               <div className="grid grid-cols-3 items-center gap-2">

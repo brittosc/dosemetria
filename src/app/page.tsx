@@ -18,6 +18,10 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("calculo");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [state.currentPhase]);
+
+  useEffect(() => {
     if (isMobile && state.results.penaDefinitiva != null) {
       setActiveTab("resumo");
     }
@@ -45,16 +49,22 @@ export default function Home() {
       description: "Pena provisória calculada. Prossiga para a 3ª fase.",
     });
   };
+  const handleReset = () => {
+    actions.reset();
+    if (isMobile) {
+      setActiveTab("calculo");
+    }
+  };
 
   const renderContent = () => {
-    if (state.results.penaDefinitiva != null) {
+    if (state.results.penaDefinitiva != null && isMobile) {
       return (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <h2 className="text-2xl font-bold">Cálculo Finalizado</h2>
           <p className="text-muted-foreground">
             A pena definitiva foi calculada. Veja o resumo completo.
           </p>
-          <Button onClick={actions.reset} size="lg">
+          <Button onClick={handleReset} size="lg">
             Fazer Novo Cálculo
           </Button>
         </div>
@@ -100,6 +110,7 @@ export default function Home() {
               penaProvisoria={state.results.penaProvisoria}
               causasData={causasData}
               onGoBack={() => actions.goToPhase(2)}
+              setActiveTab={setActiveTab} // Passando a função setActiveTab
             />
           );
         }
@@ -114,7 +125,7 @@ export default function Home() {
       <main className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-xl font-bold">Dosimetria da Pena</h1>
-          <Button variant="outline" size="sm" onClick={actions.reset}>
+          <Button variant="outline" size="sm" onClick={handleReset}>
             Reiniciar
           </Button>
         </div>

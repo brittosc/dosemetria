@@ -37,6 +37,7 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
+import { toast } from "sonner";
 
 type CausaAplicada = {
   id: string;
@@ -53,6 +54,7 @@ type PhaseThreeProps = {
   penaProvisoria: number;
   causasData: Causa[];
   onGoBack: () => void;
+  setActiveTab: (value: string) => void;
 };
 
 export function PhaseThree({
@@ -60,6 +62,7 @@ export function PhaseThree({
   penaProvisoria,
   causasData,
   onGoBack,
+  setActiveTab,
 }: PhaseThreeProps) {
   const { actions } = useDosimetryCalculator();
   const [openAumento, setOpenAumento] = useState(false);
@@ -241,6 +244,14 @@ export function PhaseThree({
     return null;
   };
 
+  const handleFinalizeAndSwitch = () => {
+    actions.calculateAndProceed();
+    toast.success("Cálculo Finalizado!", {
+      description: "A pena definitiva foi calculada com sucesso.",
+    });
+    setActiveTab("resumo");
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -262,13 +273,19 @@ export function PhaseThree({
               if (!causaInfo) return null;
               return (
                 <div key={ca.id} className="p-3 border rounded-md space-y-3">
-                  <div className="flex justify-between items-center">
-                    <Badge variant="destructive">{causaInfo.descricao}</Badge>
+                  <div className="flex justify-between items-start">
+                    <Badge
+                      variant="destructive"
+                      className="whitespace-normal h-auto text-wrap"
+                    >
+                      {causaInfo.descricao}
+                    </Badge>
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={() => handleRemoveCausa(ca.id, "aumento")}
+                      className="-mt-1"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -292,13 +309,19 @@ export function PhaseThree({
               if (!causaInfo) return null;
               return (
                 <div key={ca.id} className="p-3 border rounded-md space-y-3">
-                  <div className="flex justify-between items-center">
-                    <Badge variant="secondary">{causaInfo.descricao}</Badge>
+                  <div className="flex justify-between items-start">
+                    <Badge
+                      variant="secondary"
+                      className="whitespace-normal h-auto text-wrap"
+                    >
+                      {causaInfo.descricao}
+                    </Badge>
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={() => handleRemoveCausa(ca.id, "diminuicao")}
+                      className="-mt-1"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -320,9 +343,18 @@ export function PhaseThree({
         >
           Voltar para 2ª Fase
         </Button>
-        <Button type="button" className="w-full md:w-auto" disabled>
-          Exportar (em breve)
-        </Button>
+        {isMobile ? (
+          <Button
+            onClick={handleFinalizeAndSwitch}
+            className="w-full md:w-auto"
+          >
+            Finalizar Cálculo
+          </Button>
+        ) : (
+          <Button type="button" className="w-full md:w-auto" disabled>
+            Exportar (em breve)
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
