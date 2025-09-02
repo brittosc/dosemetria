@@ -17,38 +17,11 @@ export type CausaAplicada = {
   valorAplicado: number | string;
 };
 
-/**
- * Calcula a pena-base considerando as circunstâncias judiciais.
- * Aumenta a pena em 1/6 da pena-base para cada circunstância desfavorável.
- */
-export function calculatePhaseOne(
-  penaBase: number,
-  circunstancias: string[]
-): number {
-  const fracao = 1 / 6;
-  const aumentoTotal = circunstancias.length * fracao * penaBase;
-  return penaBase + aumentoTotal;
-}
+export type Circunstancia = {
+  id: string;
+  fracao: string;
+};
 
-/**
- * Calcula a pena provisória aplicando agravantes e atenuantes.
- * Aumenta ou diminui a pena em 1/6 para cada fator, com base na pena da primeira fase.
- */
-export function calculatePhaseTwo(
-  penaPrimeiraFase: number,
-  agravantes: string[],
-  atenuantes: string[]
-): number {
-  const fracao = 1 / 6;
-  let penaProvisoria = penaPrimeiraFase;
-
-  const aumento = agravantes.length * fracao * penaPrimeiraFase;
-  const diminuicao = atenuantes.length * fracao * penaPrimeiraFase;
-
-  penaProvisoria += aumento - diminuicao;
-
-  return penaProvisoria;
-}
 function parseFraction(fracao: string): number {
   const parts = fracao.split("/");
   if (parts.length === 2) {
@@ -60,6 +33,47 @@ function parseFraction(fracao: string): number {
   }
   return 0; // Retorna 0 se a fração for inválida
 }
+/**
+ * Calcula a pena-base considerando as circunstâncias judiciais.
+ * Aumenta a pena em 1/6 da pena-base para cada circunstância desfavorável.
+ */
+export function calculatePhaseOne(
+  penaBase: number,
+  circunstancias: Circunstancia[]
+): number {
+  const aumentoTotal = circunstancias.reduce((acc, c) => {
+    const fracao = parseFraction(c.fracao);
+    return acc + fracao * penaBase;
+  }, 0);
+  return penaBase + aumentoTotal;
+}
+
+/**
+ * Calcula a pena provisória aplicando agravantes e atenuantes.
+ * Aumenta ou diminui a pena em 1/6 para cada fator, com base na pena da primeira fase.
+ */
+export function calculatePhaseTwo(
+  penaPrimeiraFase: number,
+  agravantes: Circunstancia[],
+  atenuantes: Circunstancia[]
+): number {
+  let penaProvisoria = penaPrimeiraFase;
+
+  const aumento = agravantes.reduce((acc, c) => {
+    const fracao = parseFraction(c.fracao);
+    return acc + fracao * penaPrimeiraFase;
+  }, 0);
+
+  const diminuicao = atenuantes.reduce((acc, c) => {
+    const fracao = parseFraction(c.fracao);
+    return acc + fracao * penaPrimeiraFase;
+  }, 0);
+
+  penaProvisoria += aumento - diminuicao;
+
+  return penaProvisoria;
+}
+
 /**
  * Calcula a pena definitiva aplicando causas de aumento e diminuição
  * em cascata sobre a pena provisória.

@@ -61,10 +61,12 @@ import {
 } from "../ui/tooltip";
 import { useState } from "react";
 import { Crime } from "@/types/crime";
+import { Circunstancia } from "@/lib/calculations";
+import { Label } from "../ui/label";
 export interface PhaseOneFormValues {
   crimeId: string;
   penaBase: number;
-  circunstanciasJudiciais: string[];
+  circunstanciasJudiciais: Circunstancia[];
   dataCrime: Date;
   qualificadoraId?: string;
 }
@@ -371,7 +373,7 @@ export function PhaseOne({
                         <TooltipContent>
                           <p>
                             Selecione as que forem desfavoráveis. Cada uma
-                            aumenta a pena em 1/6.
+                            aumenta a pena em 1/6 por padrão.
                           </p>
                         </TooltipContent>
                       </Tooltip>
@@ -383,30 +385,65 @@ export function PhaseOne({
                         key={option}
                         name="circunstanciasJudiciais"
                         control={form.control}
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(option)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([
-                                        ...(field.value || []),
-                                        option,
-                                      ])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option
+                        render={({ field }) => {
+                          const isChecked = field.value?.some(
+                            (c) => c.id === option
+                          );
+                          const circunstancia = field.value?.find(
+                            (c) => c.id === option
+                          );
+                          return (
+                            <div className="space-y-2 rounded-md border p-3">
+                              <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={isChecked}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...(field.value || []),
+                                            { id: option, fracao: "1/6" },
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (c) => c.id !== option
+                                            )
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal cursor-pointer flex-1">
+                                  {option}
+                                </FormLabel>
+                              </FormItem>
+                              {isChecked && (
+                                <div className="flex items-center gap-2 pt-2">
+                                  <Label
+                                    htmlFor={`fracao-${option}`}
+                                    className="text-sm"
+                                  >
+                                    Fração:
+                                  </Label>
+                                  <Input
+                                    id={`fracao-${option}`}
+                                    value={circunstancia?.fracao}
+                                    onChange={(e) => {
+                                      const newFracao = e.target.value;
+                                      field.onChange(
+                                        field.value.map((c) =>
+                                          c.id === option
+                                            ? { ...c, fracao: newFracao }
+                                            : c
                                         )
                                       );
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="font-normal cursor-pointer flex-1">
-                              {option}
-                            </FormLabel>
-                          </FormItem>
-                        )}
+                                    }}
+                                    className="h-8"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }}
                       />
                     ))}
                   </div>

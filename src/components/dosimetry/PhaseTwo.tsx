@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-import { formatPena } from "@/lib/calculations";
+import { formatPena, Circunstancia } from "@/lib/calculations";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,10 +19,12 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export interface PhaseTwoFormValues {
-  agravantes: string[];
-  atenuantes: string[];
+  agravantes: Circunstancia[];
+  atenuantes: Circunstancia[];
 }
 
 type PhaseTwoProps = {
@@ -161,30 +163,65 @@ export function PhaseTwo({
                     key={item.id}
                     control={form.control}
                     name="agravantes"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) =>
-                              checked
-                                ? field.onChange([
-                                    ...(field.value || []),
-                                    item.id,
-                                  ])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
+                    render={({ field }) => {
+                      const isChecked = field.value?.some(
+                        (c) => c.id === item.id
+                      );
+                      const circunstancia = field.value?.find(
+                        (c) => c.id === item.id
+                      );
+                      return (
+                        <div className="space-y-2 rounded-md border p-3">
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={isChecked}
+                                onCheckedChange={(checked) =>
+                                  checked
+                                    ? field.onChange([
+                                        ...(field.value || []),
+                                        { id: item.id, fracao: "1/6" },
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (c) => c.id !== item.id
+                                        )
+                                      )
+                                }
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal cursor-pointer flex-1">
+                              {item.label}
+                            </FormLabel>
+                          </FormItem>
+                          {isChecked && (
+                            <div className="flex items-center gap-2 pt-2">
+                              <Label
+                                htmlFor={`fracao-agravante-${item.id}`}
+                                className="text-sm"
+                              >
+                                Fração:
+                              </Label>
+                              <Input
+                                id={`fracao-agravante-${item.id}`}
+                                value={circunstancia?.fracao}
+                                onChange={(e) => {
+                                  const newFracao = e.target.value;
+                                  field.onChange(
+                                    field.value.map((c) =>
+                                      c.id === item.id
+                                        ? { ...c, fracao: newFracao }
+                                        : c
                                     )
-                                  )
-                            }
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer flex-1">
-                          {item.label}
-                        </FormLabel>
-                      </FormItem>
-                    )}
+                                  );
+                                }}
+                                className="h-8"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }}
                   />
                 ))}
               </div>
@@ -200,30 +237,65 @@ export function PhaseTwo({
                     key={item.id}
                     control={form.control}
                     name="atenuantes"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) =>
-                              checked
-                                ? field.onChange([
-                                    ...(field.value || []),
-                                    item.id,
-                                  ])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
+                    render={({ field }) => {
+                      const isChecked = field.value?.some(
+                        (c) => c.id === item.id
+                      );
+                      const circunstancia = field.value?.find(
+                        (c) => c.id === item.id
+                      );
+                      return (
+                        <div className="space-y-2 rounded-md border p-3">
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={isChecked}
+                                onCheckedChange={(checked) =>
+                                  checked
+                                    ? field.onChange([
+                                        ...(field.value || []),
+                                        { id: item.id, fracao: "1/6" },
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (c) => c.id !== item.id
+                                        )
+                                      )
+                                }
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal cursor-pointer flex-1">
+                              {item.label}
+                            </FormLabel>
+                          </FormItem>
+                          {isChecked && (
+                            <div className="flex items-center gap-2 pt-2">
+                              <Label
+                                htmlFor={`fracao-atenuante-${item.id}`}
+                                className="text-sm"
+                              >
+                                Fração:
+                              </Label>
+                              <Input
+                                id={`fracao-atenuante-${item.id}`}
+                                value={circunstancia?.fracao}
+                                onChange={(e) => {
+                                  const newFracao = e.target.value;
+                                  field.onChange(
+                                    field.value.map((c) =>
+                                      c.id === item.id
+                                        ? { ...c, fracao: newFracao }
+                                        : c
                                     )
-                                  )
-                            }
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer flex-1">
-                          {item.label}
-                        </FormLabel>
-                      </FormItem>
-                    )}
+                                  );
+                                }}
+                                className="h-8"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }}
                   />
                 ))}
               </div>

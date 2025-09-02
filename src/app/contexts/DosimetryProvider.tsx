@@ -10,6 +10,7 @@ import {
   Causa,
   CausaAplicada,
   calculateFinalDate,
+  Circunstancia,
 } from "@/lib/calculations";
 
 // --- TIPOS E INTERFACES ---
@@ -19,13 +20,13 @@ export interface DosimetryState {
   selectedCrimeId?: string;
   phaseOneData: {
     penaBase: number;
-    circunstanciasJudiciais: string[];
+    circunstanciasJudiciais: Circunstancia[];
     dataCrime?: Date;
     selectedQualificadoraId?: string;
   };
   phaseTwoData: {
-    agravantes: string[];
-    atenuantes: string[];
+    agravantes: Circunstancia[];
+    atenuantes: Circunstancia[];
   };
   phaseThreeData: {
     causasAumento: CausaAplicada[];

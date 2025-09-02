@@ -208,7 +208,9 @@ export function CalculationSummary() {
     text += `Pena Base: ${formatPena(phaseOneData.penaBase)}\n`;
     text += `Circunstâncias Judiciais Desfavoráveis: ${
       phaseOneData.circunstanciasJudiciais.length > 0
-        ? phaseOneData.circunstanciasJudiciais.join(", ")
+        ? phaseOneData.circunstanciasJudiciais
+            .map((c) => `${c.id} (${c.fracao})`)
+            .join(", ")
         : "Nenhuma"
     }\n`;
     text += `Pena-Base Fixada: ${
@@ -229,14 +231,24 @@ export function CalculationSummary() {
     text += `Agravantes: ${
       phaseTwoData.agravantes.length > 0
         ? phaseTwoData.agravantes
-            .map((id) => agravantesOptions.find((opt) => opt.id === id)?.label)
+            .map(
+              (c) =>
+                `${agravantesOptions.find((opt) => opt.id === c.id)?.label} (${
+                  c.fracao
+                })`
+            )
             .join(", ")
         : "Nenhuma"
     }\n`;
     text += `Atenuantes: ${
       phaseTwoData.atenuantes.length > 0
         ? phaseTwoData.atenuantes
-            .map((id) => atenuantesOptions.find((opt) => opt.id === id)?.label)
+            .map(
+              (c) =>
+                `${atenuantesOptions.find((opt) => opt.id === c.id)?.label} (${
+                  c.fracao
+                })`
+            )
             .join(", ")
         : "Nenhuma"
     }\n`;
@@ -342,7 +354,9 @@ export function CalculationSummary() {
               <p className="font-semibold">Circunstâncias Judiciais:</p>
               <ul>
                 {phaseOneData.circunstanciasJudiciais.map((c) => (
-                  <li key={c}>- {c}</li>
+                  <li key={c.id}>
+                    - {c.id} ({c.fracao})
+                  </li>
                 ))}
               </ul>
             </div>
@@ -371,9 +385,10 @@ export function CalculationSummary() {
             <div className="text-xs text-muted-foreground">
               <p className="font-semibold">Agravantes:</p>
               <ul>
-                {phaseTwoData.agravantes.map((id) => (
-                  <li key={id}>
-                    - {agravantesOptions.find((opt) => opt.id === id)?.label}
+                {phaseTwoData.agravantes.map((c) => (
+                  <li key={c.id}>
+                    - {agravantesOptions.find((opt) => opt.id === c.id)?.label}{" "}
+                    ({c.fracao})
                   </li>
                 ))}
               </ul>
@@ -383,9 +398,10 @@ export function CalculationSummary() {
             <div className="text-xs text-muted-foreground">
               <p className="font-semibold">Atenuantes:</p>
               <ul>
-                {phaseTwoData.atenuantes.map((id) => (
-                  <li key={id}>
-                    - {atenuantesOptions.find((opt) => opt.id === id)?.label}
+                {phaseTwoData.atenuantes.map((c) => (
+                  <li key={c.id}>
+                    - {atenuantesOptions.find((opt) => opt.id === c.id)?.label}{" "}
+                    ({c.fracao})
                   </li>
                 ))}
               </ul>
