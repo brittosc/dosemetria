@@ -8,13 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatPena } from "@/lib/calculations";
+import {
+  Causa,
+  calculateMulta,
+  calculatePhaseThree,
+  formatPena,
+} from "@/lib/calculations";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import causasData from "@/app/data/causas.json";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useMemo } from "react";
+import { Slider } from "../ui/slider";
 
 const agravantesOptions = [
   { id: "reincidencia", label: "Reincidência (Art. 61, I)" },
@@ -111,9 +117,33 @@ const atenuantesOptions = [
   },
 ];
 
+const SALARIO_MINIMO = 1518; // Salário mínimo de 2025
+
 export function CalculationSummary() {
   const { state, selectedCrime, actions } = useDosimetryCalculator();
   const { results, phaseOneData, phaseTwoData, phaseThreeData } = state;
+
+  const previewPenaDefinitiva = useMemo(() => {
+    if (results.penaProvisoria === undefined) return undefined;
+    return calculatePhaseThree(
+      results.penaProvisoria,
+      phaseThreeData.causasAumento,
+      phaseThreeData.causasDiminuicao,
+      causasData as Causa[]
+    );
+  }, [
+    results.penaProvisoria,
+    phaseThreeData.causasAumento,
+    phaseThreeData.causasDiminuicao,
+  ]);
+
+  const totalMulta = useMemo(() => {
+    return calculateMulta(
+      phaseThreeData.diasMulta,
+      phaseThreeData.valorDiaMulta,
+      SALARIO_MINIMO
+    );
+  }, [phaseThreeData.diasMulta, phaseThreeData.valorDiaMulta]);
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -197,6 +227,13 @@ export function CalculationSummary() {
       results.penaDefinitiva != null ? formatPena(results.penaDefinitiva) : "--"
     }`;
     return text;
+  };
+
+  const handleFinalize = () => {
+    actions.calculateAndProceed();
+    toast.success("Cálculo Finalizado!", {
+      description: "A pena definitiva foi calculada com sucesso.",
+    });
   };
 
   const selectedQualificadora = selectedCrime?.qualificadoras?.find(
@@ -327,6 +364,8 @@ export function CalculationSummary() {
           <p className="text-xl font-bold text-green-700">
             {results.penaDefinitiva != null
               ? formatPena(results.penaDefinitiva)
+              : previewPenaDefinitiva != null
+              ? formatPena(previewPenaDefinitiva)
               : "--"}
           </p>
           {phaseThreeData.causasAumento.length > 0 && (
@@ -354,22 +393,52 @@ export function CalculationSummary() {
             </div>
           )}
         </div>
+        {selectedCrime?.temMulta && (
+          <div className="space-y-4 pt-4 border-t">
+            <h3 className="text-lg font-semibold">Cálculo da Multa</h3>
+            <div className="space-y-2">
+              <Label>Dias-multa: {phaseThreeData.diasMulta}</Label>
+              <Slider
+                min={10}
+                max={360}
+                step={1}
+                value={[phaseThreeData.diasMulta]}
+                onValueChange={(value) =>
+                  actions.updatePhaseThree({ diasMulta: value[0] })
+                }
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>
+                Valor do Dia-multa: R${" "}
+                {(phaseThreeData.valorDiaMulta * SALARIO_MINIMO).toFixed(2)}
+              </Label>
+              <Slider
+                min={1 / 30}
+                max={5}
+                step={1 / 30}
+                value={[phaseThreeData.valorDiaMulta]}
+                onValueChange={(value) =>
+                  actions.updatePhaseThree({ valorDiaMulta: value[0] })
+                }
+              />
+            </div>
+            <div>
+              <Label className="text-lg font-semibold">Total da Multa:</Label>
+              <p className="text-xl font-bold">R$ {totalMulta.toFixed(2)}</p>
+            </div>
+          </div>
+        )}
       </CardContent>
+      {state.currentPhase === 3 && results.penaDefinitiva == null && (
+        <CardFooter>
+          <Button onClick={handleFinalize} className="w-full">
+            Finalizar Cálculo
+          </Button>
+        </CardFooter>
+      )}
       {results.penaDefinitiva != null && (
         <CardFooter className="flex-col items-start gap-4">
-          <div>
-            <Label htmlFor="dias-multa">Dias-multa</Label>
-            <Input
-              id="dias-multa"
-              type="number"
-              value={phaseThreeData.diasMulta}
-              onChange={(e) =>
-                actions.updatePhaseThree({
-                  diasMulta: parseInt(e.target.value) || 0,
-                })
-              }
-            />
-          </div>
           <div>
             <p className="font-semibold">Data Final da Pena:</p>
             <p>

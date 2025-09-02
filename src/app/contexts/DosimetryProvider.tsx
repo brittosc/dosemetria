@@ -31,12 +31,14 @@ export interface DosimetryState {
     causasAumento: CausaAplicada[];
     causasDiminuicao: CausaAplicada[];
     diasMulta: number;
+    valorDiaMulta: number;
   };
   results: {
     penaPrimeiraFase?: number;
     penaProvisoria?: number;
     penaDefinitiva?: number;
     dataFinalPena?: Date;
+    totalMulta?: number;
   };
 }
 
@@ -69,7 +71,12 @@ const initialState: DosimetryState = {
     selectedQualificadoraId: undefined,
   },
   phaseTwoData: { agravantes: [], atenuantes: [] },
-  phaseThreeData: { causasAumento: [], causasDiminuicao: [], diasMulta: 0 },
+  phaseThreeData: {
+    causasAumento: [],
+    causasDiminuicao: [],
+    diasMulta: 10,
+    valorDiaMulta: 1 / 30,
+  },
   results: {},
 };
 

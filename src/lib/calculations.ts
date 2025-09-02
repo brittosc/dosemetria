@@ -4,16 +4,17 @@ export type Causa = {
   descricao: string;
   tipo: string;
   valor: {
-    tipo: "fracao" | "multiplicador" | "range";
+    tipo: "fracao" | "multiplicador" | "range" | "dobro" | "triplo";
     valor?: number;
     min?: number;
     max?: number;
+    fracao?: string;
   };
 };
 
 export type CausaAplicada = {
   id: string;
-  valorAplicado: number;
+  valorAplicado: number | string;
 };
 
 /**
@@ -48,7 +49,17 @@ export function calculatePhaseTwo(
 
   return penaProvisoria;
 }
-
+function parseFraction(fracao: string): number {
+  const parts = fracao.split("/");
+  if (parts.length === 2) {
+    const numerator = parseInt(parts[0], 10);
+    const denominator = parseInt(parts[1], 10);
+    if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+      return numerator / denominator;
+    }
+  }
+  return 0; // Retorna 0 se a fração for inválida
+}
 /**
  * Calcula a pena definitiva aplicando causas de aumento e diminuição
  * em cascata sobre a pena provisória.
@@ -64,7 +75,12 @@ export function calculatePhaseThree(
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
-
+    let fracao: number;
+    if (typeof causaAplicada.valorAplicado === "string") {
+      fracao = parseFraction(causaAplicada.valorAplicado);
+    } else {
+      fracao = causaAplicada.valorAplicado;
+    }
     switch (causaInfo.valor.tipo) {
       case "fracao":
         if (causaInfo.valor.valor !== undefined) {
@@ -77,15 +93,13 @@ export function calculatePhaseThree(
         }
         break;
       case "range":
-        if (
-          causaInfo.valor.min !== undefined &&
-          causaInfo.valor.max !== undefined
-        ) {
-          const range = causaInfo.valor.max - causaInfo.valor.min;
-          const fracao =
-            causaInfo.valor.min + range * causaAplicada.valorAplicado;
-          penaAtual += penaAtual * fracao;
-        }
+        penaAtual += penaAtual * fracao;
+        break;
+      case "dobro":
+        penaAtual *= 2;
+        break;
+      case "triplo":
+        penaAtual *= 3;
         break;
     }
   });
@@ -93,7 +107,12 @@ export function calculatePhaseThree(
   causasDiminuicao.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
-
+    let fracao: number;
+    if (typeof causaAplicada.valorAplicado === "string") {
+      fracao = parseFraction(causaAplicada.valorAplicado);
+    } else {
+      fracao = causaAplicada.valorAplicado;
+    }
     switch (causaInfo.valor.tipo) {
       case "fracao":
         if (causaInfo.valor.valor !== undefined) {
@@ -106,15 +125,7 @@ export function calculatePhaseThree(
         }
         break;
       case "range":
-        if (
-          causaInfo.valor.min !== undefined &&
-          causaInfo.valor.max !== undefined
-        ) {
-          const range = causaInfo.valor.max - causaInfo.valor.min;
-          const fracao =
-            causaInfo.valor.min + range * causaAplicada.valorAplicado;
-          penaAtual -= penaAtual * fracao;
-        }
+        penaAtual -= penaAtual * fracao;
         break;
     }
   });
@@ -160,4 +171,12 @@ export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
   const daysToAdd = Math.round(decimalPart * 30);
   finalDate.setDate(finalDate.getDate() + daysToAdd);
   return finalDate;
+}
+
+export function calculateMulta(
+  diasMulta: number,
+  valorDiaMulta: number,
+  salarioMinimo: number
+): number {
+  return diasMulta * valorDiaMulta * salarioMinimo;
 }

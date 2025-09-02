@@ -1,11 +1,14 @@
 import { useContext, useMemo } from "react";
-import crimesData from "@/app/data/crimes.json";
+import crimesDataRaw from "@/app/data/crimes.json";
 import causasDataRaw from "@/app/data/causas.json";
 import { Causa } from "@/lib/calculations";
 import {
   DosimetryContext,
   DosimetryState,
 } from "@/app/contexts/DosimetryProvider";
+import { Crime } from "@/types/crime";
+
+const crimesData: Crime[] = crimesDataRaw as Crime[];
 
 export function useDosimetryCalculator() {
   const context = useContext(DosimetryContext);
@@ -16,7 +19,7 @@ export function useDosimetryCalculator() {
   }
   const { state, dispatch } = context;
 
-  const selectedCrime = useMemo(
+  const selectedCrime: Crime | undefined = useMemo(
     () => crimesData.find((crime) => crime.id === state.selectedCrimeId),
     [state.selectedCrimeId]
   );

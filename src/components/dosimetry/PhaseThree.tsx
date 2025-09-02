@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { ChevronsUpDown, X } from "lucide-react";
 
-import { formatPena } from "@/lib/calculations";
+import { Causa, formatPena } from "@/lib/calculations";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -29,7 +27,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -39,24 +36,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer";
-
-type Causa = {
-  id: string;
-  artigo: string;
-  descricao: string;
-  tipo: string;
-  valor: {
-    tipo: string;
-    min?: number;
-    max?: number;
-    valor?: number;
-    fracao?: string;
-  };
-};
+import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 
 type CausaAplicada = {
   id: string;
-  valorAplicado: number;
+  valorAplicado: number | string;
 };
 
 export interface PhaseThreeFormValues {
@@ -68,7 +52,6 @@ type PhaseThreeProps = {
   initialValues: PhaseThreeFormValues;
   penaProvisoria: number;
   causasData: Causa[];
-  onFormSubmit: (data: PhaseThreeFormValues) => void;
   onGoBack: () => void;
 };
 
@@ -76,9 +59,9 @@ export function PhaseThree({
   initialValues,
   penaProvisoria,
   causasData,
-  onFormSubmit,
   onGoBack,
 }: PhaseThreeProps) {
+  const { actions } = useDosimetryCalculator();
   const [openAumento, setOpenAumento] = useState(false);
   const [openDiminuicao, setOpenDiminuicao] = useState(false);
   const isMobile = useIsMobile();
@@ -90,7 +73,9 @@ export function PhaseThree({
     initialValues.causasDiminuicao || []
   );
 
-  const form = useForm();
+  useEffect(() => {
+    actions.updatePhaseThree({ causasAumento, causasDiminuicao });
+  }, [causasAumento, causasDiminuicao, actions]);
 
   const handleSelectCausa = (
     causaId: string,
@@ -98,7 +83,18 @@ export function PhaseThree({
   ) => {
     const causa = causasData.find((c) => c.id === causaId);
     if (!causa) return;
-    const novaCausa: CausaAplicada = { id: causa.id, valorAplicado: 0.5 };
+
+    let valorAplicado: string | number = 0.5; // Default value
+    if (causa.valor.tipo === "range" && causa.valor.fracao) {
+      valorAplicado = causa.valor.fracao.split(" a ")[0];
+    } else if (causa.valor.tipo === "fracao" && causa.valor.fracao) {
+      valorAplicado = causa.valor.fracao;
+    } else if (causa.valor.valor) {
+      valorAplicado = causa.valor.valor;
+    }
+
+    const novaCausa: CausaAplicada = { id: causa.id, valorAplicado };
+
     if (tipo === "aumento") {
       setCausasAumento((prev) => [...prev, novaCausa]);
       setOpenAumento(false);
@@ -119,26 +115,20 @@ export function PhaseThree({
     }
   };
 
-  const handleSliderChange = (
+  const handleFractionChange = (
     id: string,
     tipo: "aumento" | "diminuicao",
-    value: number[]
+    value: string
   ) => {
-    if (!value || value.length === 0) return;
-    const valorAplicado = value[0];
     if (tipo === "aumento") {
       setCausasAumento((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, valorAplicado } : c))
+        prev.map((c) => (c.id === id ? { ...c, valorAplicado: value } : c))
       );
     } else {
       setCausasDiminuicao((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, valorAplicado } : c))
+        prev.map((c) => (c.id === id ? { ...c, valorAplicado: value } : c))
       );
     }
-  };
-
-  const onSubmit = () => {
-    onFormSubmit({ causasAumento, causasDiminuicao });
   };
 
   const availableAumentos = causasData.filter(
@@ -215,6 +205,42 @@ export function PhaseThree({
     );
   };
 
+  const renderFractionButtons = (
+    causaInfo: Causa,
+    causaAplicada: CausaAplicada,
+    tipo: "aumento" | "diminuicao"
+  ) => {
+    if (causaInfo.valor.tipo === "range" && causaInfo.valor.fracao) {
+      const fractions = causaInfo.valor.fracao.split(" a ");
+      return (
+        <div className="flex gap-2">
+          {fractions.map((fraction) => (
+            <Button
+              key={fraction}
+              type="button"
+              variant={
+                causaAplicada.valorAplicado === fraction ? "default" : "outline"
+              }
+              onClick={() =>
+                handleFractionChange(causaAplicada.id, tipo, fraction)
+              }
+            >
+              {fraction}
+            </Button>
+          ))}
+        </div>
+      );
+    }
+    if (causaInfo.valor.tipo === "fracao" && causaInfo.valor.fracao) {
+      return (
+        <Button type="button" variant="default" disabled>
+          {causaInfo.valor.fracao}
+        </Button>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -224,108 +250,80 @@ export function PhaseThree({
           <span className="font-bold"> {formatPena(penaProvisoria)}</span>.
         </CardDescription>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-8">
-            <div className="space-y-4">
-              <Label className="text-base font-semibold">
-                Causas de Aumento de Pena
-              </Label>
-              <CausaSelector tipo="aumento" />
-              <div className="space-y-4">
-                {causasAumento.map((ca) => {
-                  const causaInfo = causasData.find((c) => c.id === ca.id);
-                  if (!causaInfo) return null;
-                  return (
-                    <div
-                      key={ca.id}
-                      className="p-3 border rounded-md space-y-3"
+      <CardContent className="space-y-8">
+        <div className="space-y-4">
+          <Label className="text-base font-semibold">
+            Causas de Aumento de Pena
+          </Label>
+          <CausaSelector tipo="aumento" />
+          <div className="space-y-4">
+            {causasAumento.map((ca) => {
+              const causaInfo = causasData.find((c) => c.id === ca.id);
+              if (!causaInfo) return null;
+              return (
+                <div key={ca.id} className="p-3 border rounded-md space-y-3">
+                  <div className="flex justify-between items-center">
+                    <Badge variant="destructive">{causaInfo.descricao}</Badge>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveCausa(ca.id, "aumento")}
                     >
-                      <div className="flex justify-between items-center">
-                        <Badge variant="destructive">
-                          {causaInfo.descricao}
-                        </Badge>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleRemoveCausa(ca.id, "aumento")}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
-                      {causaInfo.valor.tipo === "range" && (
-                        <Slider
-                          defaultValue={[0.5]}
-                          max={1}
-                          step={0.01}
-                          onValueChange={(v: number[]) =>
-                            handleSliderChange(ca.id, "aumento", v)
-                          }
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
+                  {renderFractionButtons(causaInfo, ca, "aumento")}
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-            <div className="space-y-4">
-              <Label className="text-base font-semibold">
-                Causas de Diminuição de Pena
-              </Label>
-              <CausaSelector tipo="diminuicao" />
-              <div className="space-y-4">
-                {causasDiminuicao.map((ca) => {
-                  const causaInfo = causasData.find((c) => c.id === ca.id);
-                  if (!causaInfo) return null;
-                  return (
-                    <div
-                      key={ca.id}
-                      className="p-3 border rounded-md space-y-3"
+        <div className="space-y-4">
+          <Label className="text-base font-semibold">
+            Causas de Diminuição de Pena
+          </Label>
+          <CausaSelector tipo="diminuicao" />
+          <div className="space-y-4">
+            {causasDiminuicao.map((ca) => {
+              const causaInfo = causasData.find((c) => c.id === ca.id);
+              if (!causaInfo) return null;
+              return (
+                <div key={ca.id} className="p-3 border rounded-md space-y-3">
+                  <div className="flex justify-between items-center">
+                    <Badge variant="secondary">{causaInfo.descricao}</Badge>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveCausa(ca.id, "diminuicao")}
                     >
-                      <div className="flex justify-between items-center">
-                        <Badge variant="secondary">{causaInfo.descricao}</Badge>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleRemoveCausa(ca.id, "diminuicao")}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
-                      {causaInfo.valor.tipo === "range" && (
-                        <Slider
-                          defaultValue={[0.5]}
-                          max={1}
-                          step={0.01}
-                          onValueChange={(v: number[]) =>
-                            handleSliderChange(ca.id, "diminuicao", v)
-                          }
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-2 justify-between">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onGoBack}
-              className="w-full md:w-auto"
-            >
-              Voltar para 2ª Fase
-            </Button>
-            <Button type="submit" className="w-full md:w-auto">
-              Calcular Pena Definitiva
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
+                  {renderFractionButtons(causaInfo, ca, "diminuicao")}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex flex-col md:flex-row gap-2 justify-between">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onGoBack}
+          className="w-full md:w-auto"
+        >
+          Voltar para 2ª Fase
+        </Button>
+        <Button type="button" className="w-full md:w-auto" disabled>
+          Exportar (em breve)
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

@@ -48,26 +48,13 @@ import {
   CommandList,
 } from "../ui/command";
 import { useState } from "react";
+import { Crime } from "@/types/crime";
 export interface PhaseOneFormValues {
   crimeId: string;
   penaBase: number;
   circunstanciasJudiciais: string[];
   dataCrime: Date;
   qualificadoraId?: string;
-}
-
-interface Crime {
-  id: string;
-  nome: string;
-  artigo: string;
-  penaMinimaMeses: number | null;
-  penaMaximaMeses: number | null;
-  qualificadoras?: {
-    id: string;
-    nome: string;
-    penaMinimaMeses: number;
-    penaMaximaMeses: number;
-  }[];
 }
 
 interface PhaseOneProps {

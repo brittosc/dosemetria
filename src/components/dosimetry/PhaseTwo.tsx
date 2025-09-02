@@ -234,11 +234,11 @@ export function PhaseTwo({
               type="button"
               variant="outline"
               onClick={onGoBack}
-              className="w-full md:w-auto"
+              className="w-full md:w-auto mt-4"
             >
               Voltar para 1ª Fase
             </Button>
-            <Button type="submit" className="w-full md:w-auto">
+            <Button type="submit" className="w-full md:w-auto mt-4">
               Calcular Pena Provisória e Avançar
             </Button>
           </CardFooter>

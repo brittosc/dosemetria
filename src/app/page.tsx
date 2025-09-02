@@ -3,10 +3,7 @@
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { PhaseOne, PhaseOneFormValues } from "@/components/dosimetry/PhaseOne";
 import { PhaseTwo, PhaseTwoFormValues } from "@/components/dosimetry/PhaseTwo";
-import {
-  PhaseThree,
-  PhaseThreeFormValues,
-} from "@/components/dosimetry/PhaseThree";
+import { PhaseThree } from "@/components/dosimetry/PhaseThree";
 import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -46,17 +43,6 @@ export default function Home() {
     actions.calculateAndProceed();
     toast.success("2ª Fase Concluída!", {
       description: "Pena provisória calculada. Prossiga para a 3ª fase.",
-    });
-  };
-
-  const handlePhaseThreeSubmit = (data: PhaseThreeFormValues) => {
-    actions.updatePhaseThree({
-      causasAumento: data.causasAumento || [],
-      causasDiminuicao: data.causasDiminuicao || [],
-    });
-    actions.calculateAndProceed();
-    toast.success("Cálculo Finalizado!", {
-      description: "A pena definitiva foi calculada com sucesso.",
     });
   };
 
@@ -113,7 +99,6 @@ export default function Home() {
               initialValues={state.phaseThreeData}
               penaProvisoria={state.results.penaProvisoria}
               causasData={causasData}
-              onFormSubmit={handlePhaseThreeSubmit}
               onGoBack={() => actions.goToPhase(2)}
             />
           );
