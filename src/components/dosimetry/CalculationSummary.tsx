@@ -19,8 +19,10 @@ import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import causasData from "@/app/data/causas.json";
 import { Label } from "../ui/label";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Slider } from "../ui/slider";
+import { formatCurrency } from "@/lib/utils";
+import { Input } from "../ui/input";
 
 const agravantesOptions = [
   { id: "reincidencia", label: "Reincidência (Art. 61, I)" },
@@ -117,12 +119,50 @@ const atenuantesOptions = [
   },
 ];
 
-const SALARIO_MINIMO = 1518; // Salário mínimo de 2025
+const SALARIO_MINIMO = 1518; // Salário mínimo de 1518
 
 export function CalculationSummary() {
   const { state, selectedCrime, actions } = useDosimetryCalculator();
   const { results, phaseOneData, phaseTwoData, phaseThreeData } = state;
+  const [valorDiaMultaInput, setValorDiaMultaInput] = useState(
+    `${Math.round(phaseThreeData.valorDiaMulta * 30)}/30`
+  );
 
+  useEffect(() => {
+    const value = phaseThreeData.valorDiaMulta;
+    const thirtyTimesValue = Math.round(value * 30);
+    if (thirtyTimesValue / 30 === value && value < 1) {
+      setValorDiaMultaInput(`${thirtyTimesValue}/30`);
+    } else {
+      setValorDiaMultaInput(String(value));
+    }
+  }, [phaseThreeData.valorDiaMulta]);
+
+  const handleValorDiaMultaInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputValue = e.target.value;
+    setValorDiaMultaInput(inputValue);
+
+    let numericValue: number | undefined;
+    if (inputValue.includes("/")) {
+      const [numerator, denominator] = inputValue.split("/").map(Number);
+      if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+        numericValue = numerator / denominator;
+      }
+    } else {
+      numericValue = parseFloat(inputValue);
+    }
+
+    if (
+      numericValue !== undefined &&
+      !isNaN(numericValue) &&
+      numericValue >= 1 / 30 &&
+      numericValue <= 5
+    ) {
+      actions.updatePhaseThree({ valorDiaMulta: numericValue });
+    }
+  };
   const previewPenaDefinitiva = useMemo(() => {
     if (results.penaProvisoria === undefined) return undefined;
     return calculatePhaseThree(
@@ -398,34 +438,56 @@ export function CalculationSummary() {
             <h3 className="text-lg font-semibold">Cálculo da Multa</h3>
             <div className="space-y-2">
               <Label>Dias-multa: {phaseThreeData.diasMulta}</Label>
-              <Slider
-                min={10}
-                max={360}
-                step={1}
-                value={[phaseThreeData.diasMulta]}
-                onValueChange={(value) =>
-                  actions.updatePhaseThree({ diasMulta: value[0] })
-                }
-              />
+              <div className="grid grid-cols-3 items-center gap-2">
+                <Slider
+                  className="col-span-2"
+                  min={10}
+                  max={360}
+                  step={1}
+                  value={[phaseThreeData.diasMulta]}
+                  onValueChange={(value) =>
+                    actions.updatePhaseThree({ diasMulta: value[0] })
+                  }
+                />
+                <Input
+                  type="number"
+                  value={phaseThreeData.diasMulta}
+                  onChange={(e) =>
+                    actions.updatePhaseThree({
+                      diasMulta: Number(e.target.value),
+                    })
+                  }
+                  min={10}
+                  max={360}
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label>
-                Valor do Dia-multa: R${" "}
-                {(phaseThreeData.valorDiaMulta * SALARIO_MINIMO).toFixed(2)}
+                Valor do Dia-multa (x Salário Mínimo):{" "}
+                {formatCurrency(phaseThreeData.valorDiaMulta * SALARIO_MINIMO)}
               </Label>
-              <Slider
-                min={1 / 30}
-                max={5}
-                step={1 / 30}
-                value={[phaseThreeData.valorDiaMulta]}
-                onValueChange={(value) =>
-                  actions.updatePhaseThree({ valorDiaMulta: value[0] })
-                }
-              />
+              <div className="grid grid-cols-3 items-center gap-2">
+                <Slider
+                  className="col-span-2"
+                  min={1 / 30}
+                  max={5}
+                  step={1 / 30}
+                  value={[phaseThreeData.valorDiaMulta]}
+                  onValueChange={(value) =>
+                    actions.updatePhaseThree({ valorDiaMulta: value[0] })
+                  }
+                />
+                <Input
+                  type="text"
+                  value={valorDiaMultaInput}
+                  onChange={handleValorDiaMultaInputChange}
+                />
+              </div>
             </div>
             <div>
               <Label className="text-lg font-semibold">Total da Multa:</Label>
-              <p className="text-xl font-bold">R$ {totalMulta.toFixed(2)}</p>
+              <p className="text-xl font-bold">{formatCurrency(totalMulta)}</p>
             </div>
           </div>
         )}
