@@ -32,14 +32,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ptBR } from "date-fns/locale";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Checkbox } from "../ui/checkbox";
-
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "../ui/command";
+import { useState } from "react";
 export interface PhaseOneFormValues {
   crimeId: string;
   penaBase: number;
@@ -52,8 +60,8 @@ interface Crime {
   id: string;
   nome: string;
   artigo: string;
-  penaMinimaMeses: number;
-  penaMaximaMeses: number;
+  penaMinimaMeses: number | null;
+  penaMaximaMeses: number | null;
   qualificadoras?: {
     id: string;
     nome: string;
@@ -93,14 +101,14 @@ export function PhaseOne({
   const form = useForm<PhaseOneFormValues>({ defaultValues: initialValues });
   const isMobile = useIsMobile();
   const selectedQualificadoraId = form.watch("qualificadoraId");
-
+  const [open, setOpen] = useState(false);
   const handleCrimeChange = (crimeId: string) => {
     onSelectCrime(crimeId);
     form.setValue("crimeId", crimeId);
     form.setValue("qualificadoraId", undefined);
     const crime = crimesData.find((c) => c.id === crimeId);
     if (crime) {
-      form.setValue("penaBase", crime.penaMinimaMeses);
+      form.setValue("penaBase", crime.penaMinimaMeses ?? 0);
       onSelectQualificadora(undefined);
     }
   };
@@ -117,7 +125,7 @@ export function PhaseOne({
       );
       form.setValue(
         "penaBase",
-        qualificadora?.penaMinimaMeses ?? selectedCrime.penaMinimaMeses
+        qualificadora?.penaMinimaMeses ?? selectedCrime.penaMinimaMeses ?? 0
       );
     }
   };
@@ -146,34 +154,58 @@ export function PhaseOne({
           className="space-y-6 p-1 md:p-0"
         >
           <CardContent className="space-y-6">
-            <FormItem>
+            <FormItem className="flex flex-col">
               <FormLabel>Crime</FormLabel>
-              <Controller
-                name="crimeId"
-                control={form.control}
-                render={({ field }) => (
-                  <Select
-                    value={field.value || ""}
-                    onValueChange={handleCrimeChange}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o crime" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {crimesData.map((crime) => (
-                        <SelectItem key={crime.id} value={crime.id}>
-                          {crime.nome} (Art. {crime.artigo})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FormMessage>
-                {form.formState.errors.crimeId?.message}
-              </FormMessage>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-full justify-between",
+                        !selectedCrime && "text-muted-foreground"
+                      )}
+                    >
+                      {selectedCrime
+                        ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
+                        : "Selecione o crime"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                  <Command>
+                    <CommandInput placeholder="Buscar crime..." />
+                    <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
+                    <CommandGroup>
+                      <CommandList>
+                        {crimesData.map((crime) => (
+                          <CommandItem
+                            value={`${crime.nome} ${crime.artigo}`}
+                            key={crime.id}
+                            onSelect={() => {
+                              handleCrimeChange(crime.id);
+                              setOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                crime.id === selectedCrime?.id
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {crime.nome} (Art. {crime.artigo})
+                          </CommandItem>
+                        ))}
+                      </CommandList>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
             </FormItem>
 
             {selectedCrime &&
@@ -227,7 +259,7 @@ export function PhaseOne({
                       />
                     )}
                   />
-                  {activePena && (
+                  {activePena && activePena.penaMinimaMeses !== null && (
                     <FormDescription>
                       Pena entre {activePena.penaMinimaMeses} (mínima) e{" "}
                       {activePena.penaMaximaMeses} (máxima).

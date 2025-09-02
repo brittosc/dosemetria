@@ -9,6 +9,7 @@ import {
   calculatePhaseThree,
   Causa,
   CausaAplicada,
+  calculateFinalDate,
 } from "@/lib/calculations";
 
 // --- TIPOS E INTERFACES ---
@@ -20,7 +21,7 @@ export interface DosimetryState {
     penaBase: number;
     circunstanciasJudiciais: string[];
     dataCrime?: Date;
-    selectedQualificadoraId?: string; // Adicionado
+    selectedQualificadoraId?: string;
   };
   phaseTwoData: {
     agravantes: string[];
@@ -29,17 +30,19 @@ export interface DosimetryState {
   phaseThreeData: {
     causasAumento: CausaAplicada[];
     causasDiminuicao: CausaAplicada[];
+    diasMulta: number;
   };
   results: {
     penaPrimeiraFase?: number;
     penaProvisoria?: number;
     penaDefinitiva?: number;
+    dataFinalPena?: Date;
   };
 }
 
 type Action =
   | { type: "SET_CRIME"; payload: string }
-  | { type: "SET_QUALIFICADORA"; payload: string | undefined } // Adicionado
+  | { type: "SET_QUALIFICADORA"; payload: string | undefined }
   | {
       type: "UPDATE_PHASE_ONE";
       payload: Partial<DosimetryState["phaseOneData"]>;
@@ -66,7 +69,7 @@ const initialState: DosimetryState = {
     selectedQualificadoraId: undefined,
   },
   phaseTwoData: { agravantes: [], atenuantes: [] },
-  phaseThreeData: { causasAumento: [], causasDiminuicao: [] },
+  phaseThreeData: { causasAumento: [], causasDiminuicao: [], diasMulta: 0 },
   results: {},
 };
 
@@ -165,7 +168,14 @@ function dosimetryReducer(
           state.phaseThreeData.causasDiminuicao,
           causasDataRaw as Causa[]
         );
-        return { ...state, results: { ...state.results, penaDefinitiva } };
+        const dataFinalPena = calculateFinalDate(
+          state.phaseOneData.dataCrime || new Date(),
+          penaDefinitiva
+        );
+        return {
+          ...state,
+          results: { ...state.results, penaDefinitiva, dataFinalPena },
+        };
       }
       return state;
     }

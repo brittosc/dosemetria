@@ -12,11 +12,19 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { state, actions, crimesData, selectedCrime, causasData } =
     useDosimetryCalculator();
   const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState("calculo");
+
+  useEffect(() => {
+    if (isMobile && state.results.penaDefinitiva != null) {
+      setActiveTab("resumo");
+    }
+  }, [isMobile, state.results.penaDefinitiva]);
 
   const handlePhaseOneSubmit = (data: PhaseOneFormValues) => {
     actions.updatePhaseOne({
@@ -125,7 +133,7 @@ export default function Home() {
             Reiniciar
           </Button>
         </div>
-        <Tabs defaultValue="calculo" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="calculo">Cálculo</TabsTrigger>
             <TabsTrigger value="resumo">Resumo</TabsTrigger>

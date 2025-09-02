@@ -152,3 +152,12 @@ export function formatPena(totalMeses: number): string {
 
   return parts.join(", ");
 }
+
+export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
+  const finalDate = new Date(startDate);
+  finalDate.setMonth(finalDate.getMonth() + Math.floor(totalMeses));
+  const decimalPart = totalMeses - Math.floor(totalMeses);
+  const daysToAdd = Math.round(decimalPart * 30);
+  finalDate.setDate(finalDate.getDate() + daysToAdd);
+  return finalDate;
+}
