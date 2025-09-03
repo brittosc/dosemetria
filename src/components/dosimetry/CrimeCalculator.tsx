@@ -138,7 +138,10 @@ export function CrimeCalculator({
               </CardContent>
               <CardFooter className="flex justify-between mt-4">
                 <div>{removeButton}</div>
-                <Button onClick={() => handleUpdateAndAdvance(2)}>
+                <Button
+                  onClick={() => handleUpdateAndAdvance(2)}
+                  disabled={!selectedCrime}
+                >
                   Avançar para 2ª Fase
                 </Button>
               </CardFooter>
@@ -150,6 +153,7 @@ export function CrimeCalculator({
               <CardContent className="space-y-8 pt-6">
                 <PhaseTwoContent form={form} />
               </CardContent>
+              {/* CORREÇÃO APLICADA AQUI */}
               <CardFooter className="flex justify-between mt-4">
                 <div className="flex gap-2">
                   <Button
