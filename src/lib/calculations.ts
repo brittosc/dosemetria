@@ -215,3 +215,26 @@ export function calculateRegimeInicial(
   }
   return reincidente ? "Semiaberto" : "Aberto";
 }
+
+export function canSubstituirPena(
+  pena: number,
+  reincidente: boolean,
+  crimeComViolenciaOuGraveAmeaca: boolean
+): boolean {
+  const anos = pena / 12;
+  if (crimeComViolenciaOuGraveAmeaca) return false;
+  if (anos > 4) return false;
+  if (reincidente) return false; // Simplificado. A reincidência específica em crime doloso impede.
+  return true;
+}
+
+export function canSursis(
+  pena: number,
+  reincidenteEmCrimeDoloso: boolean
+): boolean {
+  const anos = pena / 12;
+  if (anos > 2) return false;
+  if (reincidenteEmCrimeDoloso) return false;
+  // Faltaria a análise das circunstâncias do Art. 59, mas simplificamos aqui.
+  return true;
+}

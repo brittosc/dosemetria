@@ -32,7 +32,6 @@ export function useDosimetryCalculator() {
       updateCrime: (
         payload: Partial<DosimetryState["crimes"][0]> & { id: string }
       ) => dispatch({ type: "UPDATE_CRIME", payload }),
-      calculateAll: () => dispatch({ type: "CALCULATE_ALL" }),
       reset: () => dispatch({ type: "RESET" }),
     }),
     [dispatch]

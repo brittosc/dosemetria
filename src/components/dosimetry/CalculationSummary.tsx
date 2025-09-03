@@ -1,13 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -346,16 +339,6 @@ export function CalculationSummary() {
           </>
         )}
       </CardContent>
-      {state.crimes.length > 0 && (
-        <CardFooter>
-          <Button
-            onClick={() => dispatch({ type: "CALCULATE_ALL" })}
-            className="w-full"
-          >
-            Calcular Pena Final
-          </Button>
-        </CardFooter>
-      )}
     </Card>
   );
 }

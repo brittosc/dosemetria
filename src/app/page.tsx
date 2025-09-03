@@ -4,14 +4,11 @@ import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { CrimeCalculator } from "@/components/dosimetry/CrimeCalculator";
 import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Home() {
   const { state, dispatch } = useDosimetryCalculator();
-  const isMobile = useIsMobile();
-  const [, setActiveTab] = useState("calculo");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,9 +16,6 @@ export default function Home() {
 
   const handleReset = () => {
     dispatch({ type: "RESET" });
-    if (isMobile) {
-      setActiveTab("calculo");
-    }
   };
 
   return (

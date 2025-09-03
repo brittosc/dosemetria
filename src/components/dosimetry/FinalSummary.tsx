@@ -30,13 +30,25 @@ export function FinalSummary() {
           <p className="font-semibold">
             Substituição por Pena Restritiva de Direitos:
           </p>
-          <p>{finalResults.podeSubstituir ? "Sim" : "Não"}</p>
+          <p>
+            {finalResults.podeSubstituir === undefined
+              ? "--"
+              : finalResults.podeSubstituir
+              ? "Sim"
+              : "Não"}
+          </p>
         </div>
         <div>
           <p className="font-semibold">
             Suspensão Condicional da Pena (Sursis):
           </p>
-          <p>{finalResults.podeSursis ? "Sim" : "Não"}</p>
+          <p>
+            {finalResults.podeSursis === undefined
+              ? "--"
+              : finalResults.podeSursis
+              ? "Sim"
+              : "Não"}
+          </p>
         </div>
         {finalResults.dataFinalPena && (
           <div>
