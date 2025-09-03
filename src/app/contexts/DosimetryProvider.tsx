@@ -16,6 +16,8 @@ import {
   CausaAplicada,
   Circunstancia,
   calculateConcursoMaterial,
+  calculateConcursoFormal,
+  calculateCrimeContinuado,
   calculateRegimeInicial,
   canSubstituirPena,
   canSursis,
@@ -25,7 +27,7 @@ import {
 // --- TIPOS E INTERFACES ---
 
 export interface CrimeState {
-  id: string; // unique id for the crime instance
+  id: string;
   crimeId?: string;
   penaBase: number;
   circunstanciasJudiciais: Circunstancia[];
@@ -48,13 +50,13 @@ export interface DosimetryState {
     dias: number;
   };
   concurso: "material" | "formal" | "continuado";
+  aumentoConcurso: string;
   finalResults: {
     penaTotal?: number;
     regimeInicial?: string;
     podeSubstituir?: boolean;
     podeSursis?: boolean;
     dataFinalPena?: Date;
-    totalMulta?: number;
   };
 }
 
@@ -63,11 +65,12 @@ type Action =
   | { type: "REMOVE_CRIME"; payload: string }
   | { type: "UPDATE_CRIME"; payload: Partial<CrimeState> & { id: string } }
   | { type: "UPDATE_CONCURSO"; payload: "material" | "formal" | "continuado" }
+  | { type: "UPDATE_AUMENTO_CONCURSO"; payload: string }
   | {
       type: "UPDATE_DETRACAO";
       payload: { anos: number; meses: number; dias: number };
     }
-  | { type: "RECALCULATE_FINALS" } // Nova ação para recalcular
+  | { type: "RECALCULATE_FINALS" }
   | { type: "RESET" };
 
 const initialCrimeState: Omit<CrimeState, "id"> = {
@@ -89,6 +92,7 @@ const initialState: DosimetryState = {
   crimes: [],
   detracao: { anos: 0, meses: 0, dias: 0 },
   concurso: "material",
+  aumentoConcurso: "1/6",
   finalResults: {},
 };
 
@@ -143,7 +147,6 @@ function dosimetryReducer(
       const updatedCrimes = state.crimes.map((crime) =>
         crime.id === action.payload.id ? { ...crime, ...action.payload } : crime
       );
-      // Recalcula as penas para o crime atualizado
       const calculatedCrimes = updatedCrimes.map((crime) =>
         crime.id === action.payload.id ? calculateCrimePens(crime) : crime
       );
@@ -154,10 +157,31 @@ function dosimetryReducer(
     }
     case "UPDATE_CONCURSO":
       return { ...state, concurso: action.payload };
+    case "UPDATE_AUMENTO_CONCURSO":
+      return { ...state, aumentoConcurso: action.payload };
     case "UPDATE_DETRACAO":
       return { ...state, detracao: action.payload };
     case "RECALCULATE_FINALS": {
-      const penaTotalBruta = calculateConcursoMaterial(state.crimes);
+      let penaTotalBruta = 0;
+      switch (state.concurso) {
+        case "formal":
+          penaTotalBruta = calculateConcursoFormal(
+            state.crimes,
+            state.aumentoConcurso
+          );
+          break;
+        case "continuado":
+          penaTotalBruta = calculateCrimeContinuado(
+            state.crimes,
+            state.aumentoConcurso
+          );
+          break;
+        case "material":
+        default:
+          penaTotalBruta = calculateConcursoMaterial(state.crimes);
+          break;
+      }
+
       const detracaoEmMeses =
         state.detracao.anos * 12 +
         state.detracao.meses +
@@ -167,7 +191,6 @@ function dosimetryReducer(
       const reincidente = state.crimes.some((c) =>
         c.agravantes.some((a) => a.id === "reincidencia")
       );
-      // Simplificado: considera violência se qualquer crime for violento
       const crimeComViolenciaOuGraveAmeaca = state.crimes.length > 0;
 
       const regimeInicial = calculateRegimeInicial(penaTotal, reincidente);
@@ -213,10 +236,9 @@ export const DosimetryContext = createContext<DosimetryContextType>({
 export function DosimetryProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(dosimetryReducer, initialState);
 
-  // Efeito para recalcular os resultados finais sempre que o estado relevante mudar
   useEffect(() => {
     dispatch({ type: "RECALCULATE_FINALS" });
-  }, [state.crimes, state.detracao, state.concurso]);
+  }, [state.crimes, state.detracao, state.concurso, state.aumentoConcurso]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

@@ -25,6 +25,7 @@ export type Circunstancia = {
 };
 
 function parseFraction(fracao: string): number {
+  if (!fracao || typeof fracao !== "string") return 0;
   const parts = fracao.split("/");
   if (parts.length === 2) {
     const numerator = parseInt(parts[0], 10);
@@ -35,10 +36,7 @@ function parseFraction(fracao: string): number {
   }
   return 0; // Retorna 0 se a fração for inválida
 }
-/**
- * Calcula a pena-base considerando as circunstâncias judiciais.
- * Aumenta a pena em 1/6 da pena-base para cada circunstância desfavorável.
- */
+
 export function calculatePhaseOne(
   penaBase: number,
   circunstancias: Circunstancia[]
@@ -50,10 +48,6 @@ export function calculatePhaseOne(
   return penaBase + aumentoTotal;
 }
 
-/**
- * Calcula a pena provisória aplicando agravantes e atenuantes.
- * Aumenta ou diminui a pena em 1/6 para cada fator, com base na pena da primeira fase.
- */
 export function calculatePhaseTwo(
   penaPrimeiraFase: number,
   agravantes: Circunstancia[],
@@ -76,10 +70,6 @@ export function calculatePhaseTwo(
   return penaProvisoria;
 }
 
-/**
- * Calcula a pena definitiva aplicando causas de aumento e diminuição
- * em cascata sobre a pena provisória.
- */
 export function calculatePhaseThree(
   penaProvisoria: number,
   causasAumento: CausaAplicada[],
@@ -149,9 +139,6 @@ export function calculatePhaseThree(
   return penaAtual;
 }
 
-/**
- * Formata o valor da pena (em meses) para exibição em anos, meses e dias.
- */
 export function formatPena(totalMeses: number): string {
   if (totalMeses === null || totalMeses === undefined || totalMeses < 0) {
     return "--";
@@ -189,18 +176,33 @@ export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
   return finalDate;
 }
 
-export function calculateMulta(
-  diasMulta: number,
-  valorDiaMulta: number,
-  salarioMinimo: number
-): number {
-  return diasMulta * valorDiaMulta * salarioMinimo;
-}
+// --- Funções de Concurso de Crimes ---
 
-// Novas Funções
 export function calculateConcursoMaterial(crimes: CrimeState[]): number {
   return crimes.reduce((acc, crime) => acc + (crime.penaDefinitiva || 0), 0);
 }
+
+export function calculateConcursoFormal(
+  crimes: CrimeState[],
+  fracaoAumento: string
+): number {
+  if (crimes.length === 0) return 0;
+  const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
+  const aumento = parseFraction(fracaoAumento);
+  return penaMaisGrave + penaMaisGrave * aumento;
+}
+
+export function calculateCrimeContinuado(
+  crimes: CrimeState[],
+  fracaoAumento: string
+): number {
+  if (crimes.length === 0) return 0;
+  const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
+  const aumento = parseFraction(fracaoAumento);
+  return penaMaisGrave + penaMaisGrave * aumento;
+}
+
+// --- Funções de Análise de Benefícios ---
 
 export function calculateRegimeInicial(
   pena: number,
@@ -224,7 +226,7 @@ export function canSubstituirPena(
   const anos = pena / 12;
   if (crimeComViolenciaOuGraveAmeaca) return false;
   if (anos > 4) return false;
-  if (reincidente) return false; // Simplificado. A reincidência específica em crime doloso impede.
+  if (reincidente) return false;
   return true;
 }
 
@@ -235,6 +237,5 @@ export function canSursis(
   const anos = pena / 12;
   if (anos > 2) return false;
   if (reincidenteEmCrimeDoloso) return false;
-  // Faltaria a análise das circunstâncias do Art. 59, mas simplificamos aqui.
   return true;
 }

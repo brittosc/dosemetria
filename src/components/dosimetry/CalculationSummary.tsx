@@ -115,8 +115,18 @@ const atenuantesOptions = [
   },
 ];
 
+// Frações corretas para cada tipo de concurso
+const fracoesConcursoFormal = ["1/6", "1/2"];
+const fracoesCrimeContinuado = ["1/6", "2/3"];
+
 export function CalculationSummary() {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
+
+  const fracoesDisponiveis =
+    state.concurso === "formal"
+      ? fracoesConcursoFormal
+      : fracoesCrimeContinuado;
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -282,12 +292,45 @@ export function CalculationSummary() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="material">Material</SelectItem>
-                  <SelectItem value="formal">Formal</SelectItem>
-                  <SelectItem value="continuado">Crime Continuado</SelectItem>
+                  <SelectItem value="material">
+                    Material (soma as penas)
+                  </SelectItem>
+                  <SelectItem value="formal">
+                    Formal (aumenta a pena mais grave)
+                  </SelectItem>
+                  <SelectItem value="continuado">
+                    Crime Continuado (aumenta a pena mais grave)
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
+            {state.concurso !== "material" && (
+              <div className="space-y-2">
+                <Label>Fração de Aumento do Concurso</Label>
+                <Select
+                  value={state.aumentoConcurso}
+                  onValueChange={(value) =>
+                    dispatch({
+                      type: "UPDATE_AUMENTO_CONCURSO",
+                      payload: value,
+                    })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {fracoesDisponiveis.map((fracao) => (
+                      <SelectItem key={fracao} value={fracao}>
+                        {fracao}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label>Detração</Label>
               <div className="flex gap-2">
@@ -300,7 +343,7 @@ export function CalculationSummary() {
                       type: "UPDATE_DETRACAO",
                       payload: {
                         ...state.detracao,
-                        anos: Number(e.target.value),
+                        anos: Number(e.target.value) || 0,
                       },
                     })
                   }
@@ -314,7 +357,7 @@ export function CalculationSummary() {
                       type: "UPDATE_DETRACAO",
                       payload: {
                         ...state.detracao,
-                        meses: Number(e.target.value),
+                        meses: Number(e.target.value) || 0,
                       },
                     })
                   }
@@ -328,7 +371,7 @@ export function CalculationSummary() {
                       type: "UPDATE_DETRACAO",
                       payload: {
                         ...state.detracao,
-                        dias: Number(e.target.value),
+                        dias: Number(e.target.value) || 0,
                       },
                     })
                   }
