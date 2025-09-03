@@ -1,23 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChevronsUpDown, X } from "lucide-react";
-
-import { Causa, formatPena } from "@/lib/calculations";
+import { useState } from "react";
+import { useWatch, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ChevronsUpDown, X } from "lucide-react";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import {
   Command,
   CommandEmpty,
@@ -26,65 +24,35 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../ui/drawer";
-import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { toast } from "sonner";
+import { Causa, CausaAplicada } from "@/lib/calculations";
+import { Label } from "../ui/label";
+import { Badge } from "../ui/badge";
+import { CrimeState } from "@/app/contexts/DosimetryProvider";
 
-type CausaAplicada = {
-  id: string;
-  valorAplicado: number | string;
-};
-
-export interface PhaseThreeFormValues {
-  causasAumento: CausaAplicada[];
-  causasDiminuicao: CausaAplicada[];
+interface PhaseThreeContentProps {
+  form: UseFormReturn<CrimeState>;
+  causasData: Causa[];
+  isMobile: boolean;
 }
 
-type PhaseThreeProps = {
-  initialValues: PhaseThreeFormValues;
-  penaProvisoria: number;
-  causasData: Causa[];
-  onGoBack: () => void;
-  setActiveTab: (value: string) => void;
-};
-
-export function PhaseThree({
-  initialValues,
-  penaProvisoria,
+export const PhaseThreeContent = ({
+  form,
   causasData,
-  onGoBack,
-  setActiveTab,
-}: PhaseThreeProps) {
-  const { actions } = useDosimetryCalculator();
+  isMobile,
+}: PhaseThreeContentProps) => {
   const [openAumento, setOpenAumento] = useState(false);
   const [openDiminuicao, setOpenDiminuicao] = useState(false);
-  const isMobile = useIsMobile();
 
-  const [causasAumento, setCausasAumento] = useState<CausaAplicada[]>(
-    initialValues.causasAumento || []
-  );
-  const [causasDiminuicao, setCausasDiminuicao] = useState<CausaAplicada[]>(
-    initialValues.causasDiminuicao || []
-  );
-
-  useEffect(() => {
-    actions.updatePhaseThree({ causasAumento, causasDiminuicao });
-  }, [causasAumento, causasDiminuicao, actions]);
+  const causasAumento =
+    useWatch({ control: form.control, name: "causasAumento" }) || [];
+  const causasDiminuicao =
+    useWatch({ control: form.control, name: "causasDiminuicao" }) || [];
 
   const handleSelectCausa = (
     causaId: string,
     tipo: "aumento" | "diminuicao"
   ) => {
-    const causa = causasData.find((c) => c.id === causaId);
+    const causa = causasData.find((c: Causa) => c.id === causaId);
     if (!causa) return;
 
     let valorAplicado: string | number = 0.5; // Default value
@@ -99,10 +67,10 @@ export function PhaseThree({
     const novaCausa: CausaAplicada = { id: causa.id, valorAplicado };
 
     if (tipo === "aumento") {
-      setCausasAumento((prev) => [...prev, novaCausa]);
+      form.setValue("causasAumento", [...causasAumento, novaCausa]);
       setOpenAumento(false);
     } else {
-      setCausasDiminuicao((prev) => [...prev, novaCausa]);
+      form.setValue("causasDiminuicao", [...causasDiminuicao, novaCausa]);
       setOpenDiminuicao(false);
     }
   };
@@ -112,9 +80,15 @@ export function PhaseThree({
     tipo: "aumento" | "diminuicao"
   ) => {
     if (tipo === "aumento") {
-      setCausasAumento((prev) => prev.filter((c) => c.id !== causaId));
+      form.setValue(
+        "causasAumento",
+        causasAumento.filter((c: CausaAplicada) => c.id !== causaId)
+      );
     } else {
-      setCausasDiminuicao((prev) => prev.filter((c) => c.id !== causaId));
+      form.setValue(
+        "causasDiminuicao",
+        causasDiminuicao.filter((c: CausaAplicada) => c.id !== causaId)
+      );
     }
   };
 
@@ -124,23 +98,31 @@ export function PhaseThree({
     value: string
   ) => {
     if (tipo === "aumento") {
-      setCausasAumento((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, valorAplicado: value } : c))
+      form.setValue(
+        "causasAumento",
+        causasAumento.map((c: CausaAplicada) =>
+          c.id === id ? { ...c, valorAplicado: value } : c
+        )
       );
     } else {
-      setCausasDiminuicao((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, valorAplicado: value } : c))
+      form.setValue(
+        "causasDiminuicao",
+        causasDiminuicao.map((c: CausaAplicada) =>
+          c.id === id ? { ...c, valorAplicado: value } : c
+        )
       );
     }
   };
 
   const availableAumentos = causasData.filter(
-    (c) => c.tipo === "aumento" && !causasAumento.some((sel) => sel.id === c.id)
+    (c: Causa) =>
+      c.tipo === "aumento" &&
+      !causasAumento.some((sel: CausaAplicada) => sel.id === c.id)
   );
   const availableDiminuicoes = causasData.filter(
-    (c) =>
+    (c: Causa) =>
       c.tipo === "diminuicao" &&
-      !causasDiminuicao.some((sel) => sel.id === c.id)
+      !causasDiminuicao.some((sel: CausaAplicada) => sel.id === c.id)
   );
 
   const renderCommandList = (tipo: "aumento" | "diminuicao") => (
@@ -150,7 +132,7 @@ export function PhaseThree({
         <CommandEmpty>Nenhuma causa encontrada.</CommandEmpty>
         <CommandGroup>
           {(tipo === "aumento" ? availableAumentos : availableDiminuicoes).map(
-            (causa) => (
+            (causa: Causa) => (
               <CommandItem
                 key={causa.id}
                 onSelect={() => handleSelectCausa(causa.id, tipo)}
@@ -244,118 +226,79 @@ export function PhaseThree({
     return null;
   };
 
-  const handleFinalizeAndSwitch = () => {
-    actions.calculateAndProceed();
-    toast.success("Cálculo Finalizado!", {
-      description: "A pena definitiva foi calculada com sucesso.",
-    });
-    setActiveTab("resumo");
-  };
-
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>3ª Fase: Cálculo da Pena Definitiva</CardTitle>
-        <CardDescription>
-          Aplique as causas de aumento e diminuição sobre a pena provisória de:
-          <span className="font-bold"> {formatPena(penaProvisoria)}</span>.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-8">
+    <>
+      <div className="space-y-4">
+        <Label className="text-base font-semibold">
+          Causas de Aumento de Pena
+        </Label>
+        <CausaSelector tipo="aumento" />
         <div className="space-y-4">
-          <Label className="text-base font-semibold">
-            Causas de Aumento de Pena
-          </Label>
-          <CausaSelector tipo="aumento" />
-          <div className="space-y-4">
-            {causasAumento.map((ca) => {
-              const causaInfo = causasData.find((c) => c.id === ca.id);
-              if (!causaInfo) return null;
-              return (
-                <div key={ca.id} className="p-3 border rounded-md space-y-3">
-                  <div className="flex justify-between items-start">
-                    <Badge
-                      variant="destructive"
-                      className="whitespace-normal h-auto text-wrap"
-                    >
-                      {causaInfo.descricao}
-                    </Badge>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveCausa(ca.id, "aumento")}
-                      className="-mt-1"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
-                  {renderFractionButtons(causaInfo, ca, "aumento")}
+          {causasAumento.map((ca: CausaAplicada) => {
+            const causaInfo = causasData.find((c: Causa) => c.id === ca.id);
+            if (!causaInfo) return null;
+            return (
+              <div key={ca.id} className="p-3 border rounded-md space-y-3">
+                <div className="flex justify-between items-start">
+                  <Badge
+                    variant="destructive"
+                    className="whitespace-normal h-auto text-wrap"
+                  >
+                    {causaInfo.descricao}
+                  </Badge>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveCausa(ca.id, "aumento")}
+                    className="-mt-1"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
-              );
-            })}
-          </div>
+                <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
+                {renderFractionButtons(causaInfo, ca, "aumento")}
+              </div>
+            );
+          })}
         </div>
+      </div>
 
+      <div className="space-y-4">
+        <Label className="text-base font-semibold">
+          Causas de Diminuição de Pena
+        </Label>
+        <CausaSelector tipo="diminuicao" />
         <div className="space-y-4">
-          <Label className="text-base font-semibold">
-            Causas de Diminuição de Pena
-          </Label>
-          <CausaSelector tipo="diminuicao" />
-          <div className="space-y-4">
-            {causasDiminuicao.map((ca) => {
-              const causaInfo = causasData.find((c) => c.id === ca.id);
-              if (!causaInfo) return null;
-              return (
-                <div key={ca.id} className="p-3 border rounded-md space-y-3">
-                  <div className="flex justify-between items-start">
-                    <Badge
-                      variant="secondary"
-                      className="whitespace-normal h-auto text-wrap"
-                    >
-                      {causaInfo.descricao}
-                    </Badge>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveCausa(ca.id, "diminuicao")}
-                      className="-mt-1"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
-                  {renderFractionButtons(causaInfo, ca, "diminuicao")}
+          {causasDiminuicao.map((ca: CausaAplicada) => {
+            const causaInfo = causasData.find((c: Causa) => c.id === ca.id);
+            if (!causaInfo) return null;
+            return (
+              <div key={ca.id} className="p-3 border rounded-md space-y-3">
+                <div className="flex justify-between items-start">
+                  <Badge
+                    variant="secondary"
+                    className="whitespace-normal h-auto text-wrap"
+                  >
+                    {causaInfo.descricao}
+                  </Badge>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveCausa(ca.id, "diminuicao")}
+                    className="-mt-1"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
-              );
-            })}
-          </div>
+                <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
+                {renderFractionButtons(causaInfo, ca, "diminuicao")}
+              </div>
+            );
+          })}
         </div>
-      </CardContent>
-      <CardFooter className="flex flex-col md:flex-row gap-2 justify-between">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onGoBack}
-          className="w-full md:w-auto"
-        >
-          Voltar para 2ª Fase
-        </Button>
-        {isMobile ? (
-          <Button
-            onClick={handleFinalizeAndSwitch}
-            className="w-full md:w-auto"
-          >
-            Finalizar Cálculo
-          </Button>
-        ) : (
-          <Button type="button" className="w-full md:w-auto" disabled>
-            Exportar (em breve)
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
+      </div>
+    </>
   );
-}
+};

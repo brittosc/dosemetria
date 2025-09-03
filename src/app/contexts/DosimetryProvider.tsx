@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useReducer, useMemo, ReactNode } from "react";
-import crimesData from "@/app/data/crimes.json";
 import causasDataRaw from "@/app/data/causas.json";
 import {
   calculatePhaseOne,
@@ -9,77 +8,104 @@ import {
   calculatePhaseThree,
   Causa,
   CausaAplicada,
-  calculateFinalDate,
   Circunstancia,
+  calculateConcursoMaterial,
+  calculateRegimeInicial,
 } from "@/lib/calculations";
 
 // --- TIPOS E INTERFACES ---
 
+export interface CrimeState {
+  id: string; // unique id for the crime instance
+  crimeId?: string;
+  penaBase: number;
+  circunstanciasJudiciais: Circunstancia[];
+  dataCrime?: Date;
+  selectedQualificadoraId?: string;
+  agravantes: Circunstancia[];
+  atenuantes: Circunstancia[];
+  causasAumento: CausaAplicada[];
+  causasDiminuicao: CausaAplicada[];
+  penaPrimeiraFase?: number;
+  penaProvisoria?: number;
+  penaDefinitiva?: number;
+}
+
 export interface DosimetryState {
-  currentPhase: number;
-  selectedCrimeId?: string;
-  phaseOneData: {
-    penaBase: number;
-    circunstanciasJudiciais: Circunstancia[];
-    dataCrime?: Date;
-    selectedQualificadoraId?: string;
+  crimes: CrimeState[];
+  detracao: {
+    anos: number;
+    meses: number;
+    dias: number;
   };
-  phaseTwoData: {
-    agravantes: Circunstancia[];
-    atenuantes: Circunstancia[];
-  };
-  phaseThreeData: {
-    causasAumento: CausaAplicada[];
-    causasDiminuicao: CausaAplicada[];
-    diasMulta: number;
-    valorDiaMulta: number;
-  };
-  results: {
-    penaPrimeiraFase?: number;
-    penaProvisoria?: number;
-    penaDefinitiva?: number;
+  concurso: "material" | "formal" | "continuado";
+  finalResults: {
+    penaTotal?: number;
+    regimeInicial?: string;
+    podeSubstituir?: boolean;
+    podeSursis?: boolean;
     dataFinalPena?: Date;
     totalMulta?: number;
   };
 }
 
 type Action =
-  | { type: "SET_CRIME"; payload: string }
-  | { type: "SET_QUALIFICADORA"; payload: string | undefined }
+  | { type: "ADD_CRIME" }
+  | { type: "REMOVE_CRIME"; payload: string }
+  | { type: "UPDATE_CRIME"; payload: Partial<CrimeState> & { id: string } }
+  | { type: "UPDATE_CONCURSO"; payload: "material" | "formal" | "continuado" }
   | {
-      type: "UPDATE_PHASE_ONE";
-      payload: Partial<DosimetryState["phaseOneData"]>;
+      type: "UPDATE_DETRACAO";
+      payload: { anos: number; meses: number; dias: number };
     }
-  | {
-      type: "UPDATE_PHASE_TWO";
-      payload: Partial<DosimetryState["phaseTwoData"]>;
-    }
-  | {
-      type: "UPDATE_PHASE_THREE";
-      payload: Partial<DosimetryState["phaseThreeData"]>;
-    }
-  | { type: "CALCULATE_AND_PROCEED" }
-  | { type: "GO_TO_PHASE"; payload: number }
+  | { type: "CALCULATE_ALL" }
   | { type: "RESET" };
 
-const initialState: DosimetryState = {
-  currentPhase: 1,
-  selectedCrimeId: undefined,
-  phaseOneData: {
-    penaBase: 0,
-    circunstanciasJudiciais: [],
-    dataCrime: new Date(),
-    selectedQualificadoraId: undefined,
-  },
-  phaseTwoData: { agravantes: [], atenuantes: [] },
-  phaseThreeData: {
-    causasAumento: [],
-    causasDiminuicao: [],
-    diasMulta: 10,
-    valorDiaMulta: 1 / 30,
-  },
-  results: {},
+const initialCrimeState: Omit<CrimeState, "id"> = {
+  crimeId: undefined,
+  penaBase: 0,
+  circunstanciasJudiciais: [],
+  dataCrime: new Date(),
+  selectedQualificadoraId: undefined,
+  agravantes: [],
+  atenuantes: [],
+  causasAumento: [],
+  causasDiminuicao: [],
+  penaPrimeiraFase: undefined,
+  penaProvisoria: undefined,
+  penaDefinitiva: undefined,
 };
+
+const initialState: DosimetryState = {
+  crimes: [], // Começa com a lista de crimes vazia
+  detracao: { anos: 0, meses: 0, dias: 0 },
+  concurso: "material",
+  finalResults: {},
+};
+
+function calculateCrimePens(crime: CrimeState): CrimeState {
+  const penaPrimeiraFase = calculatePhaseOne(
+    crime.penaBase,
+    crime.circunstanciasJudiciais
+  );
+  const penaProvisoria = calculatePhaseTwo(
+    penaPrimeiraFase,
+    crime.agravantes,
+    crime.atenuantes
+  );
+  const penaDefinitiva = calculatePhaseThree(
+    penaProvisoria,
+    crime.causasAumento,
+    crime.causasDiminuicao,
+    causasDataRaw as Causa[]
+  );
+  return {
+    ...crime,
+    penaPrimeiraFase,
+    penaProvisoria,
+    penaDefinitiva,
+  };
+}
 
 function dosimetryReducer(
   state: DosimetryState,
@@ -87,107 +113,56 @@ function dosimetryReducer(
 ): DosimetryState {
   switch (action.type) {
     case "RESET":
-      return initialState;
-
-    case "SET_CRIME": {
-      const crime = crimesData.find((c) => c.id === action.payload);
       return {
         ...initialState,
-        selectedCrimeId: action.payload,
-        phaseOneData: {
-          ...initialState.phaseOneData,
-          penaBase: crime?.penaMinimaMeses ?? 0,
-        },
+        crimes: [],
       };
-    }
-
-    case "SET_QUALIFICADORA": {
-      const crime = crimesData.find((c) => c.id === state.selectedCrimeId);
-      const qualificadora = crime?.qualificadoras?.find(
-        (q) => q.id === action.payload
+    case "ADD_CRIME":
+      return {
+        ...state,
+        crimes: [
+          ...state.crimes,
+          { id: crypto.randomUUID(), ...initialCrimeState },
+        ],
+      };
+    case "REMOVE_CRIME":
+      return {
+        ...state,
+        crimes: state.crimes.filter((crime) => crime.id !== action.payload),
+      };
+    case "UPDATE_CRIME": {
+      const updatedCrimes = state.crimes.map((crime) =>
+        crime.id === action.payload.id
+          ? calculateCrimePens({ ...crime, ...action.payload })
+          : crime
       );
       return {
         ...state,
-        phaseOneData: {
-          ...state.phaseOneData,
-          selectedQualificadoraId: action.payload,
-          penaBase:
-            qualificadora?.penaMinimaMeses ?? crime?.penaMinimaMeses ?? 0,
+        crimes: updatedCrimes,
+      };
+    }
+    case "UPDATE_CONCURSO":
+      return { ...state, concurso: action.payload };
+    case "UPDATE_DETRACAO":
+      return { ...state, detracao: action.payload };
+    case "CALCULATE_ALL": {
+      const calculatedCrimes = state.crimes.map(calculateCrimePens);
+
+      const penaTotal = calculateConcursoMaterial(calculatedCrimes);
+      const reincidente = calculatedCrimes.some((c) =>
+        c.agravantes.some((a) => a.id === "reincidencia")
+      );
+      const regimeInicial = calculateRegimeInicial(penaTotal, reincidente);
+
+      return {
+        ...state,
+        crimes: calculatedCrimes,
+        finalResults: {
+          penaTotal,
+          regimeInicial,
         },
       };
     }
-
-    case "UPDATE_PHASE_ONE":
-      return {
-        ...state,
-        phaseOneData: { ...state.phaseOneData, ...action.payload },
-      };
-
-    case "UPDATE_PHASE_TWO":
-      return {
-        ...state,
-        phaseTwoData: { ...state.phaseTwoData, ...action.payload },
-      };
-
-    case "UPDATE_PHASE_THREE":
-      return {
-        ...state,
-        phaseThreeData: { ...state.phaseThreeData, ...action.payload },
-      };
-
-    case "GO_TO_PHASE":
-      return { ...state, currentPhase: action.payload };
-
-    case "CALCULATE_AND_PROCEED": {
-      if (state.currentPhase === 1) {
-        const crime = crimesData.find((c) => c.id === state.selectedCrimeId);
-        if (!crime) return state;
-
-        const penaPrimeiraFase = calculatePhaseOne(
-          state.phaseOneData.penaBase,
-          state.phaseOneData.circunstanciasJudiciais
-        );
-        return {
-          ...state,
-          currentPhase: 2,
-          results: { ...state.results, penaPrimeiraFase },
-        };
-      }
-
-      if (state.currentPhase === 2 && state.results.penaPrimeiraFase) {
-        const penaProvisoria = calculatePhaseTwo(
-          state.results.penaPrimeiraFase,
-          state.phaseTwoData.agravantes,
-          state.phaseTwoData.atenuantes
-        );
-        return {
-          ...state,
-          currentPhase: 3,
-          results: { ...state.results, penaProvisoria },
-        };
-      }
-      if (
-        state.currentPhase === 3 &&
-        state.results.penaProvisoria !== undefined
-      ) {
-        const penaDefinitiva = calculatePhaseThree(
-          state.results.penaProvisoria,
-          state.phaseThreeData.causasAumento,
-          state.phaseThreeData.causasDiminuicao,
-          causasDataRaw as Causa[]
-        );
-        const dataFinalPena = calculateFinalDate(
-          state.phaseOneData.dataCrime || new Date(),
-          penaDefinitiva
-        );
-        return {
-          ...state,
-          results: { ...state.results, penaDefinitiva, dataFinalPena },
-        };
-      }
-      return state;
-    }
-
     default:
       return state;
   }

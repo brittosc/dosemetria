@@ -1,0 +1,50 @@
+"use client";
+
+import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
+import { formatPena } from "@/lib/calculations";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+export function FinalSummary() {
+  const { state } = useDosimetryCalculator();
+  const { finalResults } = state;
+
+  return (
+    <Card className="w-full mt-4">
+      <CardHeader>
+        <CardTitle>Resultado Final</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <p className="font-semibold">Pena Total Aplicada:</p>
+          <p className="text-xl font-bold text-green-700">
+            {finalResults.penaTotal != null
+              ? formatPena(finalResults.penaTotal)
+              : "--"}
+          </p>
+        </div>
+        <div>
+          <p className="font-semibold">Regime Inicial de Cumprimento:</p>
+          <p>{finalResults.regimeInicial || "--"}</p>
+        </div>
+        <div>
+          <p className="font-semibold">
+            Substituição por Pena Restritiva de Direitos:
+          </p>
+          <p>{finalResults.podeSubstituir ? "Sim" : "Não"}</p>
+        </div>
+        <div>
+          <p className="font-semibold">
+            Suspensão Condicional da Pena (Sursis):
+          </p>
+          <p>{finalResults.podeSursis ? "Sim" : "Não"}</p>
+        </div>
+        {finalResults.dataFinalPena && (
+          <div>
+            <p className="font-semibold">Data Final da Pena (com detração):</p>
+            <p>{finalResults.dataFinalPena.toLocaleDateString("pt-BR")}</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}

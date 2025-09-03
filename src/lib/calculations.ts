@@ -1,3 +1,5 @@
+import { CrimeState } from "@/app/contexts/DosimetryProvider";
+
 export type Causa = {
   id: string;
   artigo: string;
@@ -193,4 +195,23 @@ export function calculateMulta(
   salarioMinimo: number
 ): number {
   return diasMulta * valorDiaMulta * salarioMinimo;
+}
+
+// Novas Funções
+export function calculateConcursoMaterial(crimes: CrimeState[]): number {
+  return crimes.reduce((acc, crime) => acc + (crime.penaDefinitiva || 0), 0);
+}
+
+export function calculateRegimeInicial(
+  pena: number,
+  reincidente: boolean
+): string {
+  const anos = pena / 12;
+  if (anos > 8) {
+    return "Fechado";
+  }
+  if (anos > 4) {
+    return reincidente ? "Fechado" : "Semiaberto";
+  }
+  return reincidente ? "Semiaberto" : "Aberto";
 }

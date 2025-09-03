@@ -20,25 +20,19 @@ export function useDosimetryCalculator() {
   const { state, dispatch } = context;
 
   const selectedCrime: Crime | undefined = useMemo(
-    () => crimesData.find((crime) => crime.id === state.selectedCrimeId),
-    [state.selectedCrimeId]
+    () => crimesData.find((crime) => crime.id === state.crimes[0]?.crimeId),
+    [state.crimes]
   );
 
   const actions = useMemo(
     () => ({
-      setCrime: (crimeId: string) =>
-        dispatch({ type: "SET_CRIME", payload: crimeId }),
-      setQualificadora: (qualificadoraId?: string) =>
-        dispatch({ type: "SET_QUALIFICADORA", payload: qualificadoraId }),
-      updatePhaseOne: (data: Partial<DosimetryState["phaseOneData"]>) =>
-        dispatch({ type: "UPDATE_PHASE_ONE", payload: data }),
-      updatePhaseTwo: (data: Partial<DosimetryState["phaseTwoData"]>) =>
-        dispatch({ type: "UPDATE_PHASE_TWO", payload: data }),
-      updatePhaseThree: (data: Partial<DosimetryState["phaseThreeData"]>) =>
-        dispatch({ type: "UPDATE_PHASE_THREE", payload: data }),
-      calculateAndProceed: () => dispatch({ type: "CALCULATE_AND_PROCEED" }),
-      goToPhase: (phase: number) =>
-        dispatch({ type: "GO_TO_PHASE", payload: phase }),
+      addCrime: () => dispatch({ type: "ADD_CRIME" }),
+      removeCrime: (id: string) =>
+        dispatch({ type: "REMOVE_CRIME", payload: id }),
+      updateCrime: (
+        payload: Partial<DosimetryState["crimes"][0]> & { id: string }
+      ) => dispatch({ type: "UPDATE_CRIME", payload }),
+      calculateAll: () => dispatch({ type: "CALCULATE_ALL" }),
       reset: () => dispatch({ type: "RESET" }),
     }),
     [dispatch]
@@ -46,5 +40,5 @@ export function useDosimetryCalculator() {
 
   const causasData = causasDataRaw as Causa[];
 
-  return { state, actions, selectedCrime, crimesData, causasData };
+  return { state, dispatch, actions, selectedCrime, crimesData, causasData };
 }
