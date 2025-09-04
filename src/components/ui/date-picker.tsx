@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale"; // Importa o locale PT-BR
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -31,7 +32,11 @@ export function DatePicker({
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Selecione a data</span>}
+          {date ? (
+            format(date, "PPP", { locale: ptBR })
+          ) : (
+            <span>Selecione a data</span>
+          )}{" "}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -40,6 +45,8 @@ export function DatePicker({
           selected={date}
           onSelect={setDate}
           initialFocus
+          locale={ptBR} // Adiciona locale ptBR ao calendário
+          toDate={new Date()} // Desabilita datas futuras
         />
       </PopoverContent>
     </Popover>
