@@ -31,6 +31,7 @@ import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { CrimeSelector } from "./CrimeSelector";
 import { formatPena } from "@/lib/calculations";
 import { toast } from "sonner";
+import { DatePicker } from "../ui/date-picker";
 
 interface PhaseOneContentProps {
   form: UseFormReturn<CrimeState>;
@@ -86,6 +87,17 @@ export const PhaseOneContent = ({
           crimesData={crimesData}
           selectedCrime={selectedCrime}
           onCrimeChange={handleCrimeChange}
+        />
+        <FormMessage />
+      </FormItem>
+      <FormItem className="flex flex-col">
+        <FormLabel>Data do Crime</FormLabel>
+        <Controller
+          name="dataCrime"
+          control={form.control}
+          render={({ field }) => (
+            <DatePicker date={field.value} setDate={field.onChange} />
+          )}
         />
         <FormMessage />
       </FormItem>

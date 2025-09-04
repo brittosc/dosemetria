@@ -79,6 +79,7 @@ export function CrimeCalculator({
       ...crimeState,
       crimeId: crimeId,
       penaBase: crime?.penaMinimaMeses ?? 0,
+      dataCrime: new Date(),
       selectedQualificadoraId: undefined,
       agravantes: [],
       atenuantes: [],
