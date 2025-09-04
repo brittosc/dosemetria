@@ -28,20 +28,20 @@ import { Causa, CausaAplicada } from "@/lib/calculations";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PhaseThreeContentProps {
   form: UseFormReturn<CrimeState>;
   causasData: Causa[];
+  isMobile: boolean; // Propriedade adicionada
 }
 
 export const PhaseThreeContent = ({
   form,
   causasData,
+  isMobile,
 }: PhaseThreeContentProps) => {
   const [openAumento, setOpenAumento] = useState(false);
   const [openDiminuicao, setOpenDiminuicao] = useState(false);
-  const isMobile = useIsMobile();
 
   const causasAumento =
     useWatch({ control: form.control, name: "causasAumento" }) || [];

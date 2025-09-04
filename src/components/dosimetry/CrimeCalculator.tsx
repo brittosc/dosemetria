@@ -13,6 +13,7 @@ import { PhaseOneContent } from "./PhaseOne";
 import { PhaseTwoContent } from "./PhaseTwo";
 import { PhaseThreeContent } from "./PhaseThree";
 import { CausaAplicada, Circunstancia } from "@/lib/calculations";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
@@ -25,14 +26,16 @@ export function CrimeCalculator({
 }: CrimeCalculatorProps) {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
   const [currentPhase, setCurrentPhase] = useState(1);
+  const isMobile = useIsMobile();
 
   const form = useForm<CrimeState>({
     defaultValues: crimeState,
-    mode: "onChange",
   });
 
-  const selectedCrimeId = form.watch("crimeId");
-  const selectedQualificadoraId = form.watch("selectedQualificadoraId");
+  const { watch, reset } = form;
+
+  const selectedCrimeId = watch("crimeId");
+  const selectedQualificadoraId = watch("selectedQualificadoraId");
 
   const selectedCrime = crimesData.find((c: Crime) => c.id === selectedCrimeId);
   const activePena =
@@ -41,32 +44,34 @@ export function CrimeCalculator({
     ) || selectedCrime;
 
   useEffect(() => {
-    const subscription = form.watch((value) => {
-      const {
-        circunstanciasJudiciais = [],
-        agravantes = [],
-        atenuantes = [],
-        causasAumento = [],
-        causasDiminuicao = [],
-        ...rest
-      } = value;
+    const subscription = watch((value) => {
+      const payload = { ...crimeState, ...value };
 
-      const payload = {
-        ...crimeState,
-        ...rest,
-        circunstanciasJudiciais: circunstanciasJudiciais.filter(
-          Boolean
-        ) as Circunstancia[],
-        agravantes: agravantes.filter(Boolean) as Circunstancia[],
-        atenuantes: atenuantes.filter(Boolean) as Circunstancia[],
-        causasAumento: causasAumento.filter(Boolean) as CausaAplicada[],
-        causasDiminuicao: causasDiminuicao.filter(Boolean) as CausaAplicada[],
-      };
+      // Corrigido: Assegura que os arrays são do tipo correto.
+      payload.circunstanciasJudiciais = (
+        payload.circunstanciasJudiciais || []
+      ).filter(Boolean) as Circunstancia[];
+      payload.agravantes = (payload.agravantes || []).filter(
+        Boolean
+      ) as Circunstancia[];
+      payload.atenuantes = (payload.atenuantes || []).filter(
+        Boolean
+      ) as Circunstancia[];
+      payload.causasAumento = (payload.causasAumento || []).filter(
+        Boolean
+      ) as CausaAplicada[];
+      payload.causasDiminuicao = (payload.causasDiminuicao || []).filter(
+        Boolean
+      ) as CausaAplicada[];
 
-      dispatch({ type: "UPDATE_CRIME", payload });
+      // Corrigido: Assegura ao TypeScript que o payload corresponde ao tipo esperado.
+      dispatch({
+        type: "UPDATE_CRIME",
+        payload: payload as Partial<CrimeState> & { id: string },
+      });
     });
     return () => subscription.unsubscribe();
-  }, [form, dispatch, crimeState]);
+  }, [watch, dispatch, crimeState]);
 
   const handleCrimeChange = (crimeId: string) => {
     const crime = crimesData.find((c: Crime) => c.id === crimeId);
@@ -81,7 +86,7 @@ export function CrimeCalculator({
       causasDiminuicao: [],
     };
     dispatch({ type: "UPDATE_CRIME", payload: updatedCrimeState });
-    form.reset(updatedCrimeState);
+    reset(updatedCrimeState);
   };
 
   const handleQualificadoraChange = (qualificadoraId: string) => {
@@ -100,7 +105,7 @@ export function CrimeCalculator({
     };
 
     dispatch({ type: "UPDATE_CRIME", payload: updatedCrimeState });
-    form.reset(updatedCrimeState);
+    reset(updatedCrimeState);
   };
 
   const removeButton = state.crimes.length > 0 && (
@@ -169,7 +174,11 @@ export function CrimeCalculator({
           {currentPhase === 3 && (
             <>
               <CardContent className="space-y-8 pt-6">
-                <PhaseThreeContent form={form} causasData={causasData} />
+                <PhaseThreeContent
+                  form={form}
+                  causasData={causasData}
+                  isMobile={isMobile}
+                />
               </CardContent>
               <CardFooter className="flex justify-between">
                 <div className="flex gap-2">
@@ -190,3 +199,4 @@ export function CrimeCalculator({
     </Card>
   );
 }
+  
