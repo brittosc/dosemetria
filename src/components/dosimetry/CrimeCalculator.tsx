@@ -15,6 +15,7 @@ import { PhaseThreeContent } from "./PhaseThree";
 import { CausaAplicada, Circunstancia } from "@/lib/calculations";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
@@ -107,7 +108,6 @@ export function CrimeCalculator({
     reset(updatedCrimeState);
   };
 
-  // CORREÇÃO APLICADA AQUI
   const handleNextPhase = (nextPhase: number) => {
     const { penaBase } = getValues();
     const min = activePena?.penaMinimaMeses;
@@ -134,80 +134,109 @@ export function CrimeCalculator({
     </Button>
   );
 
+  const phaseVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 20 },
+  };
+
   return (
-    <Card className="w-full">
+    <Card className="w-full overflow-hidden">
       <Form {...form}>
         <form onSubmit={(e) => e.preventDefault()}>
-          {currentPhase === 1 && (
-            <>
-              <CardContent className="space-y-6 pt-6">
-                <PhaseOneContent
-                  form={form}
-                  selectedCrime={selectedCrime}
-                  activePena={activePena}
-                  crimesData={crimesData}
-                  handleCrimeChange={handleCrimeChange}
-                  handleQualificadoraChange={handleQualificadoraChange}
-                />
-              </CardContent>
-              <CardFooter className="flex justify-between mt-4">
-                <div>{removeButton}</div>
-                <Button
-                  onClick={() => handleNextPhase(2)}
-                  disabled={!selectedCrime}
-                >
-                  Avançar para 2ª Fase
-                </Button>
-              </CardFooter>
-            </>
-          )}
-
-          {currentPhase === 2 && (
-            <>
-              <CardContent className="space-y-8 pt-6">
-                <PhaseTwoContent form={form} />
-              </CardContent>
-              <CardFooter className="flex justify-between mt-4">
-                <div className="flex gap-2">
+          <AnimatePresence mode="wait">
+            {currentPhase === 1 && (
+              <motion.div
+                key="phase1"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={phaseVariants}
+                transition={{ duration: 0.3 }}
+              >
+                <CardContent className="space-y-6 pt-6">
+                  <PhaseOneContent
+                    form={form}
+                    selectedCrime={selectedCrime}
+                    activePena={activePena}
+                    crimesData={crimesData}
+                    handleCrimeChange={handleCrimeChange}
+                    handleQualificadoraChange={handleQualificadoraChange}
+                  />
+                </CardContent>
+                <CardFooter className="flex justify-between mt-4">
+                  <div>{removeButton}</div>
                   <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setCurrentPhase(1)}
+                    onClick={() => handleNextPhase(2)}
+                    disabled={!selectedCrime}
                   >
-                    Voltar
+                    Avançar para 2ª Fase
                   </Button>
-                  {removeButton}
-                </div>
-                <Button onClick={() => setCurrentPhase(3)}>
-                  Avançar para 3ª Fase
-                </Button>
-              </CardFooter>
-            </>
-          )}
+                </CardFooter>
+              </motion.div>
+            )}
 
-          {currentPhase === 3 && (
-            <>
-              <CardContent className="space-y-8 pt-6">
-                <PhaseThreeContent
-                  form={form}
-                  causasData={causasData}
-                  isMobile={isMobile}
-                />
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setCurrentPhase(2)}
-                  >
-                    Voltar
+            {currentPhase === 2 && (
+              <motion.div
+                key="phase2"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={phaseVariants}
+                transition={{ duration: 0.3 }}
+              >
+                <CardContent className="space-y-8 pt-6">
+                  <PhaseTwoContent form={form} />
+                </CardContent>
+                <CardFooter className="flex justify-between mt-4">
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setCurrentPhase(1)}
+                    >
+                      Voltar
+                    </Button>
+                    {removeButton}
+                  </div>
+                  <Button onClick={() => setCurrentPhase(3)}>
+                    Avançar para 3ª Fase
                   </Button>
-                  {removeButton}
-                </div>
-              </CardFooter>
-            </>
-          )}
+                </CardFooter>
+              </motion.div>
+            )}
+
+            {currentPhase === 3 && (
+              <motion.div
+                key="phase3"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={phaseVariants}
+                transition={{ duration: 0.3 }}
+              >
+                <CardContent className="space-y-8 pt-6">
+                  <PhaseThreeContent
+                    form={form}
+                    causasData={causasData}
+                    isMobile={isMobile}
+                  />
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setCurrentPhase(2)}
+                    >
+                      Voltar
+                    </Button>
+                    {removeButton}
+                  </div>
+                </CardFooter>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </form>
       </Form>
     </Card>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -41,12 +41,19 @@ export function CrimeSelector({
 }: CrimeSelectorProps) {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
+  const commandListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (open && commandListRef.current) {
+      commandListRef.current.scrollTop = 0;
+    }
+  }, [open]);
 
   const CrimeSelectorContent = () => (
     <Command>
       <CommandInput placeholder="Buscar crime..." />
-      <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
-      <CommandList>
+      <CommandList ref={commandListRef}>
+        <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
         <CommandGroup>
           {crimesData.map((crime: Crime) => (
             <CommandItem
@@ -108,7 +115,7 @@ export function CrimeSelector({
             variant="outline"
             role="combobox"
             className={cn(
-              "w-full justify-between",
+              "w-full justify-between transition-colors duration-300",
               !selectedCrime && "text-muted-foreground"
             )}
           >

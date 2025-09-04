@@ -6,6 +6,7 @@ import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { state, dispatch } = useDosimetryCalculator();
@@ -29,31 +30,49 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-4">
           {state.crimes.length === 0 ? (
-            <Card className="flex flex-col items-center justify-center text-center p-8 border-2 border-dashed">
-              <CardContent className="flex flex-col items-center justify-center">
-                <h2 className="text-xl font-semibold">Comece seu Cálculo</h2>
-                <p className="text-muted-foreground mt-2 mb-4">
-                  Para iniciar a dosimetria, adicione o primeiro crime.
-                </p>
-                <Button onClick={() => dispatch({ type: "ADD_CRIME" })}>
-                  Adicionar Crime
-                </Button>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="flex flex-col items-center justify-center text-center p-8 border-2 border-dashed">
+                <CardContent className="flex flex-col items-center justify-center">
+                  <h2 className="text-xl font-semibold">Comece seu Cálculo</h2>
+                  <p className="text-muted-foreground mt-2 mb-4">
+                    Para iniciar a dosimetria, adicione o primeiro crime.
+                  </p>
+                  <Button onClick={() => dispatch({ type: "ADD_CRIME" })}>
+                    Adicionar Crime
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
           ) : (
             <>
-              {state.crimes.map((crime) => (
-                <CrimeCalculator
+              {state.crimes.map((crime, index) => (
+                <motion.div
                   key={crime.id}
-                  crimeState={crime}
-                  onRemove={() =>
-                    dispatch({ type: "REMOVE_CRIME", payload: crime.id })
-                  }
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <CrimeCalculator
+                    crimeState={crime}
+                    onRemove={() =>
+                      dispatch({ type: "REMOVE_CRIME", payload: crime.id })
+                    }
+                  />
+                </motion.div>
               ))}
-              <Button onClick={() => dispatch({ type: "ADD_CRIME" })}>
-                Adicionar Outro Crime
-              </Button>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: state.crimes.length * 0.1 }}
+              >
+                <Button onClick={() => dispatch({ type: "ADD_CRIME" })}>
+                  Adicionar Outro Crime
+                </Button>
+              </motion.div>
             </>
           )}
         </div>
