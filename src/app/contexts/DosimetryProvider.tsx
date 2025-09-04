@@ -8,6 +8,7 @@ import React, {
   useEffect,
 } from "react";
 import causasDataRaw from "@/app/data/causas.json";
+import crimesDataRaw from "@/app/data/crimes.json";
 import {
   calculatePhaseOne,
   calculatePhaseTwo,
@@ -23,6 +24,7 @@ import {
   canSursis,
   calculateFinalDate,
 } from "@/lib/calculations";
+import { Crime } from "@/types/crime";
 
 // --- TIPOS E INTERFACES ---
 
@@ -50,9 +52,9 @@ export interface DosimetryState {
     dias: number;
   };
   concurso: "material" | "formal" | "continuado";
-  aumentoConcurso: string;
   finalResults: {
     penaTotal?: number;
+    penaParaRegime?: number;
     regimeInicial?: string;
     podeSubstituir?: boolean;
     podeSursis?: boolean;
@@ -65,7 +67,6 @@ type Action =
   | { type: "REMOVE_CRIME"; payload: string }
   | { type: "UPDATE_CRIME"; payload: Partial<CrimeState> & { id: string } }
   | { type: "UPDATE_CONCURSO"; payload: "material" | "formal" | "continuado" }
-  | { type: "UPDATE_AUMENTO_CONCURSO"; payload: string }
   | {
       type: "UPDATE_DETRACAO";
       payload: { anos: number; meses: number; dias: number };
@@ -83,20 +84,24 @@ const initialCrimeState: Omit<CrimeState, "id"> = {
   atenuantes: [],
   causasAumento: [],
   causasDiminuicao: [],
-  penaPrimeiraFase: undefined,
-  penaProvisoria: undefined,
-  penaDefinitiva: undefined,
 };
 
 const initialState: DosimetryState = {
   crimes: [],
   detracao: { anos: 0, meses: 0, dias: 0 },
   concurso: "material",
-  aumentoConcurso: "1/6",
   finalResults: {},
 };
 
 function calculateCrimePens(crime: CrimeState): CrimeState {
+  const crimesData: Crime[] = crimesDataRaw as Crime[];
+  const selectedCrime = crimesData.find((c) => c.id === crime.crimeId);
+  const activePena =
+    selectedCrime?.qualificadoras?.find(
+      (q) => q.id === crime.selectedQualificadoraId
+    ) || selectedCrime;
+  const penaMinima = activePena?.penaMinimaMeses ?? 0;
+
   const penaPrimeiraFase = calculatePhaseOne(
     crime.penaBase,
     crime.circunstanciasJudiciais
@@ -104,7 +109,8 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
   const penaProvisoria = calculatePhaseTwo(
     penaPrimeiraFase,
     crime.agravantes,
-    crime.atenuantes
+    crime.atenuantes,
+    penaMinima
   );
   const penaDefinitiva = calculatePhaseThree(
     penaProvisoria,
@@ -141,10 +147,7 @@ function dosimetryReducer(
 ): DosimetryState {
   switch (action.type) {
     case "RESET":
-      return {
-        ...initialState,
-        crimes: [],
-      };
+      return { ...initialState, crimes: [] };
     case "ADD_CRIME":
       return {
         ...state,
@@ -163,33 +166,28 @@ function dosimetryReducer(
         crime.id === action.payload.id ? { ...crime, ...action.payload } : crime
       );
       const calculatedCrimes = updatedCrimes.map((crime) =>
-        crime.id === action.payload.id ? calculateCrimePens(crime) : crime
+        crime.id === action.payload.id && crime.crimeId
+          ? calculateCrimePens(crime)
+          : crime
       );
-      return {
-        ...state,
-        crimes: calculatedCrimes,
-      };
+      return { ...state, crimes: calculatedCrimes };
     }
     case "UPDATE_CONCURSO":
       return { ...state, concurso: action.payload };
-    case "UPDATE_AUMENTO_CONCURSO":
-      return { ...state, aumentoConcurso: action.payload };
     case "UPDATE_DETRACAO":
       return { ...state, detracao: action.payload };
     case "RECALCULATE_FINALS": {
+      if (state.crimes.length === 0) {
+        return { ...state, finalResults: {} };
+      }
+
       let penaTotalBruta = 0;
       switch (state.concurso) {
         case "formal":
-          penaTotalBruta = calculateConcursoFormal(
-            state.crimes,
-            state.aumentoConcurso
-          );
+          penaTotalBruta = calculateConcursoFormal(state.crimes);
           break;
         case "continuado":
-          penaTotalBruta = calculateCrimeContinuado(
-            state.crimes,
-            state.aumentoConcurso
-          );
+          penaTotalBruta = calculateCrimeContinuado(state.crimes);
           break;
         case "material":
         default:
@@ -201,7 +199,8 @@ function dosimetryReducer(
         state.detracao.anos * 12 +
         state.detracao.meses +
         state.detracao.dias / 30;
-      const penaTotal = Math.max(0, penaTotalBruta - detracaoEmMeses);
+
+      const penaParaRegime = Math.max(0, penaTotalBruta - detracaoEmMeses);
 
       const reincidente = state.crimes.some((c) =>
         c.agravantes.some((a) => a.id === "reincidencia")
@@ -210,25 +209,28 @@ function dosimetryReducer(
         crimesViolentosIds.includes(c.crimeId ?? "")
       );
 
-      const regimeInicial = calculateRegimeInicial(penaTotal, reincidente);
+      const regimeInicial = calculateRegimeInicial(penaParaRegime, reincidente);
       const podeSubstituir = canSubstituirPena(
-        penaTotal,
+        penaTotalBruta,
         reincidente,
         crimeComViolenciaOuGraveAmeaca
       );
-      // Sursis só é aplicável se a substituição não for
-      const podeSursis = !podeSubstituir && canSursis(penaTotal, reincidente);
+      const podeSursis = canSursis(penaTotalBruta, reincidente, podeSubstituir);
 
       const dataInicial =
         state.crimes.length > 0 && state.crimes[0].dataCrime
           ? new Date(state.crimes[0].dataCrime)
           : new Date();
-      const dataFinalPena = calculateFinalDate(dataInicial, penaTotal);
+      const dataFinalPena = calculateFinalDate(
+        dataInicial,
+        penaTotalBruta - detracaoEmMeses
+      );
 
       return {
         ...state,
         finalResults: {
-          penaTotal,
+          penaTotal: penaTotalBruta,
+          penaParaRegime,
           regimeInicial,
           podeSubstituir,
           podeSursis,
@@ -256,7 +258,7 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch({ type: "RECALCULATE_FINALS" });
-  }, [state.crimes, state.detracao, state.concurso, state.aumentoConcurso]);
+  }, [state.crimes, state.detracao, state.concurso]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

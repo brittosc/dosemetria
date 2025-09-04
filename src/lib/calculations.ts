@@ -51,7 +51,8 @@ export function calculatePhaseOne(
 export function calculatePhaseTwo(
   penaPrimeiraFase: number,
   agravantes: Circunstancia[],
-  atenuantes: Circunstancia[]
+  atenuantes: Circunstancia[],
+  penaMinima: number
 ): number {
   let penaProvisoria = penaPrimeiraFase;
 
@@ -67,7 +68,8 @@ export function calculatePhaseTwo(
 
   penaProvisoria += aumento - diminuicao;
 
-  return penaProvisoria;
+  // Súmula 231 do STJ
+  return Math.max(penaProvisoria, penaMinima);
 }
 
 export function calculatePhaseThree(
@@ -89,15 +91,6 @@ export function calculatePhaseThree(
     }
     switch (causaInfo.valor.tipo) {
       case "fracao":
-        if (causaInfo.valor.valor !== undefined) {
-          penaAtual += penaAtual * causaInfo.valor.valor;
-        }
-        break;
-      case "multiplicador":
-        if (causaInfo.valor.valor !== undefined) {
-          penaAtual *= causaInfo.valor.valor;
-        }
-        break;
       case "range":
         penaAtual += penaAtual * fracao;
         break;
@@ -121,15 +114,6 @@ export function calculatePhaseThree(
     }
     switch (causaInfo.valor.tipo) {
       case "fracao":
-        if (causaInfo.valor.valor !== undefined) {
-          penaAtual -= penaAtual * causaInfo.valor.valor;
-        }
-        break;
-      case "multiplicador":
-        if (causaInfo.valor.valor !== undefined) {
-          penaAtual /= causaInfo.valor.valor;
-        }
-        break;
       case "range":
         penaAtual -= penaAtual * fracao;
         break;
@@ -139,7 +123,7 @@ export function calculatePhaseThree(
   return penaAtual;
 }
 
-export function formatPena(totalMeses: number): string {
+export function formatPena(totalMeses: number | null | undefined): string {
   if (totalMeses === null || totalMeses === undefined || totalMeses < 0) {
     return "--";
   }
@@ -164,7 +148,7 @@ export function formatPena(totalMeses: number): string {
     return "0 dias";
   }
 
-  return parts.join(", ");
+  return parts.join(" e ");
 }
 
 export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
@@ -182,24 +166,29 @@ export function calculateConcursoMaterial(crimes: CrimeState[]): number {
   return crimes.reduce((acc, crime) => acc + (crime.penaDefinitiva || 0), 0);
 }
 
-export function calculateConcursoFormal(
-  crimes: CrimeState[],
-  fracaoAumento: string
-): number {
+const getAumentoConcurso = (numCrimes: number): string => {
+  if (numCrimes <= 2) return "1/6";
+  if (numCrimes === 3) return "1/5";
+  if (numCrimes === 4) return "1/4";
+  if (numCrimes === 5) return "1/3";
+  if (numCrimes === 6) return "1/2";
+  return "2/3";
+};
+
+export function calculateConcursoFormal(crimes: CrimeState[]): number {
   if (crimes.length === 0) return 0;
   const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
+  const fracaoAumento = getAumentoConcurso(crimes.length);
   const aumento = parseFraction(fracaoAumento);
-  return penaMaisGrave + penaMaisGrave * aumento;
+  return penaMaisGrave * (1 + aumento);
 }
 
-export function calculateCrimeContinuado(
-  crimes: CrimeState[],
-  fracaoAumento: string
-): number {
+export function calculateCrimeContinuado(crimes: CrimeState[]): number {
   if (crimes.length === 0) return 0;
   const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
+  const fracaoAumento = getAumentoConcurso(crimes.length);
   const aumento = parseFraction(fracaoAumento);
-  return penaMaisGrave + penaMaisGrave * aumento;
+  return penaMaisGrave * (1 + aumento);
 }
 
 // --- Funções de Análise de Benefícios ---
@@ -226,14 +215,20 @@ export function canSubstituirPena(
   const anos = pena / 12;
   if (crimeComViolenciaOuGraveAmeaca) return false;
   if (anos > 4) return false;
+  // Reincidência específica impede a substituição. A não específica, pode permitir.
+  // Simplificando para o escopo do app:
   if (reincidente) return false;
   return true;
 }
 
 export function canSursis(
   pena: number,
-  reincidenteEmCrimeDoloso: boolean
+  reincidenteEmCrimeDoloso: boolean,
+  podeSubstituir: boolean
 ): boolean {
+  // O sursis é subsidiário à substituição. Se cabe substituição, não se aplica o sursis.
+  if (podeSubstituir) return false;
+
   const anos = pena / 12;
   if (anos > 2) return false;
   if (reincidenteEmCrimeDoloso) return false;

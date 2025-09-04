@@ -12,8 +12,7 @@ import { Crime, Qualificadora } from "@/types/crime";
 import { PhaseOneContent } from "./PhaseOne";
 import { PhaseTwoContent } from "./PhaseTwo";
 import { PhaseThreeContent } from "./PhaseThree";
-import { Circunstancia, CausaAplicada } from "@/lib/calculations";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { CausaAplicada, Circunstancia } from "@/lib/calculations";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
@@ -26,8 +25,12 @@ export function CrimeCalculator({
 }: CrimeCalculatorProps) {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
   const [currentPhase, setCurrentPhase] = useState(1);
-  const form = useForm<CrimeState>({ defaultValues: crimeState });
-  const isMobile = useIsMobile();
+
+  const form = useForm<CrimeState>({
+    defaultValues: crimeState,
+    mode: "onChange",
+  });
+
   const selectedCrimeId = form.watch("crimeId");
   const selectedQualificadoraId = form.watch("selectedQualificadoraId");
 
@@ -52,33 +55,33 @@ export function CrimeCalculator({
         ...crimeState,
         ...rest,
         circunstanciasJudiciais: circunstanciasJudiciais.filter(
-          (c): c is Circunstancia => !!c
-        ),
-        agravantes: agravantes.filter((c): c is Circunstancia => !!c),
-        atenuantes: atenuantes.filter((c): c is Circunstancia => !!c),
-        causasAumento: causasAumento.filter((c): c is CausaAplicada => !!c),
-        causasDiminuicao: causasDiminuicao.filter(
-          (c): c is CausaAplicada => !!c
-        ),
+          Boolean
+        ) as Circunstancia[],
+        agravantes: agravantes.filter(Boolean) as Circunstancia[],
+        atenuantes: atenuantes.filter(Boolean) as Circunstancia[],
+        causasAumento: causasAumento.filter(Boolean) as CausaAplicada[],
+        causasDiminuicao: causasDiminuicao.filter(Boolean) as CausaAplicada[],
       };
 
       dispatch({ type: "UPDATE_CRIME", payload });
     });
     return () => subscription.unsubscribe();
-  }, [form, crimeState, dispatch]);
+  }, [form, dispatch, crimeState]);
 
   const handleCrimeChange = (crimeId: string) => {
     const crime = crimesData.find((c: Crime) => c.id === crimeId);
-    const updatedCrimeState: Partial<CrimeState> = {
+    const updatedCrimeState = {
+      ...crimeState,
       crimeId: crimeId,
       penaBase: crime?.penaMinimaMeses ?? 0,
       selectedQualificadoraId: undefined,
+      agravantes: [],
+      atenuantes: [],
+      causasAumento: [],
+      causasDiminuicao: [],
     };
-    dispatch({
-      type: "UPDATE_CRIME",
-      payload: { ...crimeState, ...updatedCrimeState },
-    });
-    form.reset({ ...crimeState, ...updatedCrimeState });
+    dispatch({ type: "UPDATE_CRIME", payload: updatedCrimeState });
+    form.reset(updatedCrimeState);
   };
 
   const handleQualificadoraChange = (qualificadoraId: string) => {
@@ -90,22 +93,14 @@ export function CrimeCalculator({
     const penaBase =
       qualificadora?.penaMinimaMeses ?? selectedCrime?.penaMinimaMeses ?? 0;
 
-    const updatedCrimeState: Partial<CrimeState> = {
+    const updatedCrimeState = {
+      ...crimeState,
       selectedQualificadoraId: finalId,
       penaBase: penaBase,
     };
 
-    dispatch({
-      type: "UPDATE_CRIME",
-      payload: { ...crimeState, ...updatedCrimeState },
-    });
-    form.reset({ ...crimeState, ...updatedCrimeState });
-  };
-
-  const handleUpdateAndAdvance = (nextPhase: number) => {
-    const values = form.getValues();
-    dispatch({ type: "UPDATE_CRIME", payload: { ...crimeState, ...values } });
-    setCurrentPhase(nextPhase);
+    dispatch({ type: "UPDATE_CRIME", payload: updatedCrimeState });
+    form.reset(updatedCrimeState);
   };
 
   const removeButton = state.crimes.length > 0 && (
@@ -123,7 +118,7 @@ export function CrimeCalculator({
   return (
     <Card className="w-full">
       <Form {...form}>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           {currentPhase === 1 && (
             <>
               <CardContent className="space-y-6 pt-6">
@@ -139,7 +134,7 @@ export function CrimeCalculator({
               <CardFooter className="flex justify-between mt-4">
                 <div>{removeButton}</div>
                 <Button
-                  onClick={() => handleUpdateAndAdvance(2)}
+                  onClick={() => setCurrentPhase(2)}
                   disabled={!selectedCrime}
                 >
                   Avançar para 2ª Fase
@@ -153,7 +148,6 @@ export function CrimeCalculator({
               <CardContent className="space-y-8 pt-6">
                 <PhaseTwoContent form={form} />
               </CardContent>
-              {/* CORREÇÃO APLICADA AQUI */}
               <CardFooter className="flex justify-between mt-4">
                 <div className="flex gap-2">
                   <Button
@@ -165,7 +159,7 @@ export function CrimeCalculator({
                   </Button>
                   {removeButton}
                 </div>
-                <Button onClick={() => handleUpdateAndAdvance(3)}>
+                <Button onClick={() => setCurrentPhase(3)}>
                   Avançar para 3ª Fase
                 </Button>
               </CardFooter>
@@ -175,11 +169,7 @@ export function CrimeCalculator({
           {currentPhase === 3 && (
             <>
               <CardContent className="space-y-8 pt-6">
-                <PhaseThreeContent
-                  form={form}
-                  causasData={causasData}
-                  isMobile={isMobile}
-                />
+                <PhaseThreeContent form={form} causasData={causasData} />
               </CardContent>
               <CardFooter className="flex justify-between">
                 <div className="flex gap-2">

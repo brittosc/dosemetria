@@ -1,7 +1,6 @@
 "use client";
 
 import { Controller, UseFormReturn } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   FormControl,
   FormDescription,
@@ -17,41 +16,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Check, ChevronsUpDown, HelpCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { HelpCircle } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { useState } from "react";
 import { Crime, Qualificadora } from "@/types/crime";
 import { Circunstancia } from "@/lib/calculations";
 import { Label } from "../ui/label";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { CrimeSelector } from "./CrimeSelector";
+import { formatPena } from "@/lib/calculations";
 
 interface PhaseOneContentProps {
   form: UseFormReturn<CrimeState>;
@@ -81,91 +59,15 @@ export const PhaseOneContent = ({
   handleCrimeChange,
   handleQualificadoraChange,
 }: PhaseOneContentProps) => {
-  const [openCrimeSelector, setOpenCrimeSelector] = useState(false);
-  const isMobile = useIsMobile();
-
-  const CrimeSelectorContent = () => (
-    <Command>
-      <CommandInput placeholder="Buscar crime..." />
-      <CommandEmpty>Nenhum crime encontrado.</CommandEmpty>
-      <CommandList>
-        <CommandGroup>
-          {crimesData.map((crime: Crime) => (
-            <CommandItem
-              value={`${crime.nome} ${crime.artigo}`}
-              key={crime.id}
-              onSelect={() => {
-                handleCrimeChange(crime.id);
-                setOpenCrimeSelector(false);
-              }}
-            >
-              <Check
-                className={cn(
-                  "mr-2 h-4 w-4",
-                  crime.id === selectedCrime?.id ? "opacity-100" : "opacity-0"
-                )}
-              />
-              {crime.nome} (Art. {crime.artigo})
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
-    </Command>
-  );
-
   return (
     <>
       <FormItem className="flex flex-col">
         <FormLabel>Crime</FormLabel>
-        {isMobile ? (
-          <Drawer open={openCrimeSelector} onOpenChange={setOpenCrimeSelector}>
-            <DrawerTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-full justify-between",
-                  !selectedCrime && "text-muted-foreground"
-                )}
-              >
-                {selectedCrime
-                  ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
-                  : "Selecione o crime"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Selecione o Crime</DrawerTitle>
-              </DrawerHeader>
-              <div className="p-4">
-                <CrimeSelectorContent />
-              </div>
-            </DrawerContent>
-          </Drawer>
-        ) : (
-          <Popover open={openCrimeSelector} onOpenChange={setOpenCrimeSelector}>
-            <PopoverTrigger asChild>
-              <FormControl>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  className={cn(
-                    "w-full justify-between",
-                    !selectedCrime && "text-muted-foreground"
-                  )}
-                >
-                  {selectedCrime
-                    ? `${selectedCrime.nome} (Art. ${selectedCrime.artigo})`
-                    : "Selecione o crime"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </FormControl>
-            </PopoverTrigger>
-            <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-              <CrimeSelectorContent />
-            </PopoverContent>
-          </Popover>
-        )}
+        <CrimeSelector
+          crimesData={crimesData}
+          selectedCrime={selectedCrime}
+          onCrimeChange={handleCrimeChange}
+        />
         <FormMessage />
       </FormItem>
 
@@ -215,14 +117,15 @@ export const PhaseOneContent = ({
                 />
               )}
             />
-            {activePena && activePena.penaMinimaMeses !== null && (
-              <FormDescription>
-                {" "}
-                Pena entre {activePena.penaMinimaMeses} (mínima) e{" "}
-                {activePena.penaMaximaMeses} (máxima).{" "}
-              </FormDescription>
-            )}
-            <FormMessage>{form.formState.errors.penaBase?.message}</FormMessage>
+            {activePena &&
+              activePena.penaMinimaMeses !== null &&
+              activePena.penaMaximaMeses !== null && (
+                <FormDescription>
+                  Pena entre {formatPena(activePena.penaMinimaMeses)} (mínima) e{" "}
+                  {formatPena(activePena.penaMaximaMeses)} (máxima).
+                </FormDescription>
+              )}
+            <FormMessage />
           </FormItem>
 
           <FormItem>
@@ -293,7 +196,7 @@ export const PhaseOneContent = ({
                               onChange={(e) => {
                                 const newFracao = e.target.value;
                                 field.onChange(
-                                  field.value.map((c: Circunstancia) =>
+                                  (field.value || []).map((c: Circunstancia) =>
                                     c.id === option
                                       ? { ...c, fracao: newFracao }
                                       : c
