@@ -6,11 +6,21 @@ export type Causa = {
   descricao: string;
   tipo: string;
   valor: {
-    tipo: "fracao" | "multiplicador" | "range" | "dobro" | "triplo";
+    tipo:
+      | "fracao"
+      | "multiplicador"
+      | "range"
+      | "dobro"
+      | "triplo"
+      | "range_fracao_dobro"
+      | "fixa"
+      | "range_ate";
     valor?: number;
     min?: number;
     max?: number;
     fracao?: string;
+    penaMinimaMeses?: number;
+    penaMaximaMeses?: number;
   };
 };
 
@@ -26,12 +36,19 @@ export type Circunstancia = {
 
 function parseFraction(fracao: string): number {
   if (!fracao || typeof fracao !== "string") return 0;
-  const parts = fracao.split("/");
-  if (parts.length === 2) {
-    const numerator = parseInt(parts[0], 10);
-    const denominator = parseInt(parts[1], 10);
-    if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
-      return numerator / denominator;
+
+  if (fracao.toLowerCase().trim() === "metade") {
+    return 0.5;
+  }
+
+  if (fracao.includes("/")) {
+    const parts = fracao.split("/");
+    if (parts.length === 2) {
+      const numerator = parseInt(parts[0], 10);
+      const denominator = parseInt(parts[1], 10);
+      if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+        return numerator / denominator;
+      }
     }
   }
   return 0;
@@ -83,41 +100,26 @@ export function calculatePhaseThree(
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
-    let fracao: number;
-    if (typeof causaAplicada.valorAplicado === "string") {
-      fracao = parseFraction(causaAplicada.valorAplicado);
+
+    if (typeof causaAplicada.valorAplicado === "number") {
+      penaAtual *= causaAplicada.valorAplicado;
     } else {
-      fracao = causaAplicada.valorAplicado;
-    }
-    switch (causaInfo.valor.tipo) {
-      case "fracao":
-      case "range":
-        penaAtual += penaAtual * fracao;
-        break;
-      case "dobro":
-        penaAtual *= 2;
-        break;
-      case "triplo":
-        penaAtual *= 3;
-        break;
+      const fracao = parseFraction(causaAplicada.valorAplicado);
+      penaAtual += penaAtual * fracao;
     }
   });
 
   causasDiminuicao.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
+
     let fracao: number;
     if (typeof causaAplicada.valorAplicado === "string") {
       fracao = parseFraction(causaAplicada.valorAplicado);
     } else {
       fracao = causaAplicada.valorAplicado;
     }
-    switch (causaInfo.valor.tipo) {
-      case "fracao":
-      case "range":
-        penaAtual -= penaAtual * fracao;
-        break;
-    }
+    penaAtual -= penaAtual * fracao;
   });
 
   return penaAtual;
