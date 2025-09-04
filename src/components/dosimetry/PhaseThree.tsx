@@ -28,11 +28,49 @@ import { Causa, CausaAplicada } from "@/lib/calculations";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
+import { Slider } from "@/components/ui/slider";
 
 interface PhaseThreeContentProps {
   form: UseFormReturn<CrimeState>;
   causasData: Causa[];
-  isMobile: boolean; // Propriedade adicionada
+  isMobile: boolean;
+}
+
+// Função para encontrar o maior divisor comum (para simplificar frações)
+function gcd(a: number, b: number): number {
+  return b === 0 ? a : gcd(b, a % b);
+}
+
+// Função para converter um decimal para a fração mais próxima e comum
+function decimalToFraction(decimal: number, precision = 10000): string {
+  if (decimal === 1) return "1/1";
+  if (decimal === 0) return "0/1";
+
+  // Checa frações comuns com uma pequena margem de erro
+  const commonFractions: { [key: string]: number } = {
+    "1/6": 1 / 6,
+    "1/5": 1 / 5,
+    "1/4": 1 / 4,
+    "1/3": 1 / 3,
+    "2/5": 2 / 5,
+    "1/2": 1 / 2,
+    "3/5": 3 / 5,
+    "2/3": 2 / 3,
+    "3/4": 3 / 4,
+    "4/5": 4 / 5,
+    "5/6": 5 / 6,
+  };
+
+  for (const key in commonFractions) {
+    if (Math.abs(decimal - commonFractions[key]) < 0.01) {
+      return key;
+    }
+  }
+
+  // Se não for uma fração comum, simplifica a partir da precisão
+  const numerator = Math.round(decimal * precision);
+  const commonDivisor = gcd(numerator, precision);
+  return `${numerator / commonDivisor}/${precision / commonDivisor}`;
 }
 
 export const PhaseThreeContent = ({
@@ -55,22 +93,15 @@ export const PhaseThreeContent = ({
     const causa = causasData.find((c: Causa) => c.id === causaId);
     if (!causa) return;
 
-    let valorAplicado: string | number = 0.5; // Default value
-    if (causa.valor.tipo === "range" && causa.valor.fracao) {
-      valorAplicado = causa.valor.fracao.split(" a ")[0];
+    let valorAplicado: string | number = 0.5; // Valor padrão
+    if (causa.valor.tipo === "range" && causa.valor.min !== undefined) {
+      valorAplicado = causa.valor.min;
     } else if (causa.valor.tipo === "fracao" && causa.valor.fracao) {
       valorAplicado = causa.valor.fracao;
     } else if (causa.valor.tipo === "dobro") {
       valorAplicado = 2;
     } else if (causa.valor.tipo === "triplo") {
       valorAplicado = 3;
-    } else if (
-      causa.valor.tipo === "range_fracao_dobro" &&
-      causa.valor.fracao
-    ) {
-      valorAplicado = causa.valor.fracao.split(" ao ")[0];
-    } else if (causa.valor.tipo === "range_ate" && causa.valor.max) {
-      valorAplicado = causa.valor.max;
     } else if (causa.valor.valor) {
       valorAplicado = causa.valor.valor;
     }
@@ -106,20 +137,21 @@ export const PhaseThreeContent = ({
   const handleFractionChange = (
     id: string,
     tipo: "aumento" | "diminuicao",
-    value: string | number
+    value: number[]
   ) => {
+    const newValue = value[0];
     if (tipo === "aumento") {
       form.setValue(
         "causasAumento",
         causasAumento.map((c: CausaAplicada) =>
-          c.id === id ? { ...c, valorAplicado: value } : c
+          c.id === id ? { ...c, valorAplicado: newValue } : c
         )
       );
     } else {
       form.setValue(
         "causasDiminuicao",
         causasDiminuicao.map((c: CausaAplicada) =>
-          c.id === id ? { ...c, valorAplicado: value } : c
+          c.id === id ? { ...c, valorAplicado: newValue } : c
         )
       );
     }
@@ -201,101 +233,58 @@ export const PhaseThreeContent = ({
     );
   };
 
-  const renderFractionButtons = (
+  const renderCausaValorInput = (
     causaInfo: Causa,
     causaAplicada: CausaAplicada,
     tipo: "aumento" | "diminuicao"
   ) => {
-    if (causaInfo.valor.tipo === "range" && causaInfo.valor.fracao) {
-      const fractions = causaInfo.valor.fracao.split(" a ");
-      return (
-        <div className="flex gap-2">
-          {fractions.map((fraction) => (
-            <Button
-              key={fraction}
-              type="button"
-              variant={
-                causaAplicada.valorAplicado === fraction ? "default" : "outline"
-              }
-              onClick={() =>
-                handleFractionChange(causaAplicada.id, tipo, fraction)
-              }
-            >
-              {fraction}
-            </Button>
-          ))}
-        </div>
-      );
-    }
     if (
-      causaInfo.valor.tipo === "range_fracao_dobro" &&
-      causaInfo.valor.fracao
+      causaInfo.valor.tipo === "range" &&
+      causaInfo.valor.min !== undefined &&
+      causaInfo.valor.max !== undefined
     ) {
-      const parts = causaInfo.valor.fracao.split(" ao ");
-      const fraction = parts[0];
-      const multiplierText = parts[1];
-
+      const valorAtual = Number(causaAplicada.valorAplicado);
       return (
-        <div className="flex gap-2">
-          <Button
-            key={fraction}
-            type="button"
-            variant={
-              causaAplicada.valorAplicado === fraction ? "default" : "outline"
-            }
-            onClick={() =>
-              handleFractionChange(causaAplicada.id, tipo, fraction)
-            }
-          >
-            {fraction}
-          </Button>
-          <Button
-            key={multiplierText}
-            type="button"
-            variant={causaAplicada.valorAplicado === 2 ? "default" : "outline"}
-            onClick={() => handleFractionChange(causaAplicada.id, tipo, 2)}
-          >
-            {multiplierText}
-          </Button>
+        <div className="space-y-2">
+          <div className="flex items-center gap-4">
+            <Slider
+              min={causaInfo.valor.min}
+              max={causaInfo.valor.max}
+              step={0.001} // Aumentando a precisão do passo
+              value={[valorAtual]}
+              onValueChange={(value) =>
+                handleFractionChange(causaAplicada.id, tipo, value)
+              }
+              className="w-full"
+            />
+            <span className="text-sm font-semibold w-28 text-right tabular-nums">
+              {decimalToFraction(valorAtual)} ({(valorAtual * 100).toFixed(1)}%)
+            </span>
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground px-1">
+            <span>{causaInfo.valor.fracao?.split(" a ")[0]}</span>
+            <span>{causaInfo.valor.fracao?.split(" a ")[1]}</span>
+          </div>
         </div>
       );
     }
-    if (causaInfo.valor.tipo === "fracao" && causaInfo.valor.fracao) {
+
+    const valorFixo =
+      causaInfo.valor.fracao ||
+      (causaInfo.valor.valor ? `${causaInfo.valor.valor * 100}%` : null);
+    if (valorFixo) {
       return (
-        <Button type="button" variant="default" disabled>
-          {causaInfo.valor.fracao}
+        <Button
+          type="button"
+          variant="outline"
+          disabled
+          className="cursor-default"
+        >
+          {valorFixo}
         </Button>
       );
     }
-    if (causaInfo.valor.tipo === "dobro" && causaInfo.valor.fracao) {
-      return (
-        <Button type="button" variant="default" disabled>
-          {causaInfo.valor.fracao}
-        </Button>
-      );
-    }
-    if (causaInfo.valor.tipo === "triplo" && causaInfo.valor.fracao) {
-      return (
-        <Button type="button" variant="default" disabled>
-          {causaInfo.valor.fracao}
-        </Button>
-      );
-    }
-    if (causaInfo.valor.tipo === "fixa" && causaInfo.valor.penaMinimaMeses) {
-      return (
-        <Button type="button" variant="default" disabled>
-          Pena: {causaInfo.valor.penaMinimaMeses} a{" "}
-          {causaInfo.valor.penaMaximaMeses} meses
-        </Button>
-      );
-    }
-    if (causaInfo.valor.tipo === "range_ate" && causaInfo.valor.fracao) {
-      return (
-        <Button type="button" variant="default" disabled>
-          {causaInfo.valor.fracao}
-        </Button>
-      );
-    }
+
     return null;
   };
 
@@ -329,10 +318,7 @@ export const PhaseThreeContent = ({
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
-                {causaInfo.valor.fracao && (
-                  <Label>Fração de Aumento: {causaInfo.valor.fracao}</Label>
-                )}
-                {renderFractionButtons(causaInfo, ca, "aumento")}
+                {renderCausaValorInput(causaInfo, ca, "aumento")}
               </div>
             );
           })}
@@ -367,8 +353,7 @@ export const PhaseThreeContent = ({
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
-                <Label>Fração de Redução: {causaInfo.valor.fracao}</Label>
-                {renderFractionButtons(causaInfo, ca, "diminuicao")}
+                {renderCausaValorInput(causaInfo, ca, "diminuicao")}
               </div>
             );
           })}

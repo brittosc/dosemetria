@@ -97,32 +97,38 @@ export function calculatePhaseThree(
 ): number {
   let penaAtual = penaProvisoria;
 
+  // Aplica as causas de aumento
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
 
-    if (typeof causaAplicada.valorAplicado === "number") {
-      penaAtual *= causaAplicada.valorAplicado;
+    const valor =
+      typeof causaAplicada.valorAplicado === "string"
+        ? parseFraction(causaAplicada.valorAplicado)
+        : causaAplicada.valorAplicado;
+
+    // Diferencia multiplicadores (dobro, triplo) de aumentos fracionários
+    if (causaInfo.valor.tipo === "dobro" || causaInfo.valor.tipo === "triplo") {
+      penaAtual *= valor; // Multiplica a pena (ex: pena * 2)
     } else {
-      const fracao = parseFraction(causaAplicada.valorAplicado);
-      penaAtual += penaAtual * fracao;
+      penaAtual += penaAtual * valor; // Aumenta a pena com base na fração (ex: pena + pena * 1/3)
     }
   });
 
+  // Aplica as causas de diminuição
   causasDiminuicao.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
 
-    let fracao: number;
-    if (typeof causaAplicada.valorAplicado === "string") {
-      fracao = parseFraction(causaAplicada.valorAplicado);
-    } else {
-      fracao = causaAplicada.valorAplicado;
-    }
-    penaAtual -= penaAtual * fracao;
+    const fracao =
+      typeof causaAplicada.valorAplicado === "string"
+        ? parseFraction(causaAplicada.valorAplicado)
+        : causaAplicada.valorAplicado;
+
+    penaAtual -= penaAtual * fracao; // Diminui a pena com base na fração (ex: pena - pena * 1/3)
   });
 
-  return penaAtual;
+  return Math.max(0, penaAtual); // Garante que a pena não seja negativa
 }
 
 export function formatPena(totalMeses: number | null | undefined): string {
