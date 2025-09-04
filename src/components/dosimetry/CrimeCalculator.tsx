@@ -14,6 +14,7 @@ import { PhaseTwoContent } from "./PhaseTwo";
 import { PhaseThreeContent } from "./PhaseThree";
 import { CausaAplicada, Circunstancia } from "@/lib/calculations";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "sonner";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
@@ -32,7 +33,7 @@ export function CrimeCalculator({
     defaultValues: crimeState,
   });
 
-  const { watch, reset } = form;
+  const { watch, reset, getValues } = form;
 
   const selectedCrimeId = watch("crimeId");
   const selectedQualificadoraId = watch("selectedQualificadoraId");
@@ -47,7 +48,6 @@ export function CrimeCalculator({
     const subscription = watch((value) => {
       const payload = { ...crimeState, ...value };
 
-      // Corrigido: Assegura que os arrays são do tipo correto.
       payload.circunstanciasJudiciais = (
         payload.circunstanciasJudiciais || []
       ).filter(Boolean) as Circunstancia[];
@@ -64,7 +64,6 @@ export function CrimeCalculator({
         Boolean
       ) as CausaAplicada[];
 
-      // Corrigido: Assegura ao TypeScript que o payload corresponde ao tipo esperado.
       dispatch({
         type: "UPDATE_CRIME",
         payload: payload as Partial<CrimeState> & { id: string },
@@ -108,6 +107,21 @@ export function CrimeCalculator({
     reset(updatedCrimeState);
   };
 
+  // CORREÇÃO APLICADA AQUI
+  const handleNextPhase = (nextPhase: number) => {
+    const { penaBase } = getValues();
+    const min = activePena?.penaMinimaMeses;
+    const max = activePena?.penaMaximaMeses;
+
+    if (min != null && max != null && (penaBase < min || penaBase > max)) {
+      toast.error("Pena-base inválida", {
+        description: `O valor da pena-base deve estar entre ${min} e ${max} meses.`,
+      });
+      return;
+    }
+    setCurrentPhase(nextPhase);
+  };
+
   const removeButton = state.crimes.length > 0 && (
     <Button
       variant="outline"
@@ -139,7 +153,7 @@ export function CrimeCalculator({
               <CardFooter className="flex justify-between mt-4">
                 <div>{removeButton}</div>
                 <Button
-                  onClick={() => setCurrentPhase(2)}
+                  onClick={() => handleNextPhase(2)}
                   disabled={!selectedCrime}
                 >
                   Avançar para 2ª Fase
@@ -199,4 +213,3 @@ export function CrimeCalculator({
     </Card>
   );
 }
-  

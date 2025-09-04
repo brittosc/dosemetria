@@ -30,6 +30,7 @@ import { Label } from "../ui/label";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { CrimeSelector } from "./CrimeSelector";
 import { formatPena } from "@/lib/calculations";
+import { toast } from "sonner";
 
 interface PhaseOneContentProps {
   form: UseFormReturn<CrimeState>;
@@ -59,6 +60,24 @@ export const PhaseOneContent = ({
   handleCrimeChange,
   handleQualificadoraChange,
 }: PhaseOneContentProps) => {
+  const handlePenaBaseBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10) || 0;
+    const min = activePena?.penaMinimaMeses;
+    const max = activePena?.penaMaximaMeses;
+
+    if (min != null && value < min) {
+      form.setValue("penaBase", min);
+      toast.info("Pena-base ajustada", {
+        description: `O valor mínimo para este crime é ${min} meses.`,
+      });
+    } else if (max != null && value > max) {
+      form.setValue("penaBase", max);
+      toast.info("Pena-base ajustada", {
+        description: `O valor máximo para este crime é ${max} meses.`,
+      });
+    }
+  };
+
   return (
     <>
       <FormItem className="flex flex-col">
@@ -111,9 +130,10 @@ export const PhaseOneContent = ({
                 <Input
                   type="number"
                   {...field}
-                  onChange={(e) =>
-                    field.onChange(parseInt(e.target.value, 10) || 0)
-                  }
+                  onBlur={handlePenaBaseBlur}
+                  onChange={(e) => {
+                    field.onChange(parseInt(e.target.value, 10) || 0);
+                  }}
                 />
               )}
             />
@@ -139,7 +159,7 @@ export const PhaseOneContent = ({
                   <TooltipContent>
                     <p>
                       Selecione as que forem desfavoráveis. Cada uma aumenta a
-                      pena em 1/6 por padrão.
+                      pena em 1/6 por padrão sobre a pena-base.
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -152,10 +172,11 @@ export const PhaseOneContent = ({
                   name="circunstanciasJudiciais"
                   control={form.control}
                   render={({ field }) => {
-                    const isChecked = field.value?.some(
+                    const value = field.value || [];
+                    const isChecked = value.some(
                       (c: Circunstancia) => c.id === option
                     );
-                    const circunstancia = field.value?.find(
+                    const circunstancia = value.find(
                       (c: Circunstancia) => c.id === option
                     );
                     return (
@@ -167,11 +188,11 @@ export const PhaseOneContent = ({
                               onCheckedChange={(checked) => {
                                 return checked
                                   ? field.onChange([
-                                      ...(field.value || []),
+                                      ...value,
                                       { id: option, fracao: "1/6" },
                                     ])
                                   : field.onChange(
-                                      field.value?.filter(
+                                      value.filter(
                                         (c: Circunstancia) => c.id !== option
                                       )
                                     );
@@ -196,7 +217,7 @@ export const PhaseOneContent = ({
                               onChange={(e) => {
                                 const newFracao = e.target.value;
                                 field.onChange(
-                                  (field.value || []).map((c: Circunstancia) =>
+                                  value.map((c: Circunstancia) =>
                                     c.id === option
                                       ? { ...c, fracao: newFracao }
                                       : c

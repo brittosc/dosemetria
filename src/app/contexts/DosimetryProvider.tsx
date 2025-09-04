@@ -106,12 +106,16 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
     crime.penaBase,
     crime.circunstanciasJudiciais
   );
+
+  // CORREÇÃO APLICADA AQUI
   const penaProvisoria = calculatePhaseTwo(
     penaPrimeiraFase,
     crime.agravantes,
     crime.atenuantes,
+    crime.penaBase, // Passando a pena-base original para o cálculo
     penaMinima
   );
+
   const penaDefinitiva = calculatePhaseThree(
     penaProvisoria,
     crime.causasAumento,

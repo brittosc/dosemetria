@@ -78,7 +78,7 @@ export function CalculationSummary() {
           </Accordion>
         )}
 
-        {state.crimes.length > 0 && (
+        {state.crimes.length > 1 && (
           <>
             <div className="space-y-2 pt-4 border-t">
               <Label>Concurso de Crimes</Label>
@@ -104,20 +104,25 @@ export function CalculationSummary() {
                 </SelectContent>
               </Select>
               {state.concurso !== "material" && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground mt-2">
                   A fração de aumento é calculada automaticamente com base no
                   número de crimes.
                 </p>
               )}
             </div>
+          </>
+        )}
 
-            <div className="space-y-2">
+        {state.crimes.length > 0 && (
+          <>
+            <div className="space-y-2 pt-4 border-t">
               <Label>Detração (Tempo de prisão provisória)</Label>
               <div className="grid grid-cols-3 gap-2">
                 <Input
                   type="number"
                   placeholder="Anos"
                   value={state.detracao.anos}
+                  min={0}
                   onChange={(e) =>
                     dispatch({
                       type: "UPDATE_DETRACAO",
@@ -132,6 +137,7 @@ export function CalculationSummary() {
                   type="number"
                   placeholder="Meses"
                   value={state.detracao.meses}
+                  min={0}
                   onChange={(e) =>
                     dispatch({
                       type: "UPDATE_DETRACAO",
@@ -146,6 +152,7 @@ export function CalculationSummary() {
                   type="number"
                   placeholder="Dias"
                   value={state.detracao.dias}
+                  min={0}
                   onChange={(e) =>
                     dispatch({
                       type: "UPDATE_DETRACAO",

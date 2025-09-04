@@ -34,7 +34,7 @@ function parseFraction(fracao: string): number {
       return numerator / denominator;
     }
   }
-  return 0; // Retorna 0 se a fração for inválida
+  return 0;
 }
 
 export function calculatePhaseOne(
@@ -52,23 +52,23 @@ export function calculatePhaseTwo(
   penaPrimeiraFase: number,
   agravantes: Circunstancia[],
   atenuantes: Circunstancia[],
+  penaBase: number,
   penaMinima: number
 ): number {
   let penaProvisoria = penaPrimeiraFase;
 
   const aumento = agravantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    return acc + fracao * penaPrimeiraFase;
+    return acc + fracao * penaBase;
   }, 0);
 
   const diminuicao = atenuantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    return acc + fracao * penaPrimeiraFase;
+    return acc + fracao * penaBase;
   }, 0);
 
   penaProvisoria += aumento - diminuicao;
 
-  // Súmula 231 do STJ
   return Math.max(penaProvisoria, penaMinima);
 }
 
@@ -124,21 +124,38 @@ export function calculatePhaseThree(
 }
 
 export function formatPena(totalMeses: number | null | undefined): string {
-  if (totalMeses === null || totalMeses === undefined || totalMeses < 0) {
+  if (
+    totalMeses === null ||
+    totalMeses === undefined ||
+    isNaN(totalMeses) ||
+    totalMeses < 0
+  ) {
     return "--";
   }
 
-  const anos = Math.floor(totalMeses / 12);
-  const mesesRestantes = totalMeses % 12;
+  // Arredonda para 4 casas decimais para evitar imprecisões de ponto flutuante
+  const totalMesesRounded = parseFloat(totalMeses.toFixed(4));
+
+  const anos = Math.floor(totalMesesRounded / 12);
+  const mesesRestantes = totalMesesRounded % 12;
   const meses = Math.floor(mesesRestantes);
-  const dias = Math.round((mesesRestantes - meses) * 30);
+
+  // Arredonda os dias para evitar casas decimais
+  let dias = Math.round((mesesRestantes - meses) * 30);
+
+  let mesesCorrigidos = meses;
+
+  if (dias >= 30) {
+    mesesCorrigidos += 1;
+    dias = 0;
+  }
 
   const parts = [];
   if (anos > 0) {
     parts.push(`${anos} ano${anos > 1 ? "s" : ""}`);
   }
-  if (meses > 0) {
-    parts.push(`${meses} ${meses > 1 ? "meses" : "mês"}`);
+  if (mesesCorrigidos > 0) {
+    parts.push(`${mesesCorrigidos} ${mesesCorrigidos > 1 ? "meses" : "mês"}`);
   }
   if (dias > 0) {
     parts.push(`${dias} dia${dias > 1 ? "s" : ""}`);
@@ -215,8 +232,6 @@ export function canSubstituirPena(
   const anos = pena / 12;
   if (crimeComViolenciaOuGraveAmeaca) return false;
   if (anos > 4) return false;
-  // Reincidência específica impede a substituição. A não específica, pode permitir.
-  // Simplificando para o escopo do app:
   if (reincidente) return false;
   return true;
 }
@@ -226,7 +241,6 @@ export function canSursis(
   reincidenteEmCrimeDoloso: boolean,
   podeSubstituir: boolean
 ): boolean {
-  // O sursis é subsidiário à substituição. Se cabe substituição, não se aplica o sursis.
   if (podeSubstituir) return false;
 
   const anos = pena / 12;
