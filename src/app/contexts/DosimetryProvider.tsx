@@ -120,6 +120,21 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
   };
 }
 
+const crimesViolentosIds = [
+  "homicidio_simples",
+  "feminicidio",
+  "lesao_corporal_simples",
+  "lesao_corporal_grave",
+  "lesao_corporal_gravissima",
+  "lesao_corporal_seguida_de_morte",
+  "lesao_corporal_violencia_domestica",
+  "roubo_simples",
+  "extorsao_simples",
+  "extorsao_mediante_sequestro",
+  "estupro",
+  "estupro_de_vulneravel",
+];
+
 function dosimetryReducer(
   state: DosimetryState,
   action: Action
@@ -191,7 +206,9 @@ function dosimetryReducer(
       const reincidente = state.crimes.some((c) =>
         c.agravantes.some((a) => a.id === "reincidencia")
       );
-      const crimeComViolenciaOuGraveAmeaca = state.crimes.length > 0;
+      const crimeComViolenciaOuGraveAmeaca = state.crimes.some((c) =>
+        crimesViolentosIds.includes(c.crimeId ?? "")
+      );
 
       const regimeInicial = calculateRegimeInicial(penaTotal, reincidente);
       const podeSubstituir = canSubstituirPena(
@@ -199,7 +216,8 @@ function dosimetryReducer(
         reincidente,
         crimeComViolenciaOuGraveAmeaca
       );
-      const podeSursis = canSursis(penaTotal, reincidente);
+      // Sursis só é aplicável se a substituição não for
+      const podeSursis = !podeSubstituir && canSursis(penaTotal, reincidente);
 
       const dataInicial =
         state.crimes.length > 0 && state.crimes[0].dataCrime
