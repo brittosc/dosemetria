@@ -23,6 +23,7 @@ import {
   canSubstituirPena,
   canSursis,
   calculateFinalDate,
+  calculateMulta,
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
 
@@ -42,6 +43,10 @@ export interface CrimeState {
   penaPrimeiraFase?: number;
   penaProvisoria?: number;
   penaDefinitiva?: number;
+  penaMulta: {
+    diasMulta: number;
+    valorDiaMulta: number;
+  };
 }
 
 export interface DosimetryState {
@@ -52,6 +57,7 @@ export interface DosimetryState {
     dias: number;
   };
   concurso: "material" | "formal" | "continuado";
+  salarioMinimo: number;
   finalResults: {
     penaTotal?: number;
     penaParaRegime?: number;
@@ -59,6 +65,7 @@ export interface DosimetryState {
     podeSubstituir?: boolean;
     podeSursis?: boolean;
     dataFinalPena?: Date;
+    multaTotal?: number;
   };
 }
 
@@ -71,6 +78,7 @@ type Action =
       type: "UPDATE_DETRACAO";
       payload: { anos: number; meses: number; dias: number };
     }
+  | { type: "UPDATE_SALARIO_MINIMO"; payload: number }
   | { type: "RECALCULATE_FINALS" }
   | { type: "RESET" };
 
@@ -84,12 +92,17 @@ const initialCrimeState: Omit<CrimeState, "id"> = {
   atenuantes: [],
   causasAumento: [],
   causasDiminuicao: [],
+  penaMulta: {
+    diasMulta: 10,
+    valorDiaMulta: 1 / 30,
+  },
 };
 
 const initialState: DosimetryState = {
   crimes: [],
   detracao: { anos: 0, meses: 0, dias: 0 },
   concurso: "material",
+  salarioMinimo: 1518,
   finalResults: {},
 };
 
@@ -107,12 +120,11 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
     crime.circunstanciasJudiciais
   );
 
-  // CORREÇÃO APLICADA AQUI
   const penaProvisoria = calculatePhaseTwo(
     penaPrimeiraFase,
     crime.agravantes,
     crime.atenuantes,
-    crime.penaBase, // Passando a pena-base original para o cálculo
+    crime.penaBase,
     penaMinima
   );
 
@@ -180,6 +192,8 @@ function dosimetryReducer(
       return { ...state, concurso: action.payload };
     case "UPDATE_DETRACAO":
       return { ...state, detracao: action.payload };
+    case "UPDATE_SALARIO_MINIMO":
+      return { ...state, salarioMinimo: action.payload };
     case "RECALCULATE_FINALS": {
       if (state.crimes.length === 0) {
         return { ...state, finalResults: {} };
@@ -230,6 +244,17 @@ function dosimetryReducer(
         penaTotalBruta - detracaoEmMeses
       );
 
+      const multaTotal = state.crimes.reduce((acc, crime) => {
+        return (
+          acc +
+          calculateMulta(
+            crime.penaMulta.diasMulta,
+            crime.penaMulta.valorDiaMulta,
+            state.salarioMinimo
+          )
+        );
+      }, 0);
+
       return {
         ...state,
         finalResults: {
@@ -239,6 +264,7 @@ function dosimetryReducer(
           podeSubstituir,
           podeSursis,
           dataFinalPena,
+          multaTotal,
         },
       };
     }
@@ -262,7 +288,7 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch({ type: "RECALCULATE_FINALS" });
-  }, [state.crimes, state.detracao, state.concurso]);
+  }, [state.crimes, state.detracao, state.concurso, state.salarioMinimo]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

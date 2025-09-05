@@ -29,6 +29,7 @@ export function CrimeCalculator({
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
   const [currentPhase, setCurrentPhase] = useState(1);
   const isMobile = useIsMobile();
+  const { salarioMinimo } = state;
 
   const form = useForm<CrimeState>({
     defaultValues: crimeState,
@@ -163,6 +164,7 @@ export function CrimeCalculator({
                     crimesData={crimesData}
                     handleCrimeChange={handleCrimeChange}
                     handleQualificadoraChange={handleQualificadoraChange}
+                    salarioMinimo={salarioMinimo}
                   />
                 </CardContent>
                 <CardFooter className="flex justify-between mt-4">

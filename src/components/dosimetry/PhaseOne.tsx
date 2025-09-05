@@ -25,13 +25,14 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { Crime, Qualificadora } from "@/types/crime";
-import { Circunstancia } from "@/lib/calculations";
+import { Circunstancia, formatValorDiaMulta } from "@/lib/calculations";
 import { Label } from "../ui/label";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { CrimeSelector } from "./CrimeSelector";
 import { formatPena } from "@/lib/calculations";
 import { toast } from "sonner";
 import { DatePicker } from "../ui/date-picker";
+import { Slider } from "@/components/ui/slider";
 
 interface PhaseOneContentProps {
   form: UseFormReturn<CrimeState>;
@@ -40,6 +41,7 @@ interface PhaseOneContentProps {
   crimesData: Crime[];
   handleCrimeChange: (crimeId: string) => void;
   handleQualificadoraChange: (qualificadoraId: string) => void;
+  salarioMinimo: number;
 }
 
 const circunstanciasJudiciaisOptions = [
@@ -60,6 +62,7 @@ export const PhaseOneContent = ({
   crimesData,
   handleCrimeChange,
   handleQualificadoraChange,
+  salarioMinimo,
 }: PhaseOneContentProps) => {
   const handlePenaBaseBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10) || 0;
@@ -159,6 +162,58 @@ export const PhaseOneContent = ({
               )}
             <FormMessage />
           </FormItem>
+
+          {selectedCrime.temMulta && (
+            <div className="space-y-4 rounded-md border p-4">
+              <h3 className="text-sm font-medium">Pena de Multa</h3>
+              <FormItem>
+                <FormLabel>Dias-Multa</FormLabel>
+                <Controller
+                  name="penaMulta.diasMulta"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Input
+                      type="number"
+                      min={10}
+                      max={360}
+                      {...field}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value, 10);
+                        field.onChange(isNaN(value) ? 0 : value);
+                      }}
+                    />
+                  )}
+                />
+                <FormDescription>Entre 10 e 360 dias.</FormDescription>
+                <FormMessage />
+              </FormItem>
+              <FormItem>
+                <FormLabel>Valor do Dia-Multa</FormLabel>
+                <Controller
+                  name="penaMulta.valorDiaMulta"
+                  control={form.control}
+                  render={({ field }) => (
+                    <div className="space-y-2">
+                      <Slider
+                        min={1 / 30}
+                        max={5}
+                        step={1 / 30}
+                        value={[field.value]}
+                        onValueChange={(value) => field.onChange(value[0])}
+                      />
+                      <FormDescription className="text-center">
+                        {formatValorDiaMulta(field.value, salarioMinimo)}
+                      </FormDescription>
+                    </div>
+                  )}
+                />
+                <FormDescription>
+                  Entre 1/30 e 5 vezes o salário mínimo.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            </div>
+          )}
 
           <FormItem>
             <div className="flex items-center gap-2">

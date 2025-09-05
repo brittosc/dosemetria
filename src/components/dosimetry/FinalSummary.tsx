@@ -1,7 +1,7 @@
 "use client";
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { formatPena } from "@/lib/calculations";
+import { formatPena, formatCurrency } from "@/lib/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
@@ -25,6 +25,14 @@ export function FinalSummary() {
             <p className="text-xl font-bold text-green-700">
               {finalResults.penaTotal != null
                 ? formatPena(finalResults.penaTotal)
+                : "--"}
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold">Multa Total:</p>
+            <p className="text-lg font-bold">
+              {finalResults.multaTotal != null
+                ? formatCurrency(finalResults.multaTotal)
                 : "--"}
             </p>
           </div>

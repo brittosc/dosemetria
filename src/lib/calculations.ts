@@ -176,6 +176,43 @@ export function formatPena(totalMeses: number | null | undefined): string {
   return parts.join(" e ");
 }
 
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+}
+
+export function formatValorDiaMulta(
+  valor: number,
+  salarioMinimo: number
+): string {
+  const epsilon = 0.0001;
+  if (Math.abs(valor - 1 / 30) < epsilon) {
+    return `1/30 do salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
+  }
+
+  if (valor < 1) {
+    const denominator = Math.round(1 / valor);
+    return `1/${denominator} do salário mínimo (${formatCurrency(
+      valor * salarioMinimo
+    )})`;
+  }
+
+  return `${valor.toLocaleString("pt-BR", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  })}x o salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
+}
+
+export function calculateMulta(
+  diasMulta: number,
+  valorDiaMulta: number,
+  salarioMinimo: number
+): number {
+  return diasMulta * valorDiaMulta * salarioMinimo;
+}
+
 export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
   const finalDate = new Date(startDate);
   finalDate.setMonth(finalDate.getMonth() + Math.floor(totalMeses));

@@ -81,6 +81,11 @@ export function CalculationSummary() {
     );
   };
 
+  const showSalarioMinimoInput = state.crimes.some((crime) => {
+    const crimeData = crimesData.find((c) => c.id === crime.crimeId);
+    return crimeData?.temMulta;
+  });
+
   return (
     <Card className="w-full sticky top-8">
       <CardHeader>
@@ -183,6 +188,21 @@ export function CalculationSummary() {
 
         {state.crimes.length > 0 && (
           <>
+            {showSalarioMinimoInput && (
+              <div className="space-y-2 pt-4 border-t">
+                <Label>Salário Mínimo (para cálculo da multa)</Label>
+                <Input
+                  type="number"
+                  value={state.salarioMinimo}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "UPDATE_SALARIO_MINIMO",
+                      payload: Number(e.target.value) || 0,
+                    })
+                  }
+                />
+              </div>
+            )}
             <div className="space-y-2 pt-4 border-t">
               <Label>Detração (Tempo de prisão provisória)</Label>
               <div className="grid grid-cols-3 gap-2">
