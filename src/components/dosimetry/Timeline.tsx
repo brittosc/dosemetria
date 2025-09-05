@@ -4,7 +4,6 @@ import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { Crime } from "@/types/crime";
 import crimesData from "@/app/data/crimes.json";
 import {

@@ -9,6 +9,9 @@ export function FinalSummary() {
   const { state } = useDosimetryCalculator();
   const { finalResults } = state;
 
+  const showMulta =
+    finalResults.multaTotal !== undefined && finalResults.multaTotal > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,14 +31,16 @@ export function FinalSummary() {
                 : "--"}
             </p>
           </div>
-          <div>
-            <p className="font-semibold">Multa Total:</p>
-            <p className="text-lg font-bold">
-              {finalResults.multaTotal != null
-                ? formatCurrency(finalResults.multaTotal)
-                : "--"}
-            </p>
-          </div>
+          {showMulta && (
+            <div>
+              <p className="font-semibold">Multa Total:</p>
+              <p className="text-lg font-bold">
+                {finalResults.multaTotal != null
+                  ? formatCurrency(finalResults.multaTotal)
+                  : "--"}
+              </p>
+            </div>
+          )}
           <div>
             <p className="font-semibold">Pena para fins de Regime:</p>
             <p className="text-md text-muted-foreground">

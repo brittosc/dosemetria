@@ -244,15 +244,20 @@ function dosimetryReducer(
         penaTotalBruta - detracaoEmMeses
       );
 
+      const crimesData: Crime[] = crimesDataRaw as Crime[];
       const multaTotal = state.crimes.reduce((acc, crime) => {
-        return (
-          acc +
-          calculateMulta(
-            crime.penaMulta.diasMulta,
-            crime.penaMulta.valorDiaMulta,
-            state.salarioMinimo
-          )
-        );
+        const crimeInfo = crimesData.find((c) => c.id === crime.crimeId);
+        if (crimeInfo?.temMulta) {
+          return (
+            acc +
+            calculateMulta(
+              crime.penaMulta.diasMulta,
+              crime.penaMulta.valorDiaMulta,
+              state.salarioMinimo
+            )
+          );
+        }
+        return acc;
       }, 0);
 
       return {
