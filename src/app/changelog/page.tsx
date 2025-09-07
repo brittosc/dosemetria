@@ -62,7 +62,7 @@ export default function ChangelogPage() {
                   <Badge variant="secondary" className="mr-2">
                     Layout
                   </Badge>
-                  Adicionada uma seção de "Contribuidores" no rodapé.
+                  Adicionada uma seção de &apos;Contribuidores&apos; no rodapé.
                 </li>
               </ul>
             </div>
@@ -82,16 +82,16 @@ export default function ChangelogPage() {
                   </Badge>
                   Refatorada a lógica de cálculo de datas e durações para usar
                   `date-fns`, garantindo precisão e eliminando bugs de
-                  arredondamento (como o "dia extra" ou a exibição de "5 meses e
-                  30 dias").
+                  arredondamento (como o &apos;dia extra&apos; ou a exibição de
+                  &apos;5 meses e 30 dias&apos;).
                 </li>
                 <li>
                   <Badge variant="destructive" className="mr-2">
                     UI
                   </Badge>
                   O resumo do cálculo agora exibe o nome completo das
-                  circunstâncias em vez de seus IDs (ex: "Menor de 21 ou maior
-                  de 70 anos").
+                  circunstâncias em vez de seus IDs (ex: &apos;Menor de 21 ou
+                  maior de 70 anos&apos;).
                 </li>
               </ul>
             </div>
