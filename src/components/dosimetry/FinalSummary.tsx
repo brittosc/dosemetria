@@ -2,10 +2,8 @@
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { formatPena, formatCurrency } from "@/lib/calculations";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Separator } from "@/components/ui/separator";
-import { PenaGraph } from "./PenaGraph";
 
 export function FinalSummary() {
   const { state } = useDosimetryCalculator();

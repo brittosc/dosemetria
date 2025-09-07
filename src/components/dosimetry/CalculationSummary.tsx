@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";

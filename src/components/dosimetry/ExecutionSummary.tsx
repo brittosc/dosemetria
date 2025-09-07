@@ -3,7 +3,7 @@
 "use client";
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { ProgressionTimeline } from "./ProgressionTimeline";
 
