@@ -21,12 +21,8 @@ export function FinalSummary() {
       transition={{ duration: 0.5 }}
     >
       <Card className="w-full mt-4">
-        <CardHeader>
-          <CardTitle>Resultado Final</CardTitle>
-        </CardHeader>
         <CardContent className="space-y-4">
-          {state.crimes.length > 0 && <PenaGraph />}
-          <Separator />
+          {state.crimes.length > 0}
           <div>
             <p className="font-semibold">Pena Total (sem detração):</p>
             <p className="text-xl font-bold text-green-700">

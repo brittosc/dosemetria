@@ -333,9 +333,6 @@ export function calculateProgression(
   resultadoMorte: boolean,
   feminicidio: boolean
 ): { fracao: number; tempo: number } {
-  // CORREÇÃO: Determina se o crime é efetivamente hediondo para fins de progressão.
-  // Um crime com resultado morte é tratado como hediondo para a progressão, mesmo que sua forma simples não seja.
-  // Exemplo: Roubo + Morte = Latrocínio (Hediondo).
   const isEffectivelyHediondo =
     crimeHediondoOuEquiparado ||
     (crimeComViolenciaOuGraveAmeaca && resultadoMorte);
