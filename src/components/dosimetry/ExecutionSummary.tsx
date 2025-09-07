@@ -1,10 +1,11 @@
+// src/components/dosimetry/ExecutionSummary.tsx
+
 "use client";
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { formatPena } from "@/lib/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Badge } from "../ui/badge";
+import { ProgressionTimeline } from "./ProgressionTimeline";
 
 export function ExecutionSummary() {
   const { state } = useDosimetryCalculator();
@@ -21,23 +22,9 @@ export function ExecutionSummary() {
           <CardTitle>Execução Penal</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {finalResults.progression && (
-            <div>
-              <p className="font-semibold">Progressão de Regime:</p>
-              <p className="text-md text-muted-foreground">
-                Fração de{" "}
-                <Badge variant="secondary">
-                  {(finalResults.progression.fracao * 100).toFixed(0)}%
-                </Badge>{" "}
-                - A progressão para regime menos rigoroso se dará após o
-                cumprimento de{" "}
-                <span className="font-bold text-foreground">
-                  {formatPena(finalResults.progression.tempo)}
-                </span>
-                .
-              </p>
-            </div>
-          )}
+          <ProgressionTimeline
+            progressoes={finalResults.progressionSteps || []}
+          />
         </CardContent>
       </Card>
     </motion.div>

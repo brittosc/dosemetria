@@ -1,3 +1,5 @@
+// src/lib/calculations.ts
+
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { add } from "date-fns";
 
@@ -61,7 +63,6 @@ export function calculatePhaseOne(
 ): number {
   const aumentoTotal = circunstancias.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    // Na 1ª fase, a fração incide sobre a pena-base.
     return acc + fracao * penaBase;
   }, 0);
   return penaBase + aumentoTotal;
@@ -77,19 +78,16 @@ export function calculatePhaseTwo(
 
   const aumento = agravantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   const diminuicao = atenuantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   penaProvisoria += aumento - diminuicao;
 
-  // A pena provisória não pode ser inferior à pena mínima legal.
   return Math.max(penaProvisoria, penaMinima);
 }
 
@@ -101,7 +99,6 @@ export function calculatePhaseThree(
 ): number {
   let penaAtual = penaProvisoria;
 
-  // Na 3ª fase, as frações incidem sobre a pena da fase anterior (penaProvisoria).
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
@@ -209,7 +206,6 @@ export function formatValorDiaMulta(
     )})`;
   }
 
-  // CORREÇÃO: Aumenta a precisão para duas casas decimais
   return `${valor.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -304,7 +300,6 @@ export function canSursis(
   return true;
 }
 
-// Novas funções para prescrição
 export function calculatePrescription(
   penaMaxima: number,
   causasInterruptivas: boolean
@@ -318,7 +313,6 @@ export function calculatePrescription(
   else prazo = 3 * 12;
 
   if (causasInterruptivas) {
-    // Lógica simplificada para interrupção, pode ser aprimorada
     prazo = prazo / 2;
   }
 
@@ -337,23 +331,64 @@ export function calculateProgression(
     crimeHediondoOuEquiparado ||
     (crimeComViolenciaOuGraveAmeaca && resultadoMorte);
 
-  if (reincidente) {
-    if (isEffectivelyHediondo) {
-      const fracao = resultadoMorte ? 0.7 : 0.6;
-      return { fracao, tempo: pena * fracao };
+  let fracao = 0;
+
+  if (isEffectivelyHediondo) {
+    if (resultadoMorte) {
+      fracao = reincidente ? 0.7 : 0.5;
+    } else if (feminicidio) {
+      // O feminicídio já é hediondo, mas tem regra específica para primário
+      fracao = reincidente ? 0.6 : 0.55;
+    } else {
+      fracao = reincidente ? 0.6 : 0.4;
     }
-    const fracao = crimeComViolenciaOuGraveAmeaca ? 0.3 : 0.2;
-    return { fracao, tempo: pena * fracao };
+  } else if (crimeComViolenciaOuGraveAmeaca) {
+    fracao = reincidente ? 0.3 : 0.25;
   } else {
-    // Primário
-    if (feminicidio) {
-      return { fracao: 0.55, tempo: pena * 0.55 };
-    }
-    if (isEffectivelyHediondo) {
-      const fracao = resultadoMorte ? 0.5 : 0.4;
-      return { fracao, tempo: pena * fracao };
-    }
-    const fracao = crimeComViolenciaOuGraveAmeaca ? 0.25 : 0.16;
-    return { fracao, tempo: pena * fracao };
+    fracao = reincidente ? 0.2 : 0.16;
   }
+
+  return { fracao, tempo: pena * fracao };
+}
+
+export function calculateAllProgressions(
+  penaTotalMeses: number,
+  fracao: number,
+  regimeInicial: string
+): { regime: string; tempoCumprir: number; penaRestante: number }[] {
+  if (
+    penaTotalMeses <= 0 ||
+    fracao <= 0 ||
+    fracao >= 1 ||
+    regimeInicial === "Aberto"
+  ) {
+    return [];
+  }
+
+  const progressoes = [];
+  let penaRestante = penaTotalMeses;
+
+  if (regimeInicial === "Fechado") {
+    const tempoParaSemiaberto = penaRestante * fracao;
+    penaRestante -= tempoParaSemiaberto;
+    progressoes.push({
+      regime: "Semiaberto",
+      tempoCumprir: tempoParaSemiaberto,
+      penaRestante: penaRestante,
+    });
+  }
+
+  if (regimeInicial === "Fechado" || regimeInicial === "Semiaberto") {
+    if (penaRestante > 0) {
+      const tempoParaAberto = penaRestante * fracao;
+      penaRestante -= tempoParaAberto;
+      progressoes.push({
+        regime: "Aberto",
+        tempoCumprir: tempoParaAberto,
+        penaRestante: penaRestante,
+      });
+    }
+  }
+
+  return progressoes;
 }

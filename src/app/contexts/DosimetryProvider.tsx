@@ -1,3 +1,5 @@
+// src/app/contexts/DosimetryProvider.tsx
+
 "use client";
 
 import React, {
@@ -25,6 +27,7 @@ import {
   calculateFinalDate,
   calculateMulta,
   calculateProgression,
+  calculateAllProgressions, // Importa a nova função
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
 
@@ -69,6 +72,7 @@ export interface DosimetryState {
     dataFinalPena?: Date;
     multaTotal?: number;
     progression?: { fracao: number; tempo: number };
+    progressionSteps?: { regime: string; tempoCumprir: number }[]; // Novo campo para os passos
   };
 }
 
@@ -275,6 +279,13 @@ function dosimetryReducer(
         isFeminicidio
       );
 
+      // *** NOVA LÓGICA AQUI ***
+      const progressionSteps = calculateAllProgressions(
+        penaTotalBruta,
+        progression.fracao,
+        regimeInicial
+      );
+
       return {
         ...state,
         finalResults: {
@@ -286,6 +297,7 @@ function dosimetryReducer(
           dataFinalPena,
           multaTotal,
           progression,
+          progressionSteps, // Adiciona os passos da progressão ao estado
         },
       };
     }
