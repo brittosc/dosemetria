@@ -5,13 +5,17 @@
     "nome": "Homicídio Simples",
     "penaMinimaMeses": 72,
     "penaMaximaMeses": 240,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "homicidio_qualificado",
         "nome": "Homicídio Qualificado (§ 2º)",
         "descricao": "Qualificadoras de motivo torpe, fútil, meio cruel, recurso que dificultou defesa, para assegurar outro crime, contra autoridade, com arma de uso restrito, contra menor de 14 anos ou em instituição de ensino.",
         "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
+        "penaMaximaMeses": 360,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -20,7 +24,9 @@
     "artigo": "121-A",
     "nome": "Feminicídio",
     "penaMinimaMeses": 240,
-    "penaMaximaMeses": 480
+    "penaMaximaMeses": 480,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "induzimento_suicidio_automutilacao",
@@ -28,18 +34,24 @@
     "nome": "Induzimento, instigação ou auxílio a suicídio ou a automutilação",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "resultado_lesao_grave",
         "nome": "Resultado Lesão Corporal Grave ou Gravíssima (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "resultado_morte",
         "nome": "Resultado Morte (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -48,21 +60,27 @@
     "artigo": "123",
     "nome": "Infanticídio",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 72
+    "penaMaximaMeses": 72,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "aborto_consentido",
     "artigo": "124",
     "nome": "Aborto provocado pela gestante ou com seu consentimento",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 36
+    "penaMaximaMeses": 36,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "aborto_sem_consentimento",
     "artigo": "125",
     "nome": "Aborto provocado por terceiro, sem consentimento",
     "penaMinimaMeses": 36,
-    "penaMaximaMeses": 120
+    "penaMaximaMeses": 120,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "aborto_com_consentimento_terceiro",
@@ -70,12 +88,16 @@
     "nome": "Aborto provocado por terceiro, com consentimento",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "aborto_com_consentimento_incapaz",
         "nome": "Qualificado se a gestante é menor de 14, alienada, ou consentimento obtido por fraude/violência (Parágrafo único)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 120
+        "penaMaximaMeses": 120,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -84,49 +106,63 @@
     "artigo": "129",
     "nome": "Lesão Corporal Simples",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "lesao_corporal_grave",
     "artigo": "129, § 1º",
     "nome": "Lesão Corporal de Natureza Grave",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 60
+    "penaMaximaMeses": 60,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "lesao_corporal_gravissima",
     "artigo": "129, § 2º",
     "nome": "Lesão Corporal de Natureza Gravíssima",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 96
+    "penaMaximaMeses": 96,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "lesao_corporal_seguida_de_morte",
     "artigo": "129, § 3º",
     "nome": "Lesão Corporal Seguida de Morte",
     "penaMinimaMeses": 48,
-    "penaMaximaMeses": 144
+    "penaMaximaMeses": 144,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "lesao_corporal_culposa",
     "artigo": "129, § 6º",
     "nome": "Lesão Corporal Culposa",
     "penaMinimaMeses": 2,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "lesao_corporal_violencia_domestica",
     "artigo": "129, § 9º",
     "nome": "Lesão Corporal (Violência Doméstica)",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 60
+    "penaMaximaMeses": 60,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "lesao_corporal_razoes_sexo_feminino",
     "artigo": "129, § 13",
     "nome": "Lesão Corporal contra a mulher por razões da condição do sexo feminino",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 60
+    "penaMaximaMeses": 60,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "perigo_contagio_venereo",
@@ -135,12 +171,16 @@
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "intencao_transmitir_doenca",
         "nome": "Intenção de transmitir a moléstia (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -149,7 +189,9 @@
     "artigo": "131",
     "nome": "Perigo de Contágio de Moléstia Grave",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "perigo_vida_saude_outrem",
@@ -157,7 +199,9 @@
     "nome": "Perigo para a vida ou saúde de outrem",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "abandono_incapaz",
@@ -165,18 +209,24 @@
     "nome": "Abandono de Incapaz",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "abandono_resultado_lesao_grave",
         "nome": "Resultado Lesão Corporal Grave (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 84
+        "penaMaximaMeses": 84,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "abandono_resultado_morte",
         "nome": "Resultado Morte (§ 2º)",
         "penaMinimaMeses": 96,
-        "penaMaximaMeses": 168
+        "penaMaximaMeses": 168,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -186,18 +236,24 @@
     "nome": "Exposição ou abandono de recém-nascido",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "exposicao_resultado_lesao_grave",
         "nome": "Resultado Lesão Corporal Grave (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "exposicao_resultado_morte",
         "nome": "Resultado Morte (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -206,7 +262,9 @@
     "artigo": "135",
     "nome": "Omissão de Socorro",
     "penaMinimaMeses": 1,
-    "penaMaximaMeses": 6
+    "penaMaximaMeses": 6,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "condicionamento_atendimento_emergencial",
@@ -214,7 +272,9 @@
     "nome": "Condicionamento de atendimento médico-hospitalar emergencial",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "maus_tratos",
@@ -222,18 +282,24 @@
     "nome": "Maus-tratos",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "maus_tratos_resultado_lesao_grave",
         "nome": "Resultado Lesão Corporal Grave (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 84
+        "penaMaximaMeses": 84,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "maus_tratos_resultado_morte",
         "nome": "Resultado Morte (§ 2º)",
         "penaMinimaMeses": 96,
-        "penaMaximaMeses": 168
+        "penaMaximaMeses": 168,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -243,12 +309,16 @@
     "nome": "Rixa",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 2,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "rixa_qualificada",
         "nome": "Resultado morte ou lesão corporal grave (Parágrafo único)",
         "penaMinimaMeses": 6,
-        "penaMaximaMeses": 24
+        "penaMaximaMeses": 24,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -258,7 +328,9 @@
     "nome": "Calúnia",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "difamacao",
@@ -266,7 +338,9 @@
     "nome": "Difamação",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "injuria_simples",
@@ -275,18 +349,24 @@
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "injuria_real",
         "nome": "Injúria com violência ou vias de fato (Injúria Real) (§ 2º)",
         "penaMinimaMeses": 3,
-        "penaMaximaMeses": 12
+        "penaMaximaMeses": 12,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "injuria_preconceituosa",
         "nome": "Injúria por religião, condição de idoso ou pessoa com deficiência (§ 3º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -296,7 +376,9 @@
     "nome": "Constrangimento Ilegal",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "ameaca",
@@ -304,7 +386,9 @@
     "nome": "Ameaça",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "perseguicao",
@@ -312,7 +396,9 @@
     "nome": "Perseguição (Stalking)",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "violencia_psicologica_mulher",
@@ -320,7 +406,9 @@
     "nome": "Violência Psicológica contra a Mulher",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "sequestro_carcere_privado",
@@ -328,18 +416,24 @@
     "nome": "Sequestro e Cárcere Privado",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "sequestro_qualificado_paragrafo_1",
         "nome": "Qualificado por vítima vulnerável, internação, duração ou fins libidinosos (§ 1º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "sequestro_qualificado_paragrafo_2",
         "nome": "Qualificado por grave sofrimento físico ou moral (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -349,7 +443,9 @@
     "nome": "Redução a condição análoga à de escravo",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "trafico_de_pessoas",
@@ -357,7 +453,9 @@
     "nome": "Tráfico de Pessoas",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "violacao_de_domicilio",
@@ -366,12 +464,16 @@
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 3,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "violacao_domicilio_qualificada",
         "nome": "Qualificada por período noturno, lugar ermo, violência, arma ou concurso de pessoas (§ 1º)",
         "penaMinimaMeses": 6,
-        "penaMaximaMeses": 24
+        "penaMaximaMeses": 24,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -381,14 +483,18 @@
     "nome": "Violação de correspondência",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "abuso_correspondencia_comercial",
     "artigo": "152",
     "nome": "Abuso de correspondência comercial",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "divulgacao_de_segredo",
@@ -397,12 +503,16 @@
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "divulgacao_informacoes_sigilosas_adm_publica",
         "nome": "Divulgação de informações sigilosas ou reservadas da Administração Pública (§ 1º-A)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -412,7 +522,9 @@
     "nome": "Violação do segredo profissional",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "invasao_dispositivo_informatico",
@@ -421,12 +533,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "invasao_com_obtencao_de_conteudo",
         "nome": "Qualificada pela obtenção de conteúdo de comunicações eletrônicas privadas, segredos, etc. (§ 3º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -437,48 +553,64 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "furto_qualificado",
         "nome": "Furto Qualificado (§ 4º - rompimento de obstáculo, abuso de confiança, concurso de pessoas, etc.)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "furto_com_explosivo",
         "nome": "Furto Qualificado com emprego de explosivo (§ 4º-A)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 120
+        "penaMaximaMeses": 120,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "furto_mediante_fraude_eletronica",
         "nome": "Furto Qualificado mediante fraude eletrônica (§ 4º-B)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "furto_veiculo_outro_estado",
         "nome": "Furto Qualificado de veículo automotor transportado para outro Estado ou exterior (§ 5º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "furto_de_semovente",
         "nome": "Furto Qualificado de semovente domesticável de produção (Abigeato) (§ 6º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "furto_substancias_explosivas",
         "nome": "Furto Qualificado de substâncias explosivas ou acessórios (§ 7º)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 120
+        "penaMaximaMeses": 120,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "furto_equipamentos_servico_publico",
         "nome": "Furto Qualificado de fios, cabos ou equipamentos de serviços públicos (§ 8º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -487,7 +619,9 @@
     "artigo": "156",
     "nome": "Furto de coisa comum",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "roubo_simples",
@@ -496,24 +630,32 @@
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 120,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "roubo_bens_servicos_essenciais",
         "nome": "Roubo Qualificado contra bens que comprometam serviços públicos essenciais (§ 1º-A)",
         "penaMinimaMeses": 72,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "roubo_com_lesao_grave",
         "nome": "Roubo Qualificado com resultado lesão corporal grave (§ 3º, I)",
         "penaMinimaMeses": 84,
-        "penaMaximaMeses": 216
+        "penaMaximaMeses": 216,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "roubo_com_morte_latrocinio",
         "nome": "Roubo Qualificado com resultado morte (Latrocínio) (§ 3º, II)",
         "penaMinimaMeses": 240,
-        "penaMaximaMeses": 360
+        "penaMaximaMeses": 360,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -524,12 +666,16 @@
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 120,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "extorsao_com_restricao_liberdade",
         "nome": "Extorsão qualificada pela restrição da liberdade da vítima (§ 3º)",
         "penaMinimaMeses": 72,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -539,24 +685,32 @@
     "nome": "Extorsão mediante sequestro",
     "penaMinimaMeses": 96,
     "penaMaximaMeses": 180,
+    "violento": true,
+    "hediondo": true,
     "qualificadoras": [
       {
         "id": "sequestro_qualificado_duracao_vitima_bando",
         "nome": "Qualificado pela duração, idade da vítima ou por ser cometido por bando ou quadrilha (§ 1º)",
         "penaMinimaMeses": 144,
-        "penaMaximaMeses": 240
+        "penaMaximaMeses": 240,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "sequestro_resultado_lesao_grave",
         "nome": "Qualificado pelo resultado lesão corporal de natureza grave (§ 2º)",
         "penaMinimaMeses": 192,
-        "penaMaximaMeses": 288
+        "penaMaximaMeses": 288,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "sequestro_resultado_morte",
         "nome": "Qualificado pelo resultado morte (§ 3º)",
         "penaMinimaMeses": 288,
-        "penaMaximaMeses": 360
+        "penaMaximaMeses": 360,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -566,7 +720,9 @@
     "nome": "Extorsão indireta",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "alteracao_de_limites",
@@ -575,14 +731,18 @@
     "descricao": "Inclui as modalidades de usurpação de águas e esbulho possessório.",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "supressao_alteracao_marca_animais",
     "artigo": "162",
     "nome": "Supressão ou alteração de marca em animais",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 36
+    "penaMaximaMeses": 36,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "dano_simples",
@@ -591,13 +751,17 @@
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "dano_qualificado",
         "nome": "Dano Qualificado (Parágrafo único)",
         "descricao": "Cometido com violência à pessoa ou grave ameaça; com emprego de substância inflamável ou explosiva; contra o patrimônio da União, Estado, etc.; por motivo egoístico ou com prejuízo considerável para a vítima.",
         "penaMinimaMeses": 6,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -606,21 +770,27 @@
     "artigo": "164",
     "nome": "Introdução ou abandono de animais em propriedade alheia",
     "penaMinimaMeses": 0.5,
-    "penaMaximaMeses": 6
+    "penaMaximaMeses": 6,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "dano_coisa_valor_artistico",
     "artigo": "165",
     "nome": "Dano em coisa de valor artístico, arqueológico ou histórico",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "alteracao_local_protegido",
     "artigo": "166",
     "nome": "Alteração de local especialmente protegido",
     "penaMinimaMeses": 1,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "apropriacao_indebita",
@@ -628,7 +798,9 @@
     "nome": "Apropriação indébita",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "apropriacao_indebita_previdenciaria",
@@ -636,7 +808,9 @@
     "nome": "Apropriação indébita previdenciária",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "apropriacao_coisa_havida_erro",
@@ -644,7 +818,9 @@
     "nome": "Apropriação de coisa havida por erro, caso fortuito ou força da natureza",
     "descricao": "Inclui as modalidades de apropriação de tesouro e apropriação de coisa achada.",
     "penaMinimaMeses": 1,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "estelionato_simples",
@@ -653,12 +829,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "estelionato_fraude_eletronica",
         "nome": "Fraude eletrônica (§ 2º-A)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -668,7 +848,9 @@
     "nome": "Fraude com ativos virtuais, valores mobiliários ou ativos financeiros",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "duplicata_simulada",
@@ -676,7 +858,9 @@
     "nome": "Duplicata simulada",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "abuso_de_incapazes",
@@ -684,7 +868,9 @@
     "nome": "Abuso de incapazes",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "induzimento_especulacao",
@@ -692,7 +878,9 @@
     "nome": "Induzimento à especulação",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraude_no_comercio",
@@ -701,12 +889,16 @@
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "fraude_no_comercio_metais_pedras",
         "nome": "Fraude com metais ou pedras preciosas (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -715,7 +907,9 @@
     "artigo": "176",
     "nome": "Outras fraudes (Tomar refeição, alojar-se em hotel, etc. sem pagar)",
     "penaMinimaMeses": 0.5,
-    "penaMaximaMeses": 2
+    "penaMaximaMeses": 2,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraudes_abuso_sociedade_acoes",
@@ -723,7 +917,9 @@
     "nome": "Fraudes e abusos na fundação ou administração de sociedade por ações",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "emissao_irregular_warrant",
@@ -731,14 +927,18 @@
     "nome": "Emissão irregular de conhecimento de depósito ou warrant",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraude_execucao",
     "artigo": "179",
     "nome": "Fraude à execução",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "receptacao_simples",
@@ -747,12 +947,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "receptacao_qualificada",
         "nome": "Receptação Qualificada (no exercício de atividade comercial ou industrial) (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -762,7 +966,9 @@
     "paragrafo": "3º",
     "nome": "Receptação Culposa",
     "penaMinimaMeses": 1,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "receptacao_de_animal",
@@ -770,7 +976,9 @@
     "nome": "Receptação de animal (Abigeato)",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "violacao_direito_autoral_simples",
@@ -779,18 +987,24 @@
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "violacao_direito_autoral_lucro_reproducao_distribuicao",
         "nome": "Violação de direito autoral qualificada com intuito de lucro (reprodução, distribuição, etc.) (§ 1º e § 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "violacao_direito_autoral_lucro_oferecimento_publico",
         "nome": "Violação de direito autoral qualificada com intuito de lucro (oferecimento ao público via cabo, fibra, etc.) (§ 3º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -800,7 +1014,9 @@
     "nome": "Atentado contra a liberdade de trabalho (exercer ou não profissão)",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "atentado_liberdade_trabalho_estabelecimento",
@@ -808,7 +1024,9 @@
     "nome": "Atentado contra a liberdade de trabalho (abrir/fechar estabelecimento ou participar de paralisação)",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "atentado_liberdade_contrato_trabalho",
@@ -816,7 +1034,9 @@
     "nome": "Atentado contra a liberdade de contrato de trabalho e boicotagem violenta",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "atentado_liberdade_associacao",
@@ -824,7 +1044,9 @@
     "nome": "Atentado contra a liberdade de associação",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "paralisacao_trabalho_com_violencia",
@@ -832,7 +1054,9 @@
     "nome": "Paralisação de trabalho, seguida de violência ou perturbação da ordem",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "paralisacao_trabalho_interesse_coletivo",
@@ -840,7 +1064,9 @@
     "nome": "Paralisação de trabalho de interesse coletivo",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "invasao_estabelecimento_sabotagem",
@@ -848,7 +1074,9 @@
     "nome": "Invasão de estabelecimento industrial, comercial ou agrícola (Sabotagem)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "frustracao_direito_trabalhista",
@@ -856,7 +1084,9 @@
     "nome": "Frustração de direito assegurado por lei trabalhista",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "frustracao_lei_nacionalizacao_trabalho",
@@ -864,7 +1094,9 @@
     "nome": "Frustração de lei sobre a nacionalização do trabalho",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "exercicio_atividade_com_infracao",
@@ -872,7 +1104,9 @@
     "nome": "Exercício de atividade com infração de decisão administrativa",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "aliciamento_para_emigracao",
@@ -880,7 +1114,9 @@
     "nome": "Aliciamento para o fim de emigração",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "aliciamento_trabalhadores_intermunicipal",
@@ -888,7 +1124,9 @@
     "nome": "Aliciamento de trabalhadores de um local para outro do território nacional",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "ultraje_a_culto",
@@ -896,7 +1134,9 @@
     "nome": "Ultraje a culto e impedimento ou perturbação de ato a ele relativo",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "impedimento_cerimonia_funeraria",
@@ -904,7 +1144,9 @@
     "nome": "Impedimento ou perturbação de cerimônia funerária",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "violacao_de_sepultura",
@@ -912,7 +1154,9 @@
     "nome": "Violação de sepultura",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "destruicao_subtracao_ocultacao_cadaver",
@@ -920,7 +1164,9 @@
     "nome": "Destruição, subtração ou ocultação de cadáver",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "vilipendio_a_cadaver",
@@ -928,7 +1174,9 @@
     "nome": "Vilipêndio a cadáver",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "estupro",
@@ -936,18 +1184,24 @@
     "nome": "Estupro",
     "penaMinimaMeses": 72,
     "penaMaximaMeses": 120,
+    "violento": true,
+    "hediondo": true,
     "qualificadoras": [
       {
         "id": "estupro_com_lesao_grave_ou_vitima_menor",
         "nome": "Qualificado por lesão corporal grave ou se a vítima é menor de 18 e maior de 14 anos (§ 1º)",
         "penaMinimaMeses": 96,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "estupro_com_resultado_morte",
         "nome": "Qualificado pelo resultado morte (§ 2º)",
         "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
+        "penaMaximaMeses": 360,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -956,7 +1210,9 @@
     "artigo": "215",
     "nome": "Violação sexual mediante fraude",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 72
+    "penaMaximaMeses": 72,
+    "violento": false,
+    "hediondo": true
   },
   {
     "id": "importunacao_sexual",
@@ -964,7 +1220,9 @@
     "nome": "Importunação sexual",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "assedio_sexual",
@@ -972,7 +1230,9 @@
     "nome": "Assédio sexual",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "registro_nao_autorizado_intimidade_sexual",
@@ -980,7 +1240,9 @@
     "nome": "Registro não autorizado da intimidade sexual",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "estupro_de_vulneravel",
@@ -988,18 +1250,24 @@
     "nome": "Estupro de vulnerável",
     "penaMinimaMeses": 96,
     "penaMaximaMeses": 180,
+    "violento": true,
+    "hediondo": true,
     "qualificadoras": [
       {
         "id": "estupro_vulneravel_com_lesao_grave",
         "nome": "Qualificado por resultado lesão corporal de natureza grave (§ 3º)",
         "penaMinimaMeses": 120,
-        "penaMaximaMeses": 240
+        "penaMaximaMeses": 240,
+        "violento": true,
+        "hediondo": true
       },
       {
         "id": "estupro_vulneravel_com_morte",
         "nome": "Qualificado pelo resultado morte (§ 4º)",
         "penaMinimaMeses": 144,
-        "penaMaximaMeses": 360
+        "penaMaximaMeses": 360,
+        "violento": true,
+        "hediondo": true
       }
     ]
   },
@@ -1008,14 +1276,18 @@
     "artigo": "218",
     "nome": "Corrupção de menores (Induzir menor de 14 a satisfazer lascívia de outrem)",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 60
+    "penaMaximaMeses": 60,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "satisfacao_lascivia_presenca_menor",
     "artigo": "218-A",
     "nome": "Satisfação de lascívia mediante presença de criança ou adolescente",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "favorecimento_prostituicao_vulneravel",
@@ -1023,7 +1295,9 @@
     "nome": "Favorecimento da prostituição ou de outra forma de exploração sexual de vulnerável",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 120,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "divulgacao_cena_estupro_sexo",
@@ -1031,7 +1305,9 @@
     "nome": "Divulgação de cena de estupro, de sexo ou de pornografia",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "mediacao_para_servir_lascivia",
@@ -1040,18 +1316,24 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "mediacao_lascivia_qualificada_vitima_ou_agente",
         "nome": "Qualificada pela idade da vítima ou pela condição do agente (ascendente, etc.) (§ 1º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "mediacao_lascivia_qualificada_violencia_fraude",
         "nome": "Qualificada pelo emprego de violência, grave ameaça ou fraude (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1062,18 +1344,24 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "favorecimento_prostituicao_qualificada_agente",
         "nome": "Qualificada pela condição do agente (ascendente, etc.) (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "favorecimento_prostituicao_qualificada_violencia_fraude",
         "nome": "Qualificada pelo emprego de violência, grave ameaça ou fraude (§ 2º)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 120
+        "penaMaximaMeses": 120,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1083,7 +1371,9 @@
     "nome": "Casa de prostituição",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "rufianismo",
@@ -1092,18 +1382,24 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "rufianismo_qualificado_vitima_ou_agente",
         "nome": "Qualificado pela idade da vítima ou pela condição do agente (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "rufianismo_qualificado_violencia_fraude",
         "nome": "Qualificado por violência, grave ameaça, fraude ou outro meio que impeça a livre manifestação da vontade da vítima (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1113,7 +1409,9 @@
     "nome": "Promoção de migração ilegal",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "ato_obsceno",
@@ -1121,7 +1419,9 @@
     "nome": "Ato obsceno",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "escrito_ou_objeto_obsceno",
@@ -1129,7 +1429,9 @@
     "nome": "Escrito ou objeto obsceno",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "bigamia",
@@ -1137,12 +1439,16 @@
     "nome": "Bigamia",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "bigamia_participacao_nao_casado",
         "nome": "Participação de pessoa não casada em casamento com pessoa casada (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1152,14 +1458,18 @@
     "nome": "Induzimento a erro essencial e ocultação de impedimento para casamento",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "casamento_conhecendo_impedimento",
     "artigo": "237",
     "nome": "Contrair casamento conhecendo a existência de impedimento",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "simulacao_autoridade_casamento",
@@ -1167,7 +1477,9 @@
     "nome": "Simulação de autoridade para celebração de casamento",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "simulacao_de_casamento",
@@ -1175,14 +1487,18 @@
     "nome": "Simulação de casamento",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "registro_nascimento_inexistente",
     "artigo": "241",
     "nome": "Registro de nascimento inexistente",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 72
+    "penaMaximaMeses": 72,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "parto_suposto_sonegacao_estado_civil",
@@ -1190,13 +1506,17 @@
     "nome": "Parto suposto, supressão ou alteração de direito inerente ao estado civil de recém-nascido",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "parto_suposto_privilegiado",
         "nome": "Forma privilegiada por motivo de reconhecida nobreza (Parágrafo único)",
         "descricao": "Neste caso, o juiz pode inclusive deixar de aplicar a pena.",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 24
+        "penaMaximaMeses": 24,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1205,7 +1525,9 @@
     "artigo": "243",
     "nome": "Sonegação de estado de filiação",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 60
+    "penaMaximaMeses": 60,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "abandono_material",
@@ -1213,7 +1535,9 @@
     "nome": "Abandono material",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "entrega_filho_menor_pessoa_inidonea",
@@ -1222,12 +1546,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "entrega_filho_qualificada_lucro_exterior",
         "nome": "Qualificada se o crime é praticado para obter lucro, ou se o menor é enviado para o exterior (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1237,7 +1565,9 @@
     "nome": "Abandono intelectual",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 1,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "permitir_menor_local_perigoso",
@@ -1245,7 +1575,9 @@
     "nome": "Permitir que menor de 18 anos frequente lugar perigoso ou conviva com pessoa viciosa",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 3,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "induzimento_fuga_sonegacao_incapazes",
@@ -1253,14 +1585,18 @@
     "nome": "Induzimento a fuga, entrega arbitrária ou sonegação de incapazes",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "subtracao_de_incapazes",
     "artigo": "249",
     "nome": "Subtração de incapazes",
     "penaMinimaMeses": 2,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "incendio",
@@ -1268,14 +1604,18 @@
     "nome": "Incêndio",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "incendio_culposo",
     "artigo": "250, § 2º",
     "nome": "Incêndio Culposo",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "explosao_dinamite",
@@ -1283,7 +1623,9 @@
     "nome": "Explosão (com dinamite ou análogo)",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "explosao_outras_substancias",
@@ -1291,21 +1633,27 @@
     "nome": "Explosão (sem dinamite ou análogo)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "explosao_culposa_dinamite",
     "artigo": "251, § 3º",
     "nome": "Explosão Culposa (com dinamite ou análogo)",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "explosao_culposa_outras_substancias",
     "artigo": "251, § 3º",
     "nome": "Explosão Culposa (sem dinamite ou análogo)",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "uso_gas_toxico",
@@ -1313,14 +1661,18 @@
     "nome": "Uso de gás tóxico ou asfixiante",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "uso_gas_toxico_culposo",
     "artigo": "252, Parágrafo único",
     "nome": "Uso de gás tóxico ou asfixiante Culposo",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "posse_transporte_explosivos",
@@ -1328,7 +1680,9 @@
     "nome": "Fabrico, fornecimento, aquisição, posse ou transporte de explosivos ou gás",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "inundacao_dolosa",
@@ -1336,14 +1690,18 @@
     "nome": "Inundação Dolosa",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "inundacao_culposa",
     "artigo": "254",
     "nome": "Inundação Culposa",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "perigo_de_inundacao",
@@ -1351,7 +1709,9 @@
     "nome": "Perigo de inundação",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "desabamento_doloso",
@@ -1359,14 +1719,18 @@
     "nome": "Desabamento ou desmoronamento Doloso",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "desabamento_culposo",
     "artigo": "256, Parágrafo único",
     "nome": "Desabamento ou desmoronamento Culposo",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "subtracao_material_salvamento",
@@ -1374,7 +1738,9 @@
     "nome": "Subtração, ocultação ou inutilização de material de salvamento",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "difusao_doenca_ou_praga",
@@ -1382,14 +1748,18 @@
     "nome": "Difusão de doença ou praga",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "difusao_doenca_ou_praga_culposa",
     "artigo": "259, Parágrafo único",
     "nome": "Difusão de doença ou praga Culposa",
     "penaMinimaMeses": 1,
-    "penaMaximaMeses": 6
+    "penaMaximaMeses": 6,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "perigo_desastre_ferroviario",
@@ -1398,12 +1768,16 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "desastre_ferroviario_doloso",
         "nome": "Qualificado se resulta desastre (§ 1º)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1412,7 +1786,9 @@
     "artigo": "260, § 2º",
     "nome": "Desastre ferroviário Culposo",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "atentado_seguranca_transporte_maritimo_fluvial_aereo",
@@ -1421,12 +1797,16 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "sinistro_transporte_maritimo_fluvial_aereo_doloso",
         "nome": "Qualificado se resulta sinistro (naufrágio, queda de aeronave, etc.) (§ 1º)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1435,7 +1815,9 @@
     "artigo": "261, § 3º",
     "nome": "Sinistro em transporte marítimo, fluvial ou aéreo Culposo",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "atentado_seguranca_outro_transporte",
@@ -1444,12 +1826,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "desastre_outro_transporte_doloso",
         "nome": "Qualificado se resulta desastre (§ 1º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -1458,7 +1844,9 @@
     "artigo": "262, § 2º",
     "nome": "Desastre com outro meio de transporte Culposo",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "arremesso_de_projetil",
@@ -1466,7 +1854,9 @@
     "nome": "Arremesso de projétil",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "atentado_seguranca_servico_utilidade_publica",
@@ -1474,7 +1864,9 @@
     "nome": "Atentado contra a segurança de serviço de utilidade pública",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "interrupcao_servico_telegrafico_telefonico",
@@ -1482,14 +1874,18 @@
     "nome": "Interrupção ou perturbação de serviço telegráfico, telefônico, informático, etc.",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "epidemia_dolosa",
     "artigo": "267",
     "nome": "Causar epidemia (doloso)",
     "penaMinimaMeses": 120,
-    "penaMaximaMeses": 180
+    "penaMaximaMeses": 180,
+    "violento": false,
+    "hediondo": true
   },
   {
     "id": "epidemia_culposa",
@@ -1497,12 +1893,16 @@
     "nome": "Causar epidemia (culposo)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "epidemia_culposa_com_morte",
         "nome": "Qualificada pelo resultado morte",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1512,7 +1912,9 @@
     "nome": "Infração de medida sanitária preventiva",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "omissao_notificacao_doenca",
@@ -1520,7 +1922,9 @@
     "nome": "Omissão de notificação de doença",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "envenenamento_agua_alimento_doloso",
@@ -1528,14 +1932,18 @@
     "nome": "Envenenamento de água potável ou de substância alimentícia ou medicinal (doloso)",
     "penaMinimaMeses": 120,
     "penaMaximaMeses": 180,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "envenenamento_agua_alimento_culposo",
     "artigo": "270, § 2º",
     "nome": "Envenenamento de água potável ou de substância alimentícia ou medicinal (culposo)",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "corrupcao_poluicao_agua_dolosa",
@@ -1543,14 +1951,18 @@
     "nome": "Corrupção ou poluição de água potável (doloso)",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "corrupcao_poluicao_agua_culposa",
     "artigo": "271, Parágrafo único",
     "nome": "Corrupção ou poluição de água potável (culposo)",
     "penaMinimaMeses": 2,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_produto_alimenticio_dolosa",
@@ -1558,14 +1970,18 @@
     "nome": "Falsificação, corrupção, adulteração ou alteração de produtos alimentícios (doloso)",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": true
   },
   {
     "id": "falsificacao_produto_alimenticio_culposa",
     "artigo": "272, § 2º",
     "nome": "Falsificação, corrupção, adulteração ou alteração de produtos alimentícios (culposo)",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_produto_terapeutico_dolosa",
@@ -1573,14 +1989,18 @@
     "nome": "Falsificação, corrupção, adulteração ou alteração de produto destinado a fins terapêuticos ou medicinais (doloso)",
     "penaMinimaMeses": 120,
     "penaMaximaMeses": 180,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": true
   },
   {
     "id": "falsificacao_produto_terapeutico_culposa",
     "artigo": "273, § 2º",
     "nome": "Falsificação, corrupção, adulteração ou alteração de produto destinado a fins terapêuticos ou medicinais (culposo)",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 36
+    "penaMaximaMeses": 36,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "emprego_processo_proibido_substancia_nao_permitida",
@@ -1588,7 +2008,9 @@
     "nome": "Emprego de processo proibido ou de substância não permitida",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "involucro_recipiente_falsa_indicacao",
@@ -1596,7 +2018,9 @@
     "nome": "Invólucro ou recipiente com falsa indicação",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "venda_produto_condicoes_274_275",
@@ -1604,7 +2028,9 @@
     "nome": "Venda de produto em condições dos arts. 274 e 275",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "venda_substancia_destinada_falsificacao",
@@ -1612,7 +2038,9 @@
     "nome": "Venda de substância destinada à falsificação de produtos",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "venda_substancia_nociva_saude_dolosa",
@@ -1620,14 +2048,18 @@
     "nome": "Venda de coisa ou substância nociva à saúde (doloso)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "venda_substancia_nociva_saude_culposa",
     "artigo": "278, Parágrafo único",
     "nome": "Venda de coisa ou substância nociva à saúde (culposo)",
     "penaMinimaMeses": 2,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "medicamento_desacordo_receita_doloso",
@@ -1635,14 +2067,18 @@
     "nome": "Fornecer substância medicinal em desacordo com receita médica (doloso)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "medicamento_desacordo_receita_culposo",
     "artigo": "280, Parágrafo único",
     "nome": "Fornecer substância medicinal em desacordo com receita médica (culposo)",
     "penaMinimaMeses": 2,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "exercicio_ilegal_medicina_arte_dentaria_farmaceutica",
@@ -1650,7 +2086,9 @@
     "nome": "Exercício ilegal da medicina, arte dentária ou farmacêutica",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "charlatanismo",
@@ -1658,7 +2096,9 @@
     "nome": "Charlatanismo",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "curandeirismo",
@@ -1666,7 +2106,9 @@
     "nome": "Curandeirismo",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "incitacao_ao_crime",
@@ -1674,7 +2116,9 @@
     "nome": "Incitação ao crime",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "apologia_de_crime",
@@ -1682,7 +2126,9 @@
     "nome": "Apologia de crime ou criminoso",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "associacao_criminosa",
@@ -1690,7 +2136,9 @@
     "nome": "Associação Criminosa",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "constituicao_milicia_privada",
@@ -1698,7 +2146,9 @@
     "nome": "Constituição de milícia privada",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "moeda_falsa",
@@ -1707,12 +2157,16 @@
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 144,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "moeda_falsa_qualificada_funcionario_publico",
         "nome": "Qualificada se cometida por funcionário público de banco de emissão (§ 3º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 180
+        "penaMaximaMeses": 180,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1721,7 +2175,9 @@
     "artigo": "289, § 2º",
     "nome": "Moeda Falsa (Forma Privilegiada - restituição à circulação após recebimento de boa-fé)",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "crimes_assimilados_moeda_falsa",
@@ -1730,12 +2186,16 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 96,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "assimilados_moeda_falsa_qualificado_funcionario",
         "nome": "Qualificado se cometido por funcionário da repartição (Parágrafo único)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1745,7 +2205,9 @@
     "nome": "Petrechos para falsificação de moeda",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "emissao_titulo_portador_ilegal",
@@ -1753,14 +2215,18 @@
     "nome": "Emissão de título ao portador sem permissão legal",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "uso_titulo_portador_ilegal",
     "artigo": "292, Parágrafo único",
     "nome": "Uso de título ao portador emitido ilegalmente",
     "penaMinimaMeses": 0.5,
-    "penaMaximaMeses": 3
+    "penaMaximaMeses": 3,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_papeis_publicos",
@@ -1769,12 +2235,16 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 96,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "falsificacao_papeis_publicos_supressao_carimbo",
         "nome": "Supressão de carimbo ou sinal de inutilização (§ 2º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1783,7 +2253,9 @@
     "artigo": "293, § 4º",
     "nome": "Uso de papel público falso após conhecimento da falsidade (recebido de boa-fé)",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "petrechos_falsificacao_papeis_publicos",
@@ -1791,7 +2263,9 @@
     "nome": "Petrechos de falsificação (Papéis Públicos)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_selo_sinal_publico",
@@ -1799,7 +2273,9 @@
     "nome": "Falsificação do selo ou sinal público",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_documento_publico",
@@ -1807,7 +2283,9 @@
     "nome": "Falsificação de documento público",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_documento_particular",
@@ -1815,7 +2293,9 @@
     "nome": "Falsificação de documento particular (inclui cartão de crédito ou débito)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsidade_ideologica_doc_publico",
@@ -1823,7 +2303,9 @@
     "nome": "Falsidade ideológica (documento público)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsidade_ideologica_doc_particular",
@@ -1831,7 +2313,9 @@
     "nome": "Falsidade ideológica (documento particular)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falso_reconhecimento_firma_doc_publico",
@@ -1839,7 +2323,9 @@
     "nome": "Falso reconhecimento de firma ou letra (documento público)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falso_reconhecimento_firma_doc_particular",
@@ -1847,7 +2333,9 @@
     "nome": "Falso reconhecimento de firma ou letra (documento particular)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "certidao_atestado_ideologicamente_falso",
@@ -1855,7 +2343,9 @@
     "nome": "Atestado ou certidão ideologicamente falso",
     "penaMinimaMeses": 2,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsidade_material_atestado_certidao",
@@ -1863,7 +2353,9 @@
     "nome": "Falsidade material de atestado ou certidão",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsidade_atestado_medico",
@@ -1871,7 +2363,9 @@
     "nome": "Falsidade de atestado médico",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "reproducao_adulteracao_selo_filatelico",
@@ -1879,7 +2373,9 @@
     "nome": "Reprodução ou adulteração de selo ou peça filatélica",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "uso_documento_falso",
@@ -1887,7 +2383,9 @@
     "nome": "Uso de documento falso",
     "descricao": "A pena é a cominada à falsificação ou à alteração do documento utilizado (arts. 297 a 302). A calculadora deve buscar a pena do crime correspondente.",
     "penaMinimaMeses": null,
-    "penaMaximaMeses": null
+    "penaMaximaMeses": null,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "supressao_documento_publico",
@@ -1895,7 +2393,9 @@
     "nome": "Supressão de documento (público)",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "supressao_documento_particular",
@@ -1903,7 +2403,9 @@
     "nome": "Supressão de documento (particular)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsificacao_sinal_contraste_metal",
@@ -1911,7 +2413,9 @@
     "nome": "Falsificação do sinal empregado no contraste de metal precioso ou na fiscalização alfandegária",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falsa_identidade",
@@ -1919,7 +2423,9 @@
     "nome": "Falsa identidade",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "uso_documento_identidade_alheio",
@@ -1927,7 +2433,9 @@
     "nome": "Uso de documento de identidade alheia",
     "penaMinimaMeses": 4,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraude_lei_sobre_estrangeiro_uso_nome_falso",
@@ -1935,14 +2443,18 @@
     "nome": "Fraude de lei sobre estrangeiro (uso de nome falso)",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraude_lei_sobre_estrangeiro_falsa_qualidade",
     "artigo": "309, Parágrafo único",
     "nome": "Fraude de lei sobre estrangeiro (atribuir falsa qualidade)",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "adulteracao_sinal_identificador_veiculo",
@@ -1951,12 +2463,16 @@
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 72,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "adulteracao_sinal_veiculo_comercial_industrial",
         "nome": "Qualificada se praticada no exercício de atividade comercial ou industrial (§ 3º)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1967,12 +2483,16 @@
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "fraude_certame_com_dano_adm_publica",
         "nome": "Qualificada se da ação ou omissão resulta dano à administração pública (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -1983,14 +2503,18 @@
     "descricao": "Inclui Peculato-apropriação, Peculato-desvio e Peculato-furto.",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 144,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "peculato_culposo",
     "artigo": "312, § 2º",
     "nome": "Peculato culposo",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "peculato_mediante_erro_de_outrem",
@@ -1998,7 +2522,9 @@
     "nome": "Peculato mediante erro de outrem",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "insercao_dados_falsos_sistema",
@@ -2006,7 +2532,9 @@
     "nome": "Inserção de dados falsos em sistema de informações",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 144,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "modificacao_nao_autorizada_sistema",
@@ -2014,7 +2542,9 @@
     "nome": "Modificação ou alteração não autorizada de sistema de informações",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "extravio_sonegacao_documento",
@@ -2022,7 +2552,9 @@
     "nome": "Extravio, sonegação ou inutilização de livro ou documento",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "emprego_irregular_verbas_publicas",
@@ -2030,7 +2562,9 @@
     "nome": "Emprego irregular de verbas ou rendas públicas",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 3,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "concussao",
@@ -2039,18 +2573,24 @@
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 144,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "excesso_de_exacao",
         "nome": "Excesso de exação (§ 1º)",
         "penaMinimaMeses": 36,
-        "penaMaximaMeses": 96
+        "penaMaximaMeses": 96,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "excesso_de_exacao_com_desvio",
         "nome": "Excesso de exação com desvio em proveito próprio ou de outrem (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 144
+        "penaMaximaMeses": 144,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -2060,14 +2600,18 @@
     "nome": "Corrupção passiva",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 144,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "corrupcao_passiva_privilegiada",
     "artigo": "317, § 2º",
     "nome": "Corrupção passiva privilegiada (cedendo a pedido ou influência de outrem)",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "facilitacao_contrabando_descaminho",
@@ -2075,7 +2619,9 @@
     "nome": "Facilitação de contrabando ou descaminho",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "prevaricacao",
@@ -2083,14 +2629,18 @@
     "nome": "Prevaricação",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "prevaricacao_impropria_prisional",
     "artigo": "319-A",
     "nome": "Deixar de vedar ao preso o acesso a aparelho telefônico, de rádio ou similar",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "condescendencia_criminosa",
@@ -2098,7 +2648,9 @@
     "nome": "Condescendência criminosa",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 1,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "advocacia_administrativa",
@@ -2107,12 +2659,16 @@
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 3,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "advocacia_administrativa_interesse_ilegitimo",
         "nome": "Qualificada se o interesse é ilegítimo (Parágrafo único)",
         "penaMinimaMeses": 3,
-        "penaMaximaMeses": 12
+        "penaMaximaMeses": 12,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -2121,7 +2677,9 @@
     "artigo": "322",
     "nome": "Violência arbitrária",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 36
+    "penaMaximaMeses": 36,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "abandono_de_funcao",
@@ -2130,18 +2688,24 @@
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 1,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "abandono_funcao_com_prejuizo_publico",
         "nome": "Qualificado se do fato resulta prejuízo público (§ 1º)",
         "penaMinimaMeses": 3,
-        "penaMaximaMeses": 12
+        "penaMaximaMeses": 12,
+        "violento": false,
+        "hediondo": false
       },
       {
         "id": "abandono_funcao_faixa_fronteira",
         "nome": "Qualificado se o fato ocorre em lugar compreendido na faixa de fronteira (§ 2º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -2151,7 +2715,9 @@
     "nome": "Exercício funcional ilegalmente antecipado ou prolongado",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 1,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "violacao_sigilo_funcional",
@@ -2160,12 +2726,16 @@
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "violacao_sigilo_funcional_com_dano",
         "nome": "Qualificada se da ação ou omissão resulta dano à Administração Pública ou a outrem (§ 2º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -2175,7 +2745,9 @@
     "nome": "Violação do sigilo de proposta de concorrência",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "usurpacao_funcao_publica",
@@ -2184,12 +2756,16 @@
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "usurpacao_funcao_publica_com_vantagem",
         "nome": "Qualificada se o agente aufere vantagem (Parágrafo único)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 60
+        "penaMaximaMeses": 60,
+        "violento": false,
+        "hediondo": false
       }
     ]
   },
@@ -2199,12 +2775,16 @@
     "nome": "Resistência",
     "penaMinimaMeses": 2,
     "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "resistencia_qualificada",
         "nome": "Qualificada se o ato, em razão da resistência, não se executa (§ 1º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 36
+        "penaMaximaMeses": 36,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -2214,14 +2794,18 @@
     "nome": "Desobediência",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "desacato",
     "artigo": "331",
     "nome": "Desacato",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "trafico_de_influencia",
@@ -2229,7 +2813,9 @@
     "nome": "Tráfico de Influência",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "corrupcao_ativa",
@@ -2237,7 +2823,9 @@
     "nome": "Corrupção ativa",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 144,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "descaminho",
@@ -2245,7 +2833,9 @@
     "nome": "Descaminho",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "contrabando",
@@ -2253,7 +2843,9 @@
     "nome": "Contrabando",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "impedimento_fraude_concorrencia",
@@ -2261,7 +2853,9 @@
     "nome": "Impedimento, perturbação ou fraude de concorrência",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "inutilizacao_edital_sinal",
@@ -2269,7 +2863,9 @@
     "nome": "Inutilização de edital ou de sinal",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "subtracao_inutilizacao_livro_documento",
@@ -2277,7 +2873,9 @@
     "nome": "Subtração ou inutilização de livro ou documento",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "sonegacao_contribuicao_previdenciaria",
@@ -2285,7 +2883,9 @@
     "nome": "Sonegação de contribuição previdenciária",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "corrupcao_ativa_transacao_internacional",
@@ -2293,7 +2893,9 @@
     "nome": "Corrupção ativa em transação comercial internacional",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "trafico_influencia_transacao_internacional",
@@ -2301,7 +2903,9 @@
     "nome": "Tráfico de influência em transação comercial internacional",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "contratacao_direta_ilegal",
@@ -2309,7 +2913,9 @@
     "nome": "Contratação direta ilegal",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "frustracao_carater_competitivo_licitacao",
@@ -2317,7 +2923,9 @@
     "nome": "Frustração do caráter competitivo de licitação",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "patrocinio_contratacao_indevida",
@@ -2325,7 +2933,9 @@
     "nome": "Patrocínio de contratação indevida",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "modificacao_pagamento_irregular_contrato_adm",
@@ -2333,7 +2943,9 @@
     "nome": "Modificação ou pagamento irregular em contrato administrativo",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "perturbacao_processo_licitatorio",
@@ -2341,7 +2953,9 @@
     "nome": "Perturbação de processo licitatório",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "violacao_sigilo_licitacao",
@@ -2349,7 +2963,9 @@
     "nome": "Violação de sigilo em licitação",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "afastamento_licitante",
@@ -2357,7 +2973,9 @@
     "nome": "Afastamento de licitante",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fraude_em_licitacao_ou_contrato",
@@ -2365,7 +2983,9 @@
     "nome": "Fraude em licitação ou contrato",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "contratacao_inidonea_admitir",
@@ -2373,7 +2993,9 @@
     "nome": "Admitir à licitação empresa ou profissional declarado inidôneo",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "contratacao_inidonea_celebrar",
@@ -2381,7 +3003,9 @@
     "nome": "Celebrar contrato com empresa ou profissional declarado inidôneo",
     "penaMinimaMeses": 36,
     "penaMaximaMeses": 72,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "impedimento_indevido_cadastro_licitacao",
@@ -2389,7 +3013,9 @@
     "nome": "Impedimento indevido de inscrição em registros cadastrais",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "omissao_grave_dados_projetista_licitacao",
@@ -2397,14 +3023,18 @@
     "nome": "Omissão grave de dado ou de informação por projetista",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "reingresso_estrangeiro_expulso",
     "artigo": "338",
     "nome": "Reingresso de estrangeiro expulso",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "denunciacao_caluniosa",
@@ -2412,7 +3042,9 @@
     "nome": "Denunciação caluniosa",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 96,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "comunicacao_falsa_crime",
@@ -2420,7 +3052,9 @@
     "nome": "Comunicação falsa de crime ou de contravenção",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "autoacusacao_falsa",
@@ -2428,7 +3062,9 @@
     "nome": "Auto-acusação falsa",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "falso_testemunho_ou_falsa_pericia",
@@ -2436,14 +3072,18 @@
     "nome": "Falso testemunho ou falsa perícia",
     "penaMinimaMeses": 24,
     "penaMaximaMeses": 48,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "coacao_no_curso_do_processo",
     "artigo": "344",
     "nome": "Coação no curso do processo",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "exercicio_arbitrario_proprias_razoes",
@@ -2451,7 +3091,9 @@
     "nome": "Exercício arbitrário das próprias razões",
     "penaMinimaMeses": 0.5,
     "penaMaximaMeses": 1,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "fraude_processual",
@@ -2459,7 +3101,9 @@
     "nome": "Fraude processual",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "favorecimento_pessoal",
@@ -2467,7 +3111,9 @@
     "nome": "Favorecimento pessoal",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "favorecimento_real",
@@ -2475,14 +3121,18 @@
     "nome": "Favorecimento real",
     "penaMinimaMeses": 1,
     "penaMaximaMeses": 6,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "entrada_aparelho_telefonico_prisao",
     "artigo": "349-A",
     "nome": "Ingressar, promover, intermediar, auxiliar ou facilitar a entrada de aparelho telefônico em estabelecimento prisional",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "fuga_pessoa_presa",
@@ -2491,18 +3141,24 @@
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 24,
     "temMulta": true,
+    "violento": true,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "fuga_presa_qualificada_meios",
         "nome": "Qualificada se praticada à mão armada, por mais de uma pessoa, ou mediante arrombamento (§ 1º)",
         "penaMinimaMeses": 24,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": true,
+        "hediondo": false
       },
       {
         "id": "fuga_presa_qualificada_agente_custodia",
         "nome": "Qualificada se o crime é praticado por pessoa sob cuja custódia ou guarda está o preso (§ 3º)",
         "penaMinimaMeses": 12,
-        "penaMaximaMeses": 48
+        "penaMaximaMeses": 48,
+        "violento": true,
+        "hediondo": false
       }
     ]
   },
@@ -2511,21 +3167,27 @@
     "artigo": "352",
     "nome": "Evasão mediante violência contra a pessoa",
     "penaMinimaMeses": 3,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "arrebatamento_de_preso",
     "artigo": "353",
     "nome": "Arrebatamento de preso",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 48
+    "penaMaximaMeses": 48,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "motim_de_presos",
     "artigo": "354",
     "nome": "Motim de presos",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "patrocinio_infiel",
@@ -2533,7 +3195,9 @@
     "nome": "Patrocínio infiel",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 36,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "exploracao_de_prestigio",
@@ -2541,7 +3205,9 @@
     "nome": "Exploração de prestígio",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 60,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "violencia_fraude_arrematacao_judicial",
@@ -2549,7 +3215,9 @@
     "nome": "Violência ou fraude em arrematação judicial",
     "penaMinimaMeses": 2,
     "penaMaximaMeses": 12,
-    "temMulta": true
+    "temMulta": true,
+    "violento": true,
+    "hediondo": false
   },
   {
     "id": "desobediencia_decisao_judicial",
@@ -2557,21 +3225,27 @@
     "nome": "Desobediência a decisão judicial sobre perda ou suspensão de direito",
     "penaMinimaMeses": 3,
     "penaMaximaMeses": 24,
-    "temMulta": true
+    "temMulta": true,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "abolicao_violenta_estado_democratico_direito",
     "artigo": "359-L",
     "nome": "Abolição violenta do Estado Democrático de Direito",
     "penaMinimaMeses": 48,
-    "penaMaximaMeses": 96
+    "penaMaximaMeses": 96,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "golpe_de_estado",
     "artigo": "359-M",
     "nome": "Golpe de Estado",
     "penaMinimaMeses": 48,
-    "penaMaximaMeses": 144
+    "penaMaximaMeses": 144,
+    "violento": true,
+    "hediondo": true
   },
   {
     "id": "porte_para_consumo",
@@ -2580,6 +3254,8 @@
     "nome": "Adquirir, guardar, ter em depósito, transportar ou trouxer consigo, para consumo pessoal, drogas",
     "penaMinimaMeses": 0,
     "penaMaximaMeses": 0,
+    "violento": false,
+    "hediondo": false,
     "outrasPenas": [
       "Advertência sobre os efeitos das drogas",
       "Prestação de serviços à comunidade",
@@ -2593,7 +3269,9 @@
     "nome": "Tráfico de Drogas",
     "descricao": "Importar, exportar, remeter, preparar, produzir, fabricar, adquirir, vender, etc. Inclui as figuras equiparadas do § 1º (matéria-prima, semear, utilizar local).",
     "penaMinimaMeses": 60,
-    "penaMaximaMeses": 180
+    "penaMaximaMeses": 180,
+    "violento": false,
+    "hediondo": true
   },
   {
     "id": "induzimento_uso_indevido",
@@ -2601,7 +3279,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Induzir, instigar ou auxiliar alguém ao uso indevido de droga",
     "penaMinimaMeses": 12,
-    "penaMaximaMeses": 36
+    "penaMaximaMeses": 36,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "oferecer_droga_uso_conjunto",
@@ -2609,7 +3289,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa de seu relacionamento, para juntos a consumirem",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 12
+    "penaMaximaMeses": 12,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "maquinario_para_o_trafico",
@@ -2617,7 +3299,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Fabricar, adquirir, utilizar, etc., maquinário ou objeto destinado à fabricação de drogas",
     "penaMinimaMeses": 36,
-    "penaMaximaMeses": 120
+    "penaMaximaMeses": 120,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "associacao_para_o_trafico",
@@ -2625,7 +3309,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Associação para o tráfico",
     "penaMinimaMeses": 36,
-    "penaMaximaMeses": 120
+    "penaMaximaMeses": 120,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "financiamento_ou_custeio_para_o_trafico",
@@ -2633,7 +3319,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Financiar ou custear a prática do tráfico",
     "penaMinimaMeses": 96,
-    "penaMaximaMeses": 240
+    "penaMaximaMeses": 240,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "colaboracao_como_informante",
@@ -2641,7 +3329,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Colaborar, como informante, com grupo, organização ou associação destinados ao tráfico",
     "penaMinimaMeses": 24,
-    "penaMaximaMeses": 72
+    "penaMaximaMeses": 72,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "prescricao_culposa_drogas",
@@ -2649,7 +3339,9 @@
     "lei": "Lei 11.343/2006",
     "nome": "Prescrever ou ministrar, culposamente, drogas",
     "penaMinimaMeses": 6,
-    "penaMaximaMeses": 24
+    "penaMaximaMeses": 24,
+    "violento": false,
+    "hediondo": false
   },
   {
     "id": "conducao_veiculo_sob_efeito_drogas",
@@ -2658,12 +3350,16 @@
     "nome": "Conduzir embarcação ou aeronave após o consumo de drogas",
     "penaMinimaMeses": 6,
     "penaMaximaMeses": 36,
+    "violento": false,
+    "hediondo": false,
     "qualificadoras": [
       {
         "id": "conducao_veiculo_coletivo_sob_efeito_drogas",
         "nome": "Qualificada se o veículo for de transporte coletivo de passageiros (Parágrafo único)",
         "penaMinimaMeses": 48,
-        "penaMaximaMeses": 72
+        "penaMaximaMeses": 72,
+        "violento": false,
+        "hediondo": false
       }
     ]
   }

@@ -4,6 +4,8 @@ export interface Qualificadora {
   descricao?: string;
   penaMinimaMeses: number;
   penaMaximaMeses: number;
+  violento: boolean;
+  hediondo: boolean;
 }
 
 export interface Crime {
@@ -16,4 +18,8 @@ export interface Crime {
   temMulta?: boolean;
   descricao?: string;
   paragrafo?: string;
+  violento: boolean;
+  hediondo: boolean;
+  outrasPenas?: string[];
+  lei?: string;
 }

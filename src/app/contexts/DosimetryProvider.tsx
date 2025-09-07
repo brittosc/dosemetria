@@ -24,6 +24,7 @@ import {
   canSursis,
   calculateFinalDate,
   calculateMulta,
+  calculateProgression,
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
 
@@ -47,6 +48,7 @@ export interface CrimeState {
     diasMulta: number;
     valorDiaMulta: number;
   };
+  resultadoMorte: boolean;
 }
 
 export interface DosimetryState {
@@ -66,6 +68,7 @@ export interface DosimetryState {
     podeSursis?: boolean;
     dataFinalPena?: Date;
     multaTotal?: number;
+    progression?: { fracao: number; tempo: number };
   };
 }
 
@@ -96,6 +99,7 @@ const initialCrimeState: Omit<CrimeState, "id"> = {
     diasMulta: 10,
     valorDiaMulta: 1 / 30,
   },
+  resultadoMorte: false,
 };
 
 const initialState: DosimetryState = {
@@ -140,21 +144,6 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
     penaDefinitiva,
   };
 }
-
-const crimesViolentosIds = [
-  "homicidio_simples",
-  "feminicidio",
-  "lesao_corporal_simples",
-  "lesao_corporal_grave",
-  "lesao_corporal_gravissima",
-  "lesao_corporal_seguida_de_morte",
-  "lesao_corporal_violencia_domestica",
-  "roubo_simples",
-  "extorsao_simples",
-  "extorsao_mediante_sequestro",
-  "estupro",
-  "estupro_de_vulneravel",
-];
 
 function dosimetryReducer(
   state: DosimetryState,
@@ -222,9 +211,29 @@ function dosimetryReducer(
       const reincidente = state.crimes.some((c) =>
         c.agravantes.some((a) => a.id === "reincidencia")
       );
-      const crimeComViolenciaOuGraveAmeaca = state.crimes.some((c) =>
-        crimesViolentosIds.includes(c.crimeId ?? "")
+
+      const crimeMaisGrave =
+        state.crimes.length > 0
+          ? state.crimes.reduce((a, b) =>
+              (a.penaDefinitiva ?? 0) > (b.penaDefinitiva ?? 0) ? a : b
+            )
+          : null;
+
+      const crimeBaseInfo = crimeMaisGrave
+        ? (crimesDataRaw as Crime[]).find(
+            (c) => c.id === crimeMaisGrave.crimeId
+          )
+        : null;
+      const qualificadoraInfo = crimeBaseInfo?.qualificadoras?.find(
+        (q) => q.id === crimeMaisGrave?.selectedQualificadoraId
       );
+
+      const activeCrimeInfo = qualificadoraInfo || crimeBaseInfo;
+
+      const crimeComViolenciaOuGraveAmeaca = activeCrimeInfo?.violento ?? false;
+      const crimeHediondoOuEquiparado = activeCrimeInfo?.hediondo ?? false;
+      const resultadoMorte = crimeMaisGrave?.resultadoMorte ?? false;
+      const isFeminicidio = crimeMaisGrave?.crimeId === "feminicidio";
 
       const regimeInicial = calculateRegimeInicial(penaParaRegime, reincidente);
       const podeSubstituir = canSubstituirPena(
@@ -240,10 +249,11 @@ function dosimetryReducer(
           : new Date();
       const dataFinalPena = calculateFinalDate(dataInicial, penaParaRegime);
 
-      const crimesData: Crime[] = crimesDataRaw as Crime[];
       const multaTotal = state.crimes.reduce((acc, crime) => {
-        const crimeInfo = crimesData.find((c) => c.id === crime.crimeId);
-        if (crimeInfo?.temMulta) {
+        const crimeData = (crimesDataRaw as Crime[]).find(
+          (c) => c.id === crime.crimeId
+        );
+        if (crimeData?.temMulta) {
           return (
             acc +
             calculateMulta(
@@ -256,6 +266,15 @@ function dosimetryReducer(
         return acc;
       }, 0);
 
+      const progression = calculateProgression(
+        penaTotalBruta,
+        reincidente,
+        crimeComViolenciaOuGraveAmeaca,
+        crimeHediondoOuEquiparado,
+        resultadoMorte,
+        isFeminicidio
+      );
+
       return {
         ...state,
         finalResults: {
@@ -266,6 +285,7 @@ function dosimetryReducer(
           podeSursis,
           dataFinalPena,
           multaTotal,
+          progression,
         },
       };
     }

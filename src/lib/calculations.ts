@@ -303,3 +303,60 @@ export function canSursis(
   if (reincidenteEmCrimeDoloso) return false;
   return true;
 }
+
+// Novas funções para prescrição
+export function calculatePrescription(
+  penaMaxima: number,
+  causasInterruptivas: boolean
+): number {
+  let prazo = 0;
+  if (penaMaxima > 12 * 12) prazo = 20 * 12;
+  else if (penaMaxima > 8 * 12) prazo = 16 * 12;
+  else if (penaMaxima > 4 * 12) prazo = 12 * 12;
+  else if (penaMaxima > 2 * 12) prazo = 8 * 12;
+  else if (penaMaxima > 1 * 12) prazo = 4 * 12;
+  else prazo = 3 * 12;
+
+  if (causasInterruptivas) {
+    // Lógica simplificada para interrupção, pode ser aprimorada
+    prazo = prazo / 2;
+  }
+
+  return prazo;
+}
+
+export function calculateProgression(
+  pena: number,
+  reincidente: boolean,
+  crimeComViolenciaOuGraveAmeaca: boolean,
+  crimeHediondoOuEquiparado: boolean,
+  resultadoMorte: boolean,
+  feminicidio: boolean
+): { fracao: number; tempo: number } {
+  // CORREÇÃO: Determina se o crime é efetivamente hediondo para fins de progressão.
+  // Um crime com resultado morte é tratado como hediondo para a progressão, mesmo que sua forma simples não seja.
+  // Exemplo: Roubo + Morte = Latrocínio (Hediondo).
+  const isEffectivelyHediondo =
+    crimeHediondoOuEquiparado ||
+    (crimeComViolenciaOuGraveAmeaca && resultadoMorte);
+
+  if (reincidente) {
+    if (isEffectivelyHediondo) {
+      const fracao = resultadoMorte ? 0.7 : 0.6;
+      return { fracao, tempo: pena * fracao };
+    }
+    const fracao = crimeComViolenciaOuGraveAmeaca ? 0.3 : 0.2;
+    return { fracao, tempo: pena * fracao };
+  } else {
+    // Primário
+    if (feminicidio) {
+      return { fracao: 0.55, tempo: pena * 0.55 };
+    }
+    if (isEffectivelyHediondo) {
+      const fracao = resultadoMorte ? 0.5 : 0.4;
+      return { fracao, tempo: pena * fracao };
+    }
+    const fracao = crimeComViolenciaOuGraveAmeaca ? 0.25 : 0.16;
+    return { fracao, tempo: pena * fracao };
+  }
+}

@@ -4,6 +4,8 @@ import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { formatPena, formatCurrency } from "@/lib/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { Separator } from "@/components/ui/separator";
+import { PenaGraph } from "./PenaGraph";
 
 export function FinalSummary() {
   const { state } = useDosimetryCalculator();
@@ -23,6 +25,8 @@ export function FinalSummary() {
           <CardTitle>Resultado Final</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {state.crimes.length > 0 && <PenaGraph />}
+          <Separator />
           <div>
             <p className="font-semibold">Pena Total (sem detração):</p>
             <p className="text-xl font-bold text-green-700">

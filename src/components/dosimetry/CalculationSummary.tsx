@@ -31,7 +31,7 @@ export function CalculationSummary() {
   });
 
   return (
-    <Card className="w-full sticky top-8">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Resumo e Finalização</CardTitle>
       </CardHeader>
