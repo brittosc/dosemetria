@@ -63,6 +63,7 @@ export function calculatePhaseOne(
 ): number {
   const aumentoTotal = circunstancias.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
+    // Na 1ª fase, a fração incide sobre a pena-base.
     return acc + fracao * penaBase;
   }, 0);
   return penaBase + aumentoTotal;
@@ -78,16 +79,19 @@ export function calculatePhaseTwo(
 
   const aumento = agravantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
+    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   const diminuicao = atenuantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
+    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   penaProvisoria += aumento - diminuicao;
 
+  // A pena provisória não pode ser inferior à pena mínima legal.
   return Math.max(penaProvisoria, penaMinima);
 }
 
@@ -99,6 +103,7 @@ export function calculatePhaseThree(
 ): number {
   let penaAtual = penaProvisoria;
 
+  // Na 3ª fase, as frações incidem sobre a pena da fase anterior (penaProvisoria).
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
@@ -324,20 +329,31 @@ export function calculateProgression(
   reincidente: boolean,
   crimeComViolenciaOuGraveAmeaca: boolean,
   crimeHediondoOuEquiparado: boolean,
-  resultadoMorte: boolean
+  resultadoMorte: boolean,
+  feminicidio: boolean
 ): { fracao: number; tempo: number } {
   let fracao = 0;
 
-  if (crimeHediondoOuEquiparado) {
-    if (resultadoMorte) {
-      fracao = reincidente ? 0.7 : 0.5; // 70% ou 50%
+  // Trata a regra específica do Feminicídio para primários primeiro
+  if (feminicidio && !reincidente) {
+    fracao = 0.55; // 55%
+  } else if (reincidente) {
+    if (crimeHediondoOuEquiparado) {
+      fracao = resultadoMorte ? 0.7 : 0.6; // 70% ou 60%
+    } else if (crimeComViolenciaOuGraveAmeaca) {
+      fracao = 0.3; // 30%
     } else {
-      fracao = reincidente ? 0.6 : 0.4; // 60% ou 40%
+      fracao = 0.2; // 20%
     }
-  } else if (crimeComViolenciaOuGraveAmeaca) {
-    fracao = reincidente ? 0.3 : 0.25; // 30% ou 25%
   } else {
-    fracao = reincidente ? 0.2 : 0.16; // 20% ou 16%
+    // Primário (sem ser feminicídio, que já foi tratado)
+    if (crimeHediondoOuEquiparado) {
+      fracao = resultadoMorte ? 0.5 : 0.4; // 50% ou 40%
+    } else if (crimeComViolenciaOuGraveAmeaca) {
+      fracao = 0.25; // 25%
+    } else {
+      fracao = 0.16; // 16%
+    }
   }
 
   return { fracao, tempo: pena * fracao };

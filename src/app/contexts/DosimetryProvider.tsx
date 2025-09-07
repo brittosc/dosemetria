@@ -218,27 +218,29 @@ function dosimetryReducer(
         c.agravantes.some((a) => a.id === "reincidencia")
       );
 
-      const crimeMaisGrave =
-        state.crimes.length > 0
-          ? state.crimes.reduce((a, b) =>
-              (a.penaDefinitiva ?? 0) > (b.penaDefinitiva ?? 0) ? a : b
-            )
-          : null;
+      const crimeComViolenciaOuGraveAmeaca = state.crimes.some((crimeState) => {
+        const crimeData = (crimesDataRaw as Crime[]).find(
+          (c) => c.id === crimeState.crimeId
+        );
+        return crimeData?.violento ?? false;
+      });
 
-      const crimeBaseInfo = crimeMaisGrave
-        ? (crimesDataRaw as Crime[]).find(
-            (c) => c.id === crimeMaisGrave.crimeId
-          )
-        : null;
-      const qualificadoraInfo = crimeBaseInfo?.qualificadoras?.find(
-        (q) => q.id === crimeMaisGrave?.selectedQualificadoraId
+      const crimeHediondoOuEquiparado = state.crimes.some((crimeState) => {
+        const crimeData = (crimesDataRaw as Crime[]).find(
+          (c) => c.id === crimeState.crimeId
+        );
+        const qualificadoraData = crimeData?.qualificadoras?.find(
+          (q) => q.id === crimeState.selectedQualificadoraId
+        );
+        return (qualificadoraData?.hediondo || crimeData?.hediondo) ?? false;
+      });
+
+      const resultadoMorte = state.crimes.some((c) => c.resultadoMorte);
+
+      // Verificação específica para feminicídio, agora corrigida
+      const isFeminicidio = state.crimes.some(
+        (c) => c.crimeId === "feminicidio"
       );
-
-      const activeCrimeInfo = qualificadoraInfo || crimeBaseInfo;
-
-      const crimeComViolenciaOuGraveAmeaca = activeCrimeInfo?.violento ?? false;
-      const crimeHediondoOuEquiparado = activeCrimeInfo?.hediondo ?? false;
-      const resultadoMorte = crimeMaisGrave?.resultadoMorte ?? false;
 
       const regimeInicial = calculateRegimeInicial(penaParaRegime, reincidente);
       const podeSubstituir = canSubstituirPena(
@@ -276,7 +278,8 @@ function dosimetryReducer(
         reincidente,
         crimeComViolenciaOuGraveAmeaca,
         crimeHediondoOuEquiparado,
-        resultadoMorte
+        resultadoMorte,
+        isFeminicidio // Passando o parâmetro
       );
 
       const progressionSteps = calculateAllProgressions(
