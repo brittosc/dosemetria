@@ -324,28 +324,20 @@ export function calculateProgression(
   reincidente: boolean,
   crimeComViolenciaOuGraveAmeaca: boolean,
   crimeHediondoOuEquiparado: boolean,
-  resultadoMorte: boolean,
-  feminicidio: boolean
+  resultadoMorte: boolean
 ): { fracao: number; tempo: number } {
-  const isEffectivelyHediondo =
-    crimeHediondoOuEquiparado ||
-    (crimeComViolenciaOuGraveAmeaca && resultadoMorte);
-
   let fracao = 0;
 
-  if (isEffectivelyHediondo) {
+  if (crimeHediondoOuEquiparado) {
     if (resultadoMorte) {
-      fracao = reincidente ? 0.7 : 0.5;
-    } else if (feminicidio) {
-      // O feminicídio já é hediondo, mas tem regra específica para primário
-      fracao = reincidente ? 0.6 : 0.55;
+      fracao = reincidente ? 0.7 : 0.5; // 70% ou 50%
     } else {
-      fracao = reincidente ? 0.6 : 0.4;
+      fracao = reincidente ? 0.6 : 0.4; // 60% ou 40%
     }
   } else if (crimeComViolenciaOuGraveAmeaca) {
-    fracao = reincidente ? 0.3 : 0.25;
+    fracao = reincidente ? 0.3 : 0.25; // 30% ou 25%
   } else {
-    fracao = reincidente ? 0.2 : 0.16;
+    fracao = reincidente ? 0.2 : 0.16; // 20% ou 16%
   }
 
   return { fracao, tempo: pena * fracao };

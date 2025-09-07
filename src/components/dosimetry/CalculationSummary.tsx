@@ -32,9 +32,6 @@ export function CalculationSummary() {
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Resumo e Finalização</CardTitle>
-      </CardHeader>
       <CardContent className="space-y-4">
         {state.crimes.length === 0 ? (
           <p className="text-muted-foreground text-sm">

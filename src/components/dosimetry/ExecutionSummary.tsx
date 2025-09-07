@@ -18,12 +18,10 @@ export function ExecutionSummary() {
       transition={{ duration: 0.5 }}
     >
       <Card className="w-full mt-4">
-        <CardHeader>
-          <CardTitle>Execução Penal</CardTitle>
-        </CardHeader>
         <CardContent className="space-y-4">
           <ProgressionTimeline
             progressoes={finalResults.progressionSteps || []}
+            fracao={finalResults.progression?.fracao || 0}
           />
         </CardContent>
       </Card>

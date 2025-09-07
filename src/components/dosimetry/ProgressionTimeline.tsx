@@ -1,7 +1,8 @@
 // src/components/dosimetry/ProgressionTimeline.tsx
 
 import { formatPena } from "@/lib/calculations";
-import { CheckCircle2, ShieldCheck } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle2 } from "lucide-react";
 
 interface Progression {
   regime: string;
@@ -10,16 +11,22 @@ interface Progression {
 
 interface ProgressionTimelineProps {
   progressoes: Progression[];
+  fracao: number;
 }
 
-export function ProgressionTimeline({ progressoes }: ProgressionTimelineProps) {
+export function ProgressionTimeline({
+  progressoes,
+  fracao,
+}: ProgressionTimelineProps) {
   if (!progressoes || progressoes.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        Não há progressão de regime aplicável.
+        Não há progressão de regime aplicável para a pena e regime atuais.
       </p>
     );
   }
+
+  const percentual = (fracao * 100).toFixed(0);
 
   return (
     <div className="space-y-4">
@@ -35,7 +42,8 @@ export function ProgressionTimeline({ progressoes }: ProgressionTimelineProps) {
                 Progressão para o Regime {prog.regime}
               </h3>
               <p className="block mb-2 text-sm font-normal leading-none text-muted-foreground">
-                Após cumprir{" "}
+                <Badge variant="secondary">{percentual}% da pena</Badge>
+                {" - Após cumprir "}
                 <span className="font-bold text-foreground">
                   {formatPena(prog.tempoCumprir)}
                 </span>
@@ -43,17 +51,6 @@ export function ProgressionTimeline({ progressoes }: ProgressionTimelineProps) {
             </div>
           </li>
         ))}
-        <li className="ml-6">
-          <span className="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-card dark:ring-gray-900 dark:bg-green-900">
-            <ShieldCheck className="w-4 h-4 text-green-800 dark:text-green-300" />
-          </span>
-          <div className="ml-2">
-            <h3 className="flex items-center mb-1 text-md font-semibold text-foreground">
-              Livramento Condicional
-            </h3>
-            <p className="text-sm text-muted-foreground">(Cálculo futuro)</p>
-          </div>
-        </li>
       </ol>
     </div>
   );

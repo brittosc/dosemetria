@@ -27,11 +27,9 @@ import {
   calculateFinalDate,
   calculateMulta,
   calculateProgression,
-  calculateAllProgressions, // Importa a nova função
+  calculateAllProgressions,
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
-
-// --- TIPOS E INTERFACES ---
 
 export interface CrimeState {
   id: string;
@@ -72,7 +70,11 @@ export interface DosimetryState {
     dataFinalPena?: Date;
     multaTotal?: number;
     progression?: { fracao: number; tempo: number };
-    progressionSteps?: { regime: string; tempoCumprir: number }[]; // Novo campo para os passos
+    progressionSteps?: {
+      regime: string;
+      tempoCumprir: number;
+      penaRestante: number;
+    }[];
   };
 }
 
@@ -187,7 +189,7 @@ function dosimetryReducer(
     case "UPDATE_SALARIO_MINIMO":
       return { ...state, salarioMinimo: action.payload };
     case "RECALCULATE_FINALS": {
-      if (state.crimes.length === 0) {
+      if (state.crimes.length === 0 || !state.crimes.some((c) => c.crimeId)) {
         return { ...state, finalResults: {} };
       }
 
@@ -237,7 +239,6 @@ function dosimetryReducer(
       const crimeComViolenciaOuGraveAmeaca = activeCrimeInfo?.violento ?? false;
       const crimeHediondoOuEquiparado = activeCrimeInfo?.hediondo ?? false;
       const resultadoMorte = crimeMaisGrave?.resultadoMorte ?? false;
-      const isFeminicidio = crimeMaisGrave?.crimeId === "feminicidio";
 
       const regimeInicial = calculateRegimeInicial(penaParaRegime, reincidente);
       const podeSubstituir = canSubstituirPena(
@@ -275,11 +276,9 @@ function dosimetryReducer(
         reincidente,
         crimeComViolenciaOuGraveAmeaca,
         crimeHediondoOuEquiparado,
-        resultadoMorte,
-        isFeminicidio
+        resultadoMorte
       );
 
-      // *** NOVA LÓGICA AQUI ***
       const progressionSteps = calculateAllProgressions(
         penaTotalBruta,
         progression.fracao,
@@ -297,7 +296,7 @@ function dosimetryReducer(
           dataFinalPena,
           multaTotal,
           progression,
-          progressionSteps, // Adiciona os passos da progressão ao estado
+          progressionSteps,
         },
       };
     }
