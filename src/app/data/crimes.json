@@ -2572,5 +2572,99 @@
     "nome": "Golpe de Estado",
     "penaMinimaMeses": 48,
     "penaMaximaMeses": 144
+  },
+  {
+    "id": "porte_para_consumo",
+    "artigo": "28",
+    "lei": "Lei 11.343/2006",
+    "nome": "Adquirir, guardar, ter em depósito, transportar ou trouxer consigo, para consumo pessoal, drogas",
+    "penaMinimaMeses": 0,
+    "penaMaximaMeses": 0,
+    "outrasPenas": [
+      "Advertência sobre os efeitos das drogas",
+      "Prestação de serviços à comunidade",
+      "Medida educativa de comparecimento a programa ou curso educativo"
+    ]
+  },
+  {
+    "id": "trafico_de_drogas",
+    "artigo": "33",
+    "lei": "Lei 11.343/2006",
+    "nome": "Tráfico de Drogas",
+    "descricao": "Importar, exportar, remeter, preparar, produzir, fabricar, adquirir, vender, etc. Inclui as figuras equiparadas do § 1º (matéria-prima, semear, utilizar local).",
+    "penaMinimaMeses": 60,
+    "penaMaximaMeses": 180
+  },
+  {
+    "id": "induzimento_uso_indevido",
+    "artigo": "33, § 2º",
+    "lei": "Lei 11.343/2006",
+    "nome": "Induzir, instigar ou auxiliar alguém ao uso indevido de droga",
+    "penaMinimaMeses": 12,
+    "penaMaximaMeses": 36
+  },
+  {
+    "id": "oferecer_droga_uso_conjunto",
+    "artigo": "33, § 3º",
+    "lei": "Lei 11.343/2006",
+    "nome": "Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa de seu relacionamento, para juntos a consumirem",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 12
+  },
+  {
+    "id": "maquinario_para_o_trafico",
+    "artigo": "34",
+    "lei": "Lei 11.343/2006",
+    "nome": "Fabricar, adquirir, utilizar, etc., maquinário ou objeto destinado à fabricação de drogas",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "associacao_para_o_trafico",
+    "artigo": "35",
+    "lei": "Lei 11.343/2006",
+    "nome": "Associação para o tráfico",
+    "penaMinimaMeses": 36,
+    "penaMaximaMeses": 120
+  },
+  {
+    "id": "financiamento_ou_custeio_para_o_trafico",
+    "artigo": "36",
+    "lei": "Lei 11.343/2006",
+    "nome": "Financiar ou custear a prática do tráfico",
+    "penaMinimaMeses": 96,
+    "penaMaximaMeses": 240
+  },
+  {
+    "id": "colaboracao_como_informante",
+    "artigo": "37",
+    "lei": "Lei 11.343/2006",
+    "nome": "Colaborar, como informante, com grupo, organização ou associação destinados ao tráfico",
+    "penaMinimaMeses": 24,
+    "penaMaximaMeses": 72
+  },
+  {
+    "id": "prescricao_culposa_drogas",
+    "artigo": "38",
+    "lei": "Lei 11.343/2006",
+    "nome": "Prescrever ou ministrar, culposamente, drogas",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 24
+  },
+  {
+    "id": "conducao_veiculo_sob_efeito_drogas",
+    "artigo": "39",
+    "lei": "Lei 11.343/2006",
+    "nome": "Conduzir embarcação ou aeronave após o consumo de drogas",
+    "penaMinimaMeses": 6,
+    "penaMaximaMeses": 36,
+    "qualificadoras": [
+      {
+        "id": "conducao_veiculo_coletivo_sob_efeito_drogas",
+        "nome": "Qualificada se o veículo for de transporte coletivo de passageiros (Parágrafo único)",
+        "penaMinimaMeses": 48,
+        "penaMaximaMeses": 72
+      }
+    ]
   }
 ]

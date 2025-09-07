@@ -124,7 +124,6 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
     penaPrimeiraFase,
     crime.agravantes,
     crime.atenuantes,
-    crime.penaBase,
     penaMinima
   );
 
@@ -239,10 +238,7 @@ function dosimetryReducer(
         state.crimes.length > 0 && state.crimes[0].dataCrime
           ? new Date(state.crimes[0].dataCrime)
           : new Date();
-      const dataFinalPena = calculateFinalDate(
-        dataInicial,
-        penaTotalBruta - detracaoEmMeses
-      );
+      const dataFinalPena = calculateFinalDate(dataInicial, penaParaRegime);
 
       const crimesData: Crime[] = crimesDataRaw as Crime[];
       const multaTotal = state.crimes.reduce((acc, crime) => {

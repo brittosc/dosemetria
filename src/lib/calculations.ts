@@ -1,4 +1,5 @@
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
+import { add } from "date-fns";
 
 export type Causa = {
   id: string;
@@ -60,6 +61,7 @@ export function calculatePhaseOne(
 ): number {
   const aumentoTotal = circunstancias.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
+    // Na 1ª fase, a fração incide sobre a pena-base.
     return acc + fracao * penaBase;
   }, 0);
   return penaBase + aumentoTotal;
@@ -69,23 +71,25 @@ export function calculatePhaseTwo(
   penaPrimeiraFase: number,
   agravantes: Circunstancia[],
   atenuantes: Circunstancia[],
-  penaBase: number,
   penaMinima: number
 ): number {
   let penaProvisoria = penaPrimeiraFase;
 
   const aumento = agravantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    return acc + fracao * penaBase;
+    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
+    return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   const diminuicao = atenuantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    return acc + fracao * penaBase;
+    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
+    return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   penaProvisoria += aumento - diminuicao;
 
+  // A pena provisória não pode ser inferior à pena mínima legal.
   return Math.max(penaProvisoria, penaMinima);
 }
 
@@ -97,7 +101,7 @@ export function calculatePhaseThree(
 ): number {
   let penaAtual = penaProvisoria;
 
-  // Aplica as causas de aumento
+  // Na 3ª fase, as frações incidem sobre a pena da fase anterior (penaProvisoria).
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
@@ -107,15 +111,13 @@ export function calculatePhaseThree(
         ? parseFraction(causaAplicada.valorAplicado)
         : causaAplicada.valorAplicado;
 
-    // Diferencia multiplicadores (dobro, triplo) de aumentos fracionários
     if (causaInfo.valor.tipo === "dobro" || causaInfo.valor.tipo === "triplo") {
-      penaAtual *= valor; // Multiplica a pena (ex: pena * 2)
+      penaAtual *= valor;
     } else {
-      penaAtual += penaAtual * valor; // Aumenta a pena com base na fração (ex: pena + pena * 1/3)
+      penaAtual += penaAtual * valor;
     }
   });
 
-  // Aplica as causas de diminuição
   causasDiminuicao.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
@@ -125,10 +127,10 @@ export function calculatePhaseThree(
         ? parseFraction(causaAplicada.valorAplicado)
         : causaAplicada.valorAplicado;
 
-    penaAtual -= penaAtual * fracao; // Diminui a pena com base na fração (ex: pena - pena * 1/3)
+    penaAtual -= penaAtual * fracao;
   });
 
-  return Math.max(0, penaAtual); // Garante que a pena não seja negativa
+  return Math.max(0, penaAtual);
 }
 
 export function formatPena(totalMeses: number | null | undefined): string {
@@ -141,29 +143,31 @@ export function formatPena(totalMeses: number | null | undefined): string {
     return "--";
   }
 
-  // Arredonda para 4 casas decimais para evitar imprecisões de ponto flutuante
-  const totalMesesRounded = parseFloat(totalMeses.toFixed(4));
+  if (totalMeses < 1 / 30) {
+    return "0 dias";
+  }
 
-  const anos = Math.floor(totalMesesRounded / 12);
-  const mesesRestantes = totalMesesRounded % 12;
-  const meses = Math.floor(mesesRestantes);
-
-  // Arredonda os dias para evitar casas decimais
+  let anos = Math.floor(totalMeses / 12);
+  const mesesRestantes = totalMeses % 12;
+  let meses = Math.floor(mesesRestantes);
   let dias = Math.round((mesesRestantes - meses) * 30);
 
-  let mesesCorrigidos = meses;
-
   if (dias >= 30) {
-    mesesCorrigidos += 1;
+    meses += 1;
     dias = 0;
+  }
+
+  if (meses >= 12) {
+    anos += 1;
+    meses = 0;
   }
 
   const parts = [];
   if (anos > 0) {
     parts.push(`${anos} ano${anos > 1 ? "s" : ""}`);
   }
-  if (mesesCorrigidos > 0) {
-    parts.push(`${mesesCorrigidos} ${mesesCorrigidos > 1 ? "meses" : "mês"}`);
+  if (meses > 0) {
+    parts.push(`${meses} ${meses > 1 ? "meses" : "mês"}`);
   }
   if (dias > 0) {
     parts.push(`${dias} dia${dias > 1 ? "s" : ""}`);
@@ -187,21 +191,28 @@ export function formatValorDiaMulta(
   valor: number,
   salarioMinimo: number
 ): string {
-  const epsilon = 0.0001;
+  const epsilon = 0.001;
   if (Math.abs(valor - 1 / 30) < epsilon) {
     return `1/30 do salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
   }
 
   if (valor < 1) {
     const denominator = Math.round(1 / valor);
+    if (denominator === 1) {
+      return `${valor.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}x o salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
+    }
     return `1/${denominator} do salário mínimo (${formatCurrency(
       valor * salarioMinimo
     )})`;
   }
 
+  // CORREÇÃO: Aumenta a precisão para duas casas decimais
   return `${valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   })}x o salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
 }
 
@@ -214,15 +225,16 @@ export function calculateMulta(
 }
 
 export function calculateFinalDate(startDate: Date, totalMeses: number): Date {
-  const finalDate = new Date(startDate);
-  finalDate.setMonth(finalDate.getMonth() + Math.floor(totalMeses));
-  const decimalPart = totalMeses - Math.floor(totalMeses);
-  const daysToAdd = Math.round(decimalPart * 30);
-  finalDate.setDate(finalDate.getDate() + daysToAdd);
+  const mesesInteiros = Math.floor(totalMeses);
+  const diasDecimais = (totalMeses - mesesInteiros) * 30;
+
+  const finalDate = add(startDate, {
+    months: mesesInteiros,
+    days: Math.round(diasDecimais),
+  });
+
   return finalDate;
 }
-
-// --- Funções de Concurso de Crimes ---
 
 export function calculateConcursoMaterial(crimes: CrimeState[]): number {
   return crimes.reduce((acc, crime) => acc + (crime.penaDefinitiva || 0), 0);
@@ -252,8 +264,6 @@ export function calculateCrimeContinuado(crimes: CrimeState[]): number {
   const aumento = parseFraction(fracaoAumento);
   return penaMaisGrave * (1 + aumento);
 }
-
-// --- Funções de Análise de Benefícios ---
 
 export function calculateRegimeInicial(
   pena: number,

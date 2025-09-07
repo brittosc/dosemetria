@@ -1381,5 +1381,83 @@
       "valor": 0.3333,
       "fracao": "1/3"
     }
+  },
+  {
+    "id": "trafico_privilegiado",
+    "artigo": "33",
+    "lei": "Lei 11.343/2006",
+    "paragrafo": "4º",
+    "descricao": "Causa de diminuição (Tráfico Privilegiado): Réu primário, de bons antecedentes, que não se dedica a atividades criminosas nem integra organização criminosa.",
+    "tipo": "diminuicao",
+    "aplicabilidade": ["trafico_de_drogas"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.6667,
+      "fracao": "1/6 a 2/3"
+    }
+  },
+  {
+    "id": "trafico_majorado_geral",
+    "artigo": "40",
+    "lei": "Lei 11.343/2006",
+    "paragrafo": "",
+    "descricao": "Causas de aumento de pena para os crimes dos arts. 33 a 37 (transnacionalidade, prevalecer-se de função pública, cometido em locais específicos, com violência/arma de fogo, interestadual, visando criança/adolescente, ou se o agente financia o crime).",
+    "tipo": "aumento",
+    "aplicabilidade": [
+      "trafico_de_drogas",
+      "maquinario_para_o_trafico",
+      "associacao_para_o_trafico",
+      "financiamento_ou_custeio_para_o_trafico",
+      "colaboracao_como_informante"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.6667,
+      "fracao": "1/6 a 2/3"
+    }
+  },
+  {
+    "id": "delacao_premiada_lei_drogas",
+    "artigo": "41",
+    "lei": "Lei 11.343/2006",
+    "paragrafo": "",
+    "descricao": "Colaboração voluntária com a investigação policial e o processo criminal (Delação Premiada)",
+    "tipo": "diminuicao",
+    "aplicabilidade": [
+      "trafico_de_drogas",
+      "maquinario_para_o_trafico",
+      "associacao_para_o_trafico",
+      "financiamento_ou_custeio_para_o_trafico",
+      "colaboracao_como_informante"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6667,
+      "fracao": "1/3 a 2/3"
+    }
+  },
+  {
+    "id": "semi_imputabilidade_lei_drogas",
+    "artigo": "46",
+    "lei": "Lei 11.343/2006",
+    "paragrafo": "",
+    "descricao": "Redução de pena por semi-imputabilidade em razão de dependência ou efeito de droga, não possuindo plena capacidade de entendimento do fato",
+    "tipo": "diminuicao",
+    "aplicabilidade": [
+      "trafico_de_drogas",
+      "maquinario_para_o_trafico",
+      "associacao_para_o_trafico",
+      "financiamento_ou_custeio_para_o_trafico",
+      "colaboracao_como_informante"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6667,
+      "fracao": "1/3 a 2/3"
+    }
   }
 ]

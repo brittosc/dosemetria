@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { formatPena, Circunstancia, CausaAplicada } from "@/lib/calculations";
+import { formatPena } from "@/lib/calculations";
 import {
   Accordion,
   AccordionContent,
@@ -20,66 +20,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "../ui/badge";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { CalculationDetails } from "./CalculationDetails";
 
 export function CalculationSummary() {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
-
-  const renderCircunstancias = (
-    circunstancias: Circunstancia[],
-    type: "increase" | "decrease"
-  ) => {
-    if (circunstancias.length === 0) return null;
-
-    return (
-      <div className="pl-4 border-l-2 border-dashed ml-2">
-        {circunstancias.map((circ) => (
-          <div key={circ.id} className="text-xs flex items-center gap-1">
-            {type === "increase" ? (
-              <ArrowUp className="h-3 w-3 text-red-500" />
-            ) : (
-              <ArrowDown className="h-3 w-3 text-green-500" />
-            )}
-            <span>
-              {circ.id}: <span className="font-semibold">{circ.fracao}</span>
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderCausas = (
-    causas: CausaAplicada[],
-    type: "increase" | "decrease"
-  ) => {
-    if (causas.length === 0) return null;
-
-    return (
-      <div className="pl-4 border-l-2 border-dashed ml-2">
-        {causas.map((causaApp) => {
-          const causaInfo = causasData.find((c) => c.id === causaApp.id);
-          return (
-            <div key={causaApp.id} className="text-xs flex items-center gap-1">
-              {type === "increase" ? (
-                <ArrowUp className="h-3 w-3 text-red-500" />
-              ) : (
-                <ArrowDown className="h-3 w-3 text-green-500" />
-              )}
-              <span>
-                {causaInfo?.descricao}:{" "}
-                <span className="font-semibold">
-                  {typeof causaApp.valorAplicado === "number"
-                    ? `x${causaApp.valorAplicado}`
-                    : causaApp.valorAplicado}
-                </span>
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
 
   const showSalarioMinimoInput = state.crimes.some((crime) => {
     const crimeData = crimesData.find((c) => c.id === crime.crimeId);
@@ -119,31 +63,50 @@ export function CalculationSummary() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="space-y-3 px-2 text-sm">
-                    {/* Fase 1 */}
                     <div className="flex justify-between font-medium">
                       <span>Pena-Base (1ª Fase):</span>
                       <span>{formatPena(crime.penaPrimeiraFase)}</span>
                     </div>
-                    {renderCircunstancias(
-                      crime.circunstanciasJudiciais,
-                      "increase"
-                    )}
+                    <CalculationDetails
+                      circunstancias={crime.circunstanciasJudiciais}
+                      causas={[]}
+                      causasData={causasData}
+                      type="increase"
+                    />
 
-                    {/* Fase 2 */}
                     <div className="flex justify-between font-medium pt-2 border-t mt-2">
                       <span>Pena Provisória (2ª Fase):</span>
                       <span>{formatPena(crime.penaProvisoria)}</span>
                     </div>
-                    {renderCircunstancias(crime.agravantes, "increase")}
-                    {renderCircunstancias(crime.atenuantes, "decrease")}
+                    <CalculationDetails
+                      circunstancias={crime.agravantes}
+                      causas={[]}
+                      causasData={causasData}
+                      type="increase"
+                    />
+                    <CalculationDetails
+                      circunstancias={crime.atenuantes}
+                      causas={[]}
+                      causasData={causasData}
+                      type="decrease"
+                    />
 
-                    {/* Fase 3 */}
                     <div className="flex justify-between font-medium pt-2 border-t mt-2">
                       <span>Pena Definitiva (3ª Fase):</span>
                       <span>{formatPena(crime.penaDefinitiva)}</span>
                     </div>
-                    {renderCausas(crime.causasAumento, "increase")}
-                    {renderCausas(crime.causasDiminuicao, "decrease")}
+                    <CalculationDetails
+                      circunstancias={[]}
+                      causas={crime.causasAumento}
+                      causasData={causasData}
+                      type="increase"
+                    />
+                    <CalculationDetails
+                      circunstancias={[]}
+                      causas={crime.causasDiminuicao}
+                      causasData={causasData}
+                      type="decrease"
+                    />
                   </AccordionContent>
                 </AccordionItem>
               );

@@ -16,6 +16,7 @@ import { CausaAplicada, Circunstancia } from "@/lib/calculations";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { Stepper } from "./Stepper";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
@@ -146,17 +147,19 @@ export function CrimeCalculator({
     <Card className="w-full overflow-hidden">
       <Form {...form}>
         <form onSubmit={(e) => e.preventDefault()}>
-          <AnimatePresence mode="wait">
-            {currentPhase === 1 && (
-              <motion.div
-                key="phase1"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={phaseVariants}
-                transition={{ duration: 0.3 }}
-              >
-                <CardContent className="space-y-6 pt-6">
+          <CardContent className="pt-6">
+            <Stepper currentPhase={currentPhase} setPhase={setCurrentPhase} />
+            <AnimatePresence mode="wait">
+              {currentPhase === 1 && (
+                <motion.div
+                  key="phase1"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={phaseVariants}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
                   <PhaseOneContent
                     form={form}
                     selectedCrime={selectedCrime}
@@ -166,80 +169,64 @@ export function CrimeCalculator({
                     handleQualificadoraChange={handleQualificadoraChange}
                     salarioMinimo={salarioMinimo}
                   />
-                </CardContent>
-                <CardFooter className="flex justify-between mt-4">
-                  <div>{removeButton}</div>
-                  <Button
-                    onClick={() => handleNextPhase(2)}
-                    disabled={!selectedCrime}
-                  >
-                    Avançar para 2ª Fase
-                  </Button>
-                </CardFooter>
-              </motion.div>
-            )}
+                </motion.div>
+              )}
 
-            {currentPhase === 2 && (
-              <motion.div
-                key="phase2"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={phaseVariants}
-                transition={{ duration: 0.3 }}
-              >
-                <CardContent className="space-y-8 pt-6">
+              {currentPhase === 2 && (
+                <motion.div
+                  key="phase2"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={phaseVariants}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-8"
+                >
                   <PhaseTwoContent form={form} />
-                </CardContent>
-                <CardFooter className="flex justify-between mt-4">
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setCurrentPhase(1)}
-                    >
-                      Voltar
-                    </Button>
-                    {removeButton}
-                  </div>
-                  <Button onClick={() => setCurrentPhase(3)}>
-                    Avançar para 3ª Fase
-                  </Button>
-                </CardFooter>
-              </motion.div>
-            )}
+                </motion.div>
+              )}
 
-            {currentPhase === 3 && (
-              <motion.div
-                key="phase3"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={phaseVariants}
-                transition={{ duration: 0.3 }}
-              >
-                <CardContent className="space-y-8 pt-6">
+              {currentPhase === 3 && (
+                <motion.div
+                  key="phase3"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={phaseVariants}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-8"
+                >
                   <PhaseThreeContent
                     form={form}
                     causasData={causasData}
                     isMobile={isMobile}
                   />
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setCurrentPhase(2)}
-                    >
-                      Voltar
-                    </Button>
-                    {removeButton}
-                  </div>
-                </CardFooter>
-              </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </CardContent>
+          <CardFooter className="flex justify-between mt-4">
+            <div className="flex gap-2">
+              {currentPhase > 1 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setCurrentPhase(currentPhase - 1)}
+                >
+                  Voltar
+                </Button>
+              )}
+              {removeButton}
+            </div>
+            {currentPhase < 3 && (
+              <Button
+                onClick={() => handleNextPhase(currentPhase + 1)}
+                disabled={!selectedCrime}
+              >
+                Avançar
+              </Button>
             )}
-          </AnimatePresence>
+          </CardFooter>
         </form>
       </Form>
     </Card>

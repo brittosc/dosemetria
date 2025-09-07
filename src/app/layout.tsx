@@ -16,9 +16,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Calculadora de Dosimetria da Pena",
-  description: "Calcule a dosimetria da pena de forma fácil e intuitiva.",
+  title: "Calculadora de Dosimetria",
+  description:
+    "Uma ferramenta para calcular a dosimetria da pena de forma fácil e intuitiva.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Calculadora de Dosimetria da Pena", // Título que aparecerá no card
+    description:
+      "Calcule a pena de forma fácil e intuitiva com esta ferramenta moderna.", // Descrição
+    url: "https://dosemetria.pages.dev", // URL do seu site quando estiver online
+    siteName: "Calculadora de Dosimetria",
+    images: [
+      {
+        url: "/justica.png", // Caminho para a imagem que você colocou na pasta /public
+        width: 512,
+        height: 512,
+        alt: "Visualização da Calculadora de Dosimetria da Pena",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
 };
+// -----------------------------------------------------------
 
 export default function RootLayout({
   children,

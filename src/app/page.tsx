@@ -5,10 +5,10 @@ import { CrimeCalculator } from "@/components/dosimetry/CrimeCalculator";
 import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { CrimeTimelineHorizontal } from "@/components/dosimetry/Timeline";
-import { Footer } from "@/components/layout/Footer"; // Importe o novo componente
+import { Footer } from "@/components/layout/Footer";
+import { EmptyState } from "@/components/dosimetry/EmptyState";
 
 export default function Home() {
   const { state, dispatch } = useDosimetryCalculator();
@@ -24,13 +24,13 @@ export default function Home() {
   return (
     <main className="container mx-auto p-4 md:p-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Calculadora de Dosimetria Penal</h1>
+        <h1 className="text-3xl font-bold flex items-center"></h1>
         <Button variant="outline" onClick={handleReset}>
           Reiniciar Cálculo
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-4">
           <CrimeTimelineHorizontal />
 
           {state.crimes.length === 0 ? (
@@ -39,17 +39,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="flex flex-col items-center justify-center text-center p-8 border-2 border-dashed">
-                <CardContent className="flex flex-col items-center justify-center">
-                  <h2 className="text-xl font-semibold">Comece seu Cálculo</h2>
-                  <p className="text-muted-foreground mt-2 mb-4">
-                    Para iniciar a dosimetria, adicione o primeiro crime.
-                  </p>
-                  <Button onClick={() => dispatch({ type: "ADD_CRIME" })}>
-                    Adicionar Crime
-                  </Button>
-                </CardContent>
-              </Card>
+              <EmptyState onAddCrime={() => dispatch({ type: "ADD_CRIME" })} />
             </motion.div>
           ) : (
             <>
@@ -80,11 +70,10 @@ export default function Home() {
             </>
           )}
         </div>
-        <div className="md:col-span-1">
+        <div className="lg:col-span-1">
           <CalculationSummary />
         </div>
       </div>
-      {/* Adicione o Footer aqui */}
       <Footer />
     </main>
   );
