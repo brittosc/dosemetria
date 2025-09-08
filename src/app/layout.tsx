@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { DosimetryProvider } from "./contexts/DosimetryProvider";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Header } from "@/components/layout/Header"; // Importe o Header
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +24,14 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "Calculadora de Dosimetria da Pena", // Título que aparecerá no card
+    title: "Calculadora de Dosimetria da Pena",
     description:
-      "Calcule a pena de forma fácil e intuitiva com esta ferramenta moderna.", // Descrição
-    url: "https://dosemetria.pages.dev", // URL do seu site quando estiver online
+      "Calcule a pena de forma fácil e intuitiva com esta ferramenta moderna.",
+    url: "https://dosemetria.pages.dev",
     siteName: "Calculadora de Dosimetria",
     images: [
       {
-        url: "/justica.png", // Caminho para a imagem que você colocou na pasta /public
+        url: "/justica.png",
         width: 512,
         height: 512,
         alt: "Visualização da Calculadora de Dosimetria da Pena",
@@ -59,6 +60,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Header /> {/* Adicione o Header aqui */}
             {children}
           </ThemeProvider>
           <Toaster position="top-center" expand={true} richColors />

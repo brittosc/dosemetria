@@ -9,20 +9,8 @@ import { motion } from "framer-motion";
 import { CrimeTimelineHorizontal } from "@/components/dosimetry/Timeline";
 import { Footer } from "@/components/layout/Footer";
 import { EmptyState } from "@/components/dosimetry/EmptyState";
-import { Download, Upload, FileText, Trash2 } from "lucide-react";
-import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { PrescriptionCalculator } from "@/components/dosimetry/PrescriptionCalculator";
 import { ExecutionSummary } from "@/components/dosimetry/ExecutionSummary";
 import { DosimetryState } from "@/app/contexts/DosimetryProvider";
-import Link from "next/link";
 
 export default function Home() {
   const { state, dispatch } = useDosimetryCalculator();
@@ -66,108 +54,9 @@ export default function Home() {
     }
   }, [state]);
 
-  const handleReset = () => {
-    localStorage.removeItem("dosimetryState");
-    dispatch({ type: "RESET" });
-    toast.success("Cálculo reiniciado.");
-  };
-
-  const handleExport = () => {
-    const data = JSON.stringify(state, null, 2);
-    const blob = new Blob([data], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `calculo-dosimetria-${new Date()
-      .toISOString()
-      .slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("Cálculo exportado com sucesso!");
-  };
-
-  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const content = e.target?.result;
-          if (typeof content === "string") {
-            const importedState: DosimetryState = JSON.parse(content);
-            // Converte strings de data de volta para objetos Date
-            importedState.crimes.forEach((crime) => {
-              if (crime.dataCrime) {
-                crime.dataCrime = new Date(crime.dataCrime);
-              }
-            });
-            importedState.detracaoPeriodos.forEach((periodo) => {
-              if (periodo.inicio) periodo.inicio = new Date(periodo.inicio);
-              if (periodo.fim) periodo.fim = new Date(periodo.fim);
-            });
-            dispatch({ type: "LOAD_STATE", payload: importedState });
-            toast.success("Cálculo importado com sucesso!");
-          }
-        } catch {
-          toast.error(
-            "Erro ao importar o arquivo. Verifique se o formato é válido."
-          );
-        }
-      };
-      reader.readAsText(file);
-      event.target.value = "";
-    }
-  };
-
   return (
     <main className="container mx-auto p-4 md:p-8">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex gap-2 flex-wrap">
-          <Button variant="outline" onClick={handleExport}>
-            <Download className="mr-2 h-4 w-4" /> Exportar
-          </Button>
-          <Button variant="outline" asChild>
-            <label htmlFor="import-file" className="cursor-pointer">
-              <Upload className="mr-2 h-4 w-4" /> Importar
-              <input
-                id="import-file"
-                type="file"
-                accept=".json"
-                className="hidden"
-                onChange={handleImport}
-              />
-            </label>
-          </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Prescrição</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Cálculo de Prescrição</DialogTitle>
-                <DialogDescription>
-                  Calcule a prescrição com base na pena máxima em abstrato do
-                  crime.
-                </DialogDescription>
-              </DialogHeader>
-              <PrescriptionCalculator />
-            </DialogContent>
-          </Dialog>
-          <Button
-            variant="outline"
-            asChild
-            disabled={state.crimes.length === 0}
-          >
-            <Link href="/report">
-              <FileText className="mr-2 h-4 w-4" /> Ver Relatório
-            </Link>
-          </Button>
-          <Button variant="destructive" onClick={handleReset}>
-            <Trash2 className="mr-2 h-4 w-4" /> Reiniciar
-          </Button>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6">
         <div className="lg:col-span-2 space-y-4">
           <CrimeTimelineHorizontal />
 
@@ -212,7 +101,9 @@ export default function Home() {
           )}
         </div>
         <div className="lg:col-span-1">
-          <div className="sticky top-8 space-y-4">
+          <div className="sticky top-24 space-y-4">
+            {" "}
+            {/* Ajustado o top para a altura do header */}
             <CalculationSummary />
             {state.crimes.length > 0 && <ExecutionSummary />}
           </div>
