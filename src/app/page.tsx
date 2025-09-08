@@ -4,47 +4,73 @@ import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { CrimeCalculator } from "@/components/dosimetry/CrimeCalculator";
 import { CalculationSummary } from "@/components/dosimetry/CalculationSummary";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { CrimeTimelineHorizontal } from "@/components/dosimetry/Timeline";
 import { Footer } from "@/components/layout/Footer";
 import { EmptyState } from "@/components/dosimetry/EmptyState";
-import { Download, Upload } from "lucide-react";
+import { Download, Upload, FileText, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogDescription,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { PrescriptionCalculator } from "@/components/dosimetry/PrescriptionCalculator";
 import { ExecutionSummary } from "@/components/dosimetry/ExecutionSummary";
-import { CrimeState, DosimetryState } from "@/app/contexts/DosimetryProvider";
+import { DosimetryState } from "@/app/contexts/DosimetryProvider";
+import Link from "next/link";
 
 export default function Home() {
   const { state, dispatch } = useDosimetryCalculator();
+  const isInitialMount = useRef(true);
 
   // Carregar do localStorage na inicialização
   useEffect(() => {
-    const savedState = localStorage.getItem("dosimetryState");
-    if (savedState) {
-      const parsedState: DosimetryState = JSON.parse(savedState);
-      // Dispatch de um RESET para garantir que o estado seja limpo e depois carregado
-      dispatch({ type: "RESET" });
-      parsedState.crimes.forEach((crime: CrimeState) => {
-        // Adiciona e atualiza cada crime para garantir que todos os cálculos sejam refeitos
-        dispatch({ type: "ADD_CRIME" });
-        dispatch({ type: "UPDATE_CRIME", payload: crime });
-      });
+    // Evita recarregar do localStorage em re-renders,
+    // o que aconteceria ao voltar da página /report
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      const savedState = localStorage.getItem("dosimetryState");
+      if (savedState) {
+        try {
+          const parsedState: DosimetryState = JSON.parse(savedState);
+          // Converte strings de data de volta para objetos Date
+          parsedState.crimes.forEach((crime) => {
+            if (crime.dataCrime) {
+              crime.dataCrime = new Date(crime.dataCrime);
+            }
+          });
+          parsedState.detracaoPeriodos.forEach((periodo) => {
+            if (periodo.inicio) periodo.inicio = new Date(periodo.inicio);
+            if (periodo.fim) periodo.fim = new Date(periodo.fim);
+          });
+
+          dispatch({ type: "LOAD_STATE", payload: parsedState });
+        } catch (error) {
+          console.error("Failed to parse saved state:", error);
+          localStorage.removeItem("dosimetryState"); // Limpa estado corrompido
+        }
+      }
     }
   }, [dispatch]);
 
   // Salvar no localStorage a cada mudança
   useEffect(() => {
-    localStorage.setItem("dosimetryState", JSON.stringify(state));
+    // Não salva no mount inicial se não houver crimes para não sobrescrever o estado vazio
+    if (!isInitialMount.current) {
+      localStorage.setItem("dosimetryState", JSON.stringify(state));
+    }
   }, [state]);
+
+  const handleReset = () => {
+    localStorage.removeItem("dosimetryState");
+    dispatch({ type: "RESET" });
+    toast.success("Cálculo reiniciado.");
+  };
 
   const handleExport = () => {
     const data = JSON.stringify(state, null, 2);
@@ -69,11 +95,17 @@ export default function Home() {
           const content = e.target?.result;
           if (typeof content === "string") {
             const importedState: DosimetryState = JSON.parse(content);
-            dispatch({ type: "RESET" });
-            importedState.crimes.forEach((crime: CrimeState) => {
-              dispatch({ type: "ADD_CRIME" });
-              dispatch({ type: "UPDATE_CRIME", payload: crime });
+            // Converte strings de data de volta para objetos Date
+            importedState.crimes.forEach((crime) => {
+              if (crime.dataCrime) {
+                crime.dataCrime = new Date(crime.dataCrime);
+              }
             });
+            importedState.detracaoPeriodos.forEach((periodo) => {
+              if (periodo.inicio) periodo.inicio = new Date(periodo.inicio);
+              if (periodo.fim) periodo.fim = new Date(periodo.fim);
+            });
+            dispatch({ type: "LOAD_STATE", payload: importedState });
             toast.success("Cálculo importado com sucesso!");
           }
         } catch {
@@ -83,7 +115,6 @@ export default function Home() {
         }
       };
       reader.readAsText(file);
-      // Limpa o valor do input para permitir importar o mesmo arquivo novamente
       event.target.value = "";
     }
   };
@@ -91,7 +122,7 @@ export default function Home() {
   return (
     <main className="container mx-auto p-4 md:p-8">
       <div className="flex justify-between items-center mb-6">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button variant="outline" onClick={handleExport}>
             <Download className="mr-2 h-4 w-4" /> Exportar
           </Button>
@@ -122,8 +153,17 @@ export default function Home() {
               <PrescriptionCalculator />
             </DialogContent>
           </Dialog>
-          <Button variant="outline" onClick={() => dispatch({ type: "RESET" })}>
-            Reiniciar
+          <Button
+            variant="outline"
+            asChild
+            disabled={state.crimes.length === 0}
+          >
+            <Link href="/report">
+              <FileText className="mr-2 h-4 w-4" /> Ver Relatório
+            </Link>
+          </Button>
+          <Button variant="destructive" onClick={handleReset}>
+            <Trash2 className="mr-2 h-4 w-4" /> Reiniciar
           </Button>
         </div>
       </div>

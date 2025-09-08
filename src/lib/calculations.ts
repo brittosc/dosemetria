@@ -1,11 +1,12 @@
 // src/lib/calculations.ts
 
-import { CrimeState } from "@/app/contexts/DosimetryProvider";
-import { add } from "date-fns";
+import { CrimeState, DetracaoPeriodo } from "@/app/contexts/DosimetryProvider";
+import { add, differenceInDays } from "date-fns";
 
 export type Causa = {
   id: string;
   artigo: string;
+  paragrafo?: string;
   descricao: string;
   tipo: string;
   valor: {
@@ -79,13 +80,11 @@ export function calculatePhaseTwo(
 
   const aumento = agravantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
   const diminuicao = atenuantes.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
-    // CORREÇÃO: Fração agora incide sobre a pena da fase anterior.
     return acc + fracao * penaPrimeiraFase;
   }, 0);
 
@@ -103,7 +102,6 @@ export function calculatePhaseThree(
 ): number {
   let penaAtual = penaProvisoria;
 
-  // Na 3ª fase, as frações incidem sobre a pena da fase anterior (penaProvisoria).
   causasAumento.forEach((causaAplicada) => {
     const causaInfo = causasData.find((c) => c.id === causaAplicada.id);
     if (!causaInfo || !causaInfo.valor) return;
@@ -133,6 +131,28 @@ export function calculatePhaseThree(
   });
 
   return Math.max(0, penaAtual);
+}
+
+export function calculateDetracaoTotal(periodos: DetracaoPeriodo[]): number {
+  return periodos.reduce((total, periodo) => {
+    if (periodo.inicio && periodo.fim) {
+      const inicio = new Date(periodo.inicio);
+      const fim = new Date(periodo.fim);
+      if (inicio < fim) {
+        return total + differenceInDays(fim, inicio) + 1;
+      }
+    }
+    return total;
+  }, 0);
+}
+
+export function calculateRemicaoTotal(
+  diasTrabalhados: number,
+  horasEstudo: number
+): number {
+  const remicaoTrabalho = Math.floor(diasTrabalhados / 3);
+  const remicaoEstudo = Math.floor(horasEstudo / 12);
+  return remicaoTrabalho + remicaoEstudo;
 }
 
 export function formatPena(totalMeses: number | null | undefined): string {
@@ -334,25 +354,23 @@ export function calculateProgression(
 ): { fracao: number; tempo: number } {
   let fracao = 0;
 
-  // Trata a regra específica do Feminicídio para primários primeiro
   if (feminicidio && !reincidente) {
-    fracao = 0.55; // 55%
+    fracao = 0.55;
   } else if (reincidente) {
     if (crimeHediondoOuEquiparado) {
-      fracao = resultadoMorte ? 0.7 : 0.6; // 70% ou 60%
+      fracao = resultadoMorte ? 0.7 : 0.6;
     } else if (crimeComViolenciaOuGraveAmeaca) {
-      fracao = 0.3; // 30%
+      fracao = 0.3;
     } else {
-      fracao = 0.2; // 20%
+      fracao = 0.2;
     }
   } else {
-    // Primário (sem ser feminicídio, que já foi tratado)
     if (crimeHediondoOuEquiparado) {
-      fracao = resultadoMorte ? 0.5 : 0.4; // 50% ou 40%
+      fracao = resultadoMorte ? 0.5 : 0.4;
     } else if (crimeComViolenciaOuGraveAmeaca) {
-      fracao = 0.25; // 25%
+      fracao = 0.25;
     } else {
-      fracao = 0.16; // 16%
+      fracao = 0.16;
     }
   }
 
@@ -399,4 +417,29 @@ export function calculateAllProgressions(
   }
 
   return progressoes;
+}
+
+export function calculateLivramentoCondicional(
+  pena: number,
+  reincidente: boolean,
+  crimeHediondo: boolean
+): { fracao: number; tempo: number; data?: Date } | null {
+  const anos = pena / 12;
+  if (anos <= 2) {
+    return null; // Não há livramento para penas de até 2 anos
+  }
+
+  let fracao = 0;
+
+  if (reincidente && crimeHediondo) {
+    return null; // VEDADO
+  } else if (crimeHediondo) {
+    fracao = 2 / 3;
+  } else if (reincidente) {
+    fracao = 1 / 2;
+  } else {
+    fracao = 1 / 3;
+  }
+
+  return { fracao, tempo: pena * fracao };
 }

@@ -1,3 +1,5 @@
+// src/components/dosimetry/PhaseTwo.tsx
+
 "use client";
 
 import { UseFormReturn } from "react-hook-form";
@@ -16,6 +18,13 @@ import {
   agravantesOptions,
   atenuantesOptions,
 } from "@/app/data/circunstancias";
+import { HelpCircle } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface PhaseTwoContentProps {
   form: UseFormReturn<CrimeState>;
@@ -61,9 +70,21 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                           }
                         />
                       </FormControl>
-                      <FormLabel className="font-normal cursor-pointer flex-1">
-                        {item.label}
-                      </FormLabel>
+                      <div className="flex-1">
+                        <FormLabel className="font-normal cursor-pointer flex items-center gap-2">
+                          {item.label}
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{item.description}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </FormLabel>
+                      </div>
                     </FormItem>
                     {isChecked && (
                       <div className="flex items-center gap-2 pt-2">
@@ -135,9 +156,21 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                           }
                         />
                       </FormControl>
-                      <FormLabel className="font-normal cursor-pointer flex-1">
-                        {item.label}
-                      </FormLabel>
+                      <div className="flex-1">
+                        <FormLabel className="font-normal cursor-pointer flex items-center gap-2">
+                          {item.label}
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{item.description}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </FormLabel>
+                      </div>
                     </FormItem>
                     {isChecked && (
                       <div className="flex items-center gap-2 pt-2">

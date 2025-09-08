@@ -28,8 +28,22 @@ import {
   calculateMulta,
   calculateProgression,
   calculateAllProgressions,
+  calculateDetracaoTotal,
+  calculateRemicaoTotal,
+  calculateLivramentoCondicional,
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
+
+export interface DetracaoPeriodo {
+  id: string;
+  inicio?: Date;
+  fim?: Date;
+}
+
+export interface Remicao {
+  diasTrabalhados: number;
+  horasEstudo: number;
+}
 
 export interface CrimeState {
   id: string;
@@ -54,15 +68,15 @@ export interface CrimeState {
 
 export interface DosimetryState {
   crimes: CrimeState[];
-  detracao: {
-    anos: number;
-    meses: number;
-    dias: number;
-  };
+  detracaoPeriodos: DetracaoPeriodo[];
+  remicao: Remicao;
+  dataInicioCumprimento: Date; // NOVO CAMPO
   concurso: "material" | "formal" | "continuado";
   salarioMinimo: number;
   finalResults: {
     penaTotal?: number;
+    totalDetracaoDias?: number;
+    totalRemicaoDias?: number;
     penaParaRegime?: number;
     regimeInicial?: string;
     podeSubstituir?: boolean;
@@ -75,6 +89,11 @@ export interface DosimetryState {
       tempoCumprir: number;
       penaRestante: number;
     }[];
+    livramentoCondicional?: {
+      fracao: number;
+      tempo: number;
+      data?: Date;
+    } | null;
   };
 }
 
@@ -83,12 +102,14 @@ type Action =
   | { type: "REMOVE_CRIME"; payload: string }
   | { type: "UPDATE_CRIME"; payload: Partial<CrimeState> & { id: string } }
   | { type: "UPDATE_CONCURSO"; payload: "material" | "formal" | "continuado" }
-  | {
-      type: "UPDATE_DETRACAO";
-      payload: { anos: number; meses: number; dias: number };
-    }
+  | { type: "ADD_DETRACAO_PERIODO" }
+  | { type: "REMOVE_DETRACAO_PERIODO"; payload: string }
+  | { type: "UPDATE_DETRACAO_PERIODO"; payload: DetracaoPeriodo }
+  | { type: "UPDATE_REMICAO"; payload: Remicao }
+  | { type: "UPDATE_DATA_INICIO_CUMPRIMENTO"; payload: Date } // NOVA AÇÃO
   | { type: "UPDATE_SALARIO_MINIMO"; payload: number }
   | { type: "RECALCULATE_FINALS" }
+  | { type: "LOAD_STATE"; payload: DosimetryState }
   | { type: "RESET" };
 
 const initialCrimeState: Omit<CrimeState, "id"> = {
@@ -110,13 +131,16 @@ const initialCrimeState: Omit<CrimeState, "id"> = {
 
 const initialState: DosimetryState = {
   crimes: [],
-  detracao: { anos: 0, meses: 0, dias: 0 },
+  detracaoPeriodos: [],
+  remicao: { diasTrabalhados: 0, horasEstudo: 0 },
+  dataInicioCumprimento: new Date(), // VALOR INICIAL
   concurso: "material",
   salarioMinimo: 1518,
   finalResults: {},
 };
 
 function calculateCrimePens(crime: CrimeState): CrimeState {
+  // ... (sem alterações nesta função) ...
   const crimesData: Crime[] = crimesDataRaw as Crime[];
   const selectedCrime = crimesData.find((c) => c.id === crime.crimeId);
   const activePena =
@@ -158,6 +182,8 @@ function dosimetryReducer(
   switch (action.type) {
     case "RESET":
       return { ...initialState, crimes: [] };
+    case "LOAD_STATE":
+      return action.payload;
     case "ADD_CRIME":
       return {
         ...state,
@@ -184,8 +210,32 @@ function dosimetryReducer(
     }
     case "UPDATE_CONCURSO":
       return { ...state, concurso: action.payload };
-    case "UPDATE_DETRACAO":
-      return { ...state, detracao: action.payload };
+    case "ADD_DETRACAO_PERIODO":
+      return {
+        ...state,
+        detracaoPeriodos: [
+          ...state.detracaoPeriodos,
+          { id: crypto.randomUUID() },
+        ],
+      };
+    case "REMOVE_DETRACAO_PERIODO":
+      return {
+        ...state,
+        detracaoPeriodos: state.detracaoPeriodos.filter(
+          (p) => p.id !== action.payload
+        ),
+      };
+    case "UPDATE_DETRACAO_PERIODO":
+      return {
+        ...state,
+        detracaoPeriodos: state.detracaoPeriodos.map((p) =>
+          p.id === action.payload.id ? action.payload : p
+        ),
+      };
+    case "UPDATE_REMICAO":
+      return { ...state, remicao: action.payload };
+    case "UPDATE_DATA_INICIO_CUMPRIMENTO": // NOVO CASE
+      return { ...state, dataInicioCumprimento: action.payload };
     case "UPDATE_SALARIO_MINIMO":
       return { ...state, salarioMinimo: action.payload };
     case "RECALCULATE_FINALS": {
@@ -194,6 +244,7 @@ function dosimetryReducer(
       }
 
       let penaTotalBruta = 0;
+      // ... (lógica do concurso de crimes sem alterações) ...
       switch (state.concurso) {
         case "formal":
           penaTotalBruta = calculateConcursoFormal(state.crimes);
@@ -207,13 +258,16 @@ function dosimetryReducer(
           break;
       }
 
-      const detracaoEmMeses =
-        state.detracao.anos * 12 +
-        state.detracao.meses +
-        state.detracao.dias / 30;
+      const totalDetracaoDias = calculateDetracaoTotal(state.detracaoPeriodos);
+      const totalRemicaoDias = calculateRemicaoTotal(
+        state.remicao.diasTrabalhados,
+        state.remicao.horasEstudo
+      );
+      const totalAbatimentoMeses = (totalDetracaoDias + totalRemicaoDias) / 30;
 
-      const penaParaRegime = Math.max(0, penaTotalBruta - detracaoEmMeses);
+      const penaParaRegime = Math.max(0, penaTotalBruta - totalAbatimentoMeses);
 
+      // ... (lógica de reincidência, violência, etc. sem alterações) ...
       const reincidente = state.crimes.some((c) =>
         c.agravantes.some((a) => a.id === "reincidencia")
       );
@@ -236,8 +290,6 @@ function dosimetryReducer(
       });
 
       const resultadoMorte = state.crimes.some((c) => c.resultadoMorte);
-
-      // Verificação específica para feminicídio, agora corrigida
       const isFeminicidio = state.crimes.some(
         (c) => c.crimeId === "feminicidio"
       );
@@ -250,12 +302,11 @@ function dosimetryReducer(
       );
       const podeSursis = canSursis(penaTotalBruta, reincidente, podeSubstituir);
 
-      const dataInicial =
-        state.crimes.length > 0 && state.crimes[0].dataCrime
-          ? new Date(state.crimes[0].dataCrime)
-          : new Date();
+      // CORREÇÃO: Usa a nova data de início como base para o cálculo final
+      const dataInicial = state.dataInicioCumprimento;
       const dataFinalPena = calculateFinalDate(dataInicial, penaParaRegime);
 
+      // ... (lógica de multa e progressão sem alterações) ...
       const multaTotal = state.crimes.reduce((acc, crime) => {
         const crimeData = (crimesDataRaw as Crime[]).find(
           (c) => c.id === crime.crimeId
@@ -279,7 +330,7 @@ function dosimetryReducer(
         crimeComViolenciaOuGraveAmeaca,
         crimeHediondoOuEquiparado,
         resultadoMorte,
-        isFeminicidio // Passando o parâmetro
+        isFeminicidio
       );
 
       const progressionSteps = calculateAllProgressions(
@@ -288,10 +339,18 @@ function dosimetryReducer(
         regimeInicial
       );
 
+      const livramentoCondicional = calculateLivramentoCondicional(
+        penaTotalBruta,
+        reincidente,
+        crimeHediondoOuEquiparado
+      );
+
       return {
         ...state,
         finalResults: {
           penaTotal: penaTotalBruta,
+          totalDetracaoDias,
+          totalRemicaoDias,
           penaParaRegime,
           regimeInicial,
           podeSubstituir,
@@ -300,6 +359,7 @@ function dosimetryReducer(
           multaTotal,
           progression,
           progressionSteps,
+          livramentoCondicional,
         },
       };
     }
@@ -323,7 +383,14 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     dispatch({ type: "RECALCULATE_FINALS" });
-  }, [state.crimes, state.detracao, state.concurso, state.salarioMinimo]);
+  }, [
+    state.crimes,
+    state.detracaoPeriodos,
+    state.remicao,
+    state.concurso,
+    state.salarioMinimo,
+    state.dataInicioCumprimento, // Adicionado gatilho para recalcular
+  ]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

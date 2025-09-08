@@ -5,11 +5,19 @@
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { ProgressionTimeline } from "./ProgressionTimeline";
+import { ExecutionTimeline } from "./ExecutionTimeline";
 
 export function ExecutionSummary() {
   const { state } = useDosimetryCalculator();
   const { finalResults } = state;
+
+  // Apenas renderiza se houver dados de progressão para exibir
+  if (
+    !finalResults.progressionSteps ||
+    finalResults.progressionSteps.length === 0
+  ) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -19,10 +27,7 @@ export function ExecutionSummary() {
     >
       <Card className="w-full mt-4">
         <CardContent className="space-y-4">
-          <ProgressionTimeline
-            progressoes={finalResults.progressionSteps || []}
-            fracao={finalResults.progression?.fracao || 0}
-          />
+          <ExecutionTimeline />
         </CardContent>
       </Card>
     </motion.div>

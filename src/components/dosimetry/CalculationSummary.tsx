@@ -1,3 +1,5 @@
+// src/components/dosimetry/CalculationSummary.tsx
+
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +23,9 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "../ui/badge";
 import { CalculationDetails } from "./CalculationDetails";
+import { Button } from "../ui/button";
+import { Plus, Trash2 } from "lucide-react";
+import { DatePicker } from "../ui/date-picker";
 
 export function CalculationSummary() {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
@@ -112,38 +117,36 @@ export function CalculationSummary() {
         )}
 
         {state.crimes.length > 1 && (
-          <>
-            <div className="space-y-2 pt-4 border-t">
-              <Label>Concurso de Crimes</Label>
-              <Select
-                value={state.concurso}
-                onValueChange={(value: "material" | "formal" | "continuado") =>
-                  dispatch({ type: "UPDATE_CONCURSO", payload: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="material">
-                    Material (soma as penas)
-                  </SelectItem>
-                  <SelectItem value="formal">
-                    Formal (aumenta a pena mais grave)
-                  </SelectItem>
-                  <SelectItem value="continuado">
-                    Crime Continuado (aumenta a pena mais grave)
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              {state.concurso !== "material" && (
-                <p className="text-xs text-muted-foreground mt-2">
-                  A fração de aumento é calculada automaticamente com base no
-                  número de crimes.
-                </p>
-              )}
-            </div>
-          </>
+          <div className="space-y-2 pt-4 border-t">
+            <Label>Concurso de Crimes</Label>
+            <Select
+              value={state.concurso}
+              onValueChange={(value: "material" | "formal" | "continuado") =>
+                dispatch({ type: "UPDATE_CONCURSO", payload: value })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="material">
+                  Material (soma as penas)
+                </SelectItem>
+                <SelectItem value="formal">
+                  Formal (aumenta a pena mais grave)
+                </SelectItem>
+                <SelectItem value="continuado">
+                  Crime Continuado (aumenta a pena mais grave)
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            {state.concurso !== "material" && (
+              <p className="text-xs text-muted-foreground mt-2">
+                A fração de aumento é calculada automaticamente com base no
+                número de crimes.
+              </p>
+            )}
+          </div>
         )}
 
         {state.crimes.length > 0 && (
@@ -163,50 +166,117 @@ export function CalculationSummary() {
                 />
               </div>
             )}
+            {/* ===== NOVA SEÇÃO AQUI ===== */}
             <div className="space-y-2 pt-4 border-t">
-              <Label>Detração (Tempo de prisão provisória)</Label>
-              <div className="grid grid-cols-3 gap-2">
+              <Label>Data de Início do Cumprimento da Pena</Label>
+              <p className="text-sm text-muted-foreground">
+                Esta é a data base para o cálculo da progressão e término da
+                pena. Geralmente, é a data da prisão.
+              </p>
+              <DatePicker
+                date={state.dataInicioCumprimento}
+                setDate={(date) =>
+                  dispatch({
+                    type: "UPDATE_DATA_INICIO_CUMPRIMENTO",
+                    payload: date || new Date(),
+                  })
+                }
+              />
+            </div>
+
+            <div className="space-y-2 pt-4 border-t">
+              <Label>Detração (Períodos de prisão provisória)</Label>
+              {state.detracaoPeriodos.map((periodo) => (
+                <div
+                  key={periodo.id}
+                  className="grid grid-cols-2 gap-2 items-center"
+                >
+                  <DatePicker
+                    date={periodo.inicio}
+                    setDate={(date) =>
+                      dispatch({
+                        type: "UPDATE_DETRACAO_PERIODO",
+                        payload: { ...periodo, inicio: date },
+                      })
+                    }
+                  />
+                  <div className="flex items-center gap-2">
+                    <DatePicker
+                      date={periodo.fim}
+                      setDate={(date) =>
+                        dispatch({
+                          type: "UPDATE_DETRACAO_PERIODO",
+                          payload: { ...periodo, fim: date },
+                        })
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() =>
+                        dispatch({
+                          type: "REMOVE_DETRACAO_PERIODO",
+                          payload: periodo.id,
+                        })
+                      }
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => dispatch({ type: "ADD_DETRACAO_PERIODO" })}
+              >
+                <Plus className="mr-2 h-4 w-4" /> Adicionar Período
+              </Button>
+            </div>
+
+            <div className="space-y-4 pt-4 border-t">
+              <div className="space-y-1">
+                <Label>Remição da Pena</Label>
+                <p className="text-sm text-muted-foreground">
+                  A cada 3 dias de trabalho ou 12 horas de estudo, 1 dia de pena
+                  é remido.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="diasTrabalhados">Dias Trabalhados</Label>
                 <Input
+                  id="diasTrabalhados"
                   type="number"
-                  placeholder="Anos"
-                  value={state.detracao.anos}
+                  placeholder="Total de dias"
+                  value={state.remicao.diasTrabalhados}
                   min={0}
                   onChange={(e) =>
                     dispatch({
-                      type: "UPDATE_DETRACAO",
+                      type: "UPDATE_REMICAO",
                       payload: {
-                        ...state.detracao,
-                        anos: Number(e.target.value) || 0,
+                        ...state.remicao,
+                        diasTrabalhados: Number(e.target.value) || 0,
                       },
                     })
                   }
                 />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="horasEstudo">Horas de Estudo</Label>
                 <Input
+                  id="horasEstudo"
                   type="number"
-                  placeholder="Meses"
-                  value={state.detracao.meses}
+                  placeholder="Total de horas"
+                  value={state.remicao.horasEstudo}
                   min={0}
                   onChange={(e) =>
                     dispatch({
-                      type: "UPDATE_DETRACAO",
+                      type: "UPDATE_REMICAO",
                       payload: {
-                        ...state.detracao,
-                        meses: Number(e.target.value) || 0,
-                      },
-                    })
-                  }
-                />
-                <Input
-                  type="number"
-                  placeholder="Dias"
-                  value={state.detracao.dias}
-                  min={0}
-                  onChange={(e) =>
-                    dispatch({
-                      type: "UPDATE_DETRACAO",
-                      payload: {
-                        ...state.detracao,
-                        dias: Number(e.target.value) || 0,
+                        ...state.remicao,
+                        horasEstudo: Number(e.target.value) || 0,
                       },
                     })
                   }
