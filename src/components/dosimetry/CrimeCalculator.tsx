@@ -111,7 +111,12 @@ export function CrimeCalculator({
     reset(updatedCrimeState);
   };
 
-  const handleNextPhase = (nextPhase: number) => {
+  const handlePhaseChange = (newPhase: number) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPhase(newPhase);
+  };
+
+  const handleNextPhase = () => {
     const { penaBase } = getValues();
     const min = activePena?.penaMinimaMeses;
     const max = activePena?.penaMaximaMeses;
@@ -122,7 +127,7 @@ export function CrimeCalculator({
       });
       return;
     }
-    setCurrentPhase(nextPhase);
+    handlePhaseChange(currentPhase + 1);
   };
 
   const removeButton = state.crimes.length > 0 && (
@@ -148,7 +153,7 @@ export function CrimeCalculator({
       <Form {...form}>
         <form onSubmit={(e) => e.preventDefault()}>
           <CardContent className="pt-6">
-            <Stepper currentPhase={currentPhase} setPhase={setCurrentPhase} />
+            <Stepper currentPhase={currentPhase} setPhase={handlePhaseChange} />
             <AnimatePresence mode="wait">
               {currentPhase === 1 && (
                 <motion.div
@@ -169,24 +174,6 @@ export function CrimeCalculator({
                     handleQualificadoraChange={handleQualificadoraChange}
                     salarioMinimo={salarioMinimo}
                   />
-                  {/* <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">
-                        Resultado Morte
-                      </FormLabel>
-                      <FormDescription>
-                        Marque se o crime resultou na morte da vítima.
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={form.watch("resultadoMorte")}
-                        onCheckedChange={(checked) =>
-                          form.setValue("resultadoMorte", checked)
-                        }
-                      />
-                    </FormControl>
-                  </FormItem> */}
                 </motion.div>
               )}
 
@@ -229,7 +216,7 @@ export function CrimeCalculator({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setCurrentPhase(currentPhase - 1)}
+                  onClick={() => handlePhaseChange(currentPhase - 1)}
                 >
                   Voltar
                 </Button>
@@ -237,10 +224,7 @@ export function CrimeCalculator({
               {removeButton}
             </div>
             {currentPhase < 3 && (
-              <Button
-                onClick={() => handleNextPhase(currentPhase + 1)}
-                disabled={!selectedCrime}
-              >
+              <Button onClick={handleNextPhase} disabled={!selectedCrime}>
                 Avançar
               </Button>
             )}

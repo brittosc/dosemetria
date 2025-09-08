@@ -1,6 +1,13 @@
 "use client";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -14,15 +21,15 @@ import { formatPena } from "@/lib/calculations";
 const chartConfig = {
   penaBase: {
     label: "Pena Base (1ª Fase)",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   penaProvisoria: {
     label: "Pena Provisória (2ª Fase)",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   penaDefinitiva: {
     label: "Pena Definitiva (3ª Fase)",
-    color: "hsl(var(--chart-3))",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig;
 
@@ -37,7 +44,13 @@ export function PenaGraph() {
 
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={data}>
+      <BarChart
+        accessibilityLayer
+        data={data}
+        margin={{
+          top: 20,
+        }}
+      >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="crime"
@@ -60,17 +73,41 @@ export function PenaGraph() {
           }
         />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="penaBase" fill="var(--color-penaBase)" radius={4} />
+        <Bar dataKey="penaBase" fill="var(--color-penaBase)" radius={4}>
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+            formatter={(value: unknown) => formatPena(value as number)}
+          />
+        </Bar>
         <Bar
           dataKey="penaProvisoria"
           fill="var(--color-penaProvisoria)"
           radius={4}
-        />
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+            formatter={(value: unknown) => formatPena(value as number)}
+          />
+        </Bar>
         <Bar
           dataKey="penaDefinitiva"
           fill="var(--color-penaDefinitiva)"
           radius={4}
-        />
+        >
+          <LabelList
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            fontSize={12}
+            formatter={(value: unknown) => formatPena(value as number)}
+          />
+        </Bar>
       </BarChart>
     </ChartContainer>
   );

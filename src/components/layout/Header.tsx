@@ -18,10 +18,10 @@ import {
   Download,
   Upload,
   FileText,
-  Trash2,
   Gavel,
   Menu,
   Scale,
+  RotateCcw,
 } from "lucide-react";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { DosimetryState } from "@/app/contexts/DosimetryProvider";
@@ -139,34 +139,35 @@ export function Header() {
       <Button
         variant="outline"
         size="sm"
-        asChild
+        onClick={() =>
+          state.crimes.length > 0 && window.open("/report", "_blank")
+        }
         disabled={state.crimes.length === 0}
       >
-        <Link href="/report" target="_blank">
-          <FileText className="mr-2 h-4 w-4" /> Ver Relatório
-        </Link>
+        <FileText className="mr-2 h-4 w-4" /> Ver Relatório
       </Button>
-      <Button variant="destructive" size="sm" onClick={handleReset}>
-        <Trash2 className="mr-2 h-4 w-4" /> Reiniciar
+      <Button
+        variant="destructive"
+        size="sm"
+        onClick={handleReset}
+        disabled={state.crimes.length === 0}
+      >
+        <RotateCcw className="mr-2 h-4 w-4" /> Reiniciar
       </Button>
     </>
   );
 
   return (
     <header className="no-print border-b px-4 md:px-6 sticky top-0 bg-background/80 backdrop-blur-sm z-50">
-      <div className="flex h-16 items-center justify-between gap-4">
-        {/* Left side: Logo and Desktop Navigation */}
-        <div className="flex items-center gap-6">
-          <Logo />
+      <div className="flex h-16 items-center justify-between">
+        <Logo />
+        <div className="flex-1 flex justify-center">
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList className="gap-2">
               {navigationLinks.map((link, index) => (
                 <NavigationMenuItem key={index}>
-                  <NavigationMenuLink
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                  >
-                    {link.label}
+                  <NavigationMenuLink asChild>
+                    <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -186,17 +187,16 @@ export function Header() {
               </Button>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-56 p-2">
-              <div className="flex flex-col gap-2 -mb-4">
-                {actionButtons}{" "}
+              <div className="flex flex-col gap-2">
+                {actionButtons}
                 <NavigationMenu className="max-w-none *:w-full">
                   <NavigationMenuList className="flex-col items-start gap-0">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
-                        <NavigationMenuLink
-                          href={link.href}
-                          className="py-1.5 text-sm"
-                        >
-                          {link.label}
+                        <NavigationMenuLink asChild>
+                          <Link href={link.href} className="py-1.5 text-sm">
+                            {link.label}
+                          </Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
                     ))}

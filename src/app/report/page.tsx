@@ -31,6 +31,20 @@ export default function ReportPage() {
   const { state } = useDosimetryCalculator();
   const router = useRouter();
 
+  if (state.crimes.length === 0) {
+    return (
+      <div className="container mx-auto p-4 md:p-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Nenhum crime para exibir</h1>
+        <p className="text-muted-foreground mb-6">
+          Adicione pelo menos um crime na calculadora para gerar um relatório.
+        </p>
+        <Button onClick={() => router.push("/")}>
+          Voltar para a Calculadora
+        </Button>
+      </div>
+    );
+  }
+
   const handlePrint = () => {
     window.print();
   };
@@ -41,11 +55,8 @@ export default function ReportPage() {
     <main className="container mx-auto p-4 md:p-8 bg-white text-black">
       <style jsx global>{`
         @media print {
-          @page {
-            size: A4;
-            margin: 0;
-          }
           body {
+            background-color: white !important;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
           }
@@ -253,7 +264,7 @@ export default function ReportPage() {
           );
         })}
 
-        <Card className="print-card">
+        <Card className="print-card no-print">
           <CardHeader>
             <CardTitle>Gráfico das Penas</CardTitle>
           </CardHeader>

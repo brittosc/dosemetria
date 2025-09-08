@@ -9,7 +9,6 @@ import { motion } from "framer-motion";
 import { CrimeTimelineHorizontal } from "@/components/dosimetry/Timeline";
 import { Footer } from "@/components/layout/Footer";
 import { EmptyState } from "@/components/dosimetry/EmptyState";
-import { ExecutionSummary } from "@/components/dosimetry/ExecutionSummary";
 import { DosimetryState } from "@/app/contexts/DosimetryProvider";
 
 export default function Home() {
@@ -104,8 +103,7 @@ export default function Home() {
           <div className="sticky top-24 space-y-4">
             {" "}
             {/* Ajustado o top para a altura do header */}
-            <CalculationSummary />
-            {state.crimes.length > 0 && <ExecutionSummary />}
+            {state.crimes.length > 0 && <CalculationSummary />}
           </div>
         </div>
       </div>
