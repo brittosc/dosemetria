@@ -4,13 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { X } from "lucide-react";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
@@ -23,7 +17,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Stepper } from "./Stepper";
-import { Switch } from "@/components/ui/switch";
 
 interface CrimeCalculatorProps {
   crimeState: CrimeState;
