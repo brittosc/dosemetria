@@ -74,9 +74,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     ([, config]) => config.theme || config.color
   );
 
-  if (!colorConfig.length) {
-    return null;
-  }
+  if (!colorConfig.length) return null;
 
   return (
     <style
@@ -102,15 +100,30 @@ ${colorConfig
   );
 };
 
-const ChartTooltip = RechartsPrimitive.Tooltip;
+// === Tipagem segura para Tooltip e Legend ===
+type ChartDataItem = {
+  [key: string]: string | number | undefined;
+  name?: string;
+  value?: number;
+  fill?: string;
+};
 
 type TooltipPayload = {
   name: string;
   dataKey: string;
   value: number | string;
   color: string;
-  payload: any;
+  payload: ChartDataItem;
 };
+
+type LegendPayload = {
+  value: string;
+  color: string;
+  dataKey?: string | number;
+};
+
+// === Tooltip ===
+const ChartTooltip = RechartsPrimitive.Tooltip;
 
 function ChartTooltipContent({
   active,
@@ -139,9 +152,7 @@ function ChartTooltipContent({
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload?.length) {
-      return null;
-    }
+    if (hideLabel || !payload?.length) return null;
 
     const [item] = payload;
     const key = `${labelKey || item?.dataKey || item?.name || "value"}`;
@@ -159,9 +170,7 @@ function ChartTooltipContent({
       );
     }
 
-    if (!value) {
-      return null;
-    }
+    if (!value) return null;
 
     return <div className={cn("font-medium", labelClassName)}>{value}</div>;
   }, [
@@ -174,9 +183,7 @@ function ChartTooltipContent({
     labelKey,
   ]);
 
-  if (!active || !payload?.length) {
-    return null;
-  }
+  if (!active || !payload?.length) return null;
 
   const nestLabel = payload.length === 1 && indicator !== "dot";
 
@@ -189,7 +196,7 @@ function ChartTooltipContent({
     >
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
-        {payload.map((item: TooltipPayload, index: number) => {
+        {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
           const indicatorColor = color || item.payload.fill || item.color;
@@ -203,7 +210,7 @@ function ChartTooltipContent({
               )}
             >
               {formatter && item?.value !== undefined && item.name ? (
-                formatter(item.value, item.name, item, index, item.payload)
+                formatter(item.value, item.name, item, index, payload)
               ) : (
                 <>
                   {itemConfig?.icon ? (
@@ -258,13 +265,8 @@ function ChartTooltipContent({
   );
 }
 
+// === Legend ===
 const ChartLegend = RechartsPrimitive.Legend;
-
-type LegendPayload = {
-  value: string;
-  color: string;
-  dataKey?: string | number;
-};
 
 function ChartLegendContent({
   className,
@@ -280,9 +282,7 @@ function ChartLegendContent({
 }) {
   const { config } = useChart();
 
-  if (!payload || !payload.length) {
-    return null;
-  }
+  if (!payload || !payload.length) return null;
 
   return (
     <div
@@ -292,7 +292,7 @@ function ChartLegendContent({
         className
       )}
     >
-      {payload.map((item: LegendPayload) => {
+      {payload.map((item) => {
         const key = `${nameKey || item.dataKey || "value"}`;
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
@@ -321,21 +321,19 @@ function ChartLegendContent({
   );
 }
 
-// Helper to extract item config from a payload.
+// Helper para extrair configuração do payload
 function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: unknown,
+  payload: TooltipPayload | LegendPayload,
   key: string
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined;
-  }
+  if (typeof payload !== "object" || payload === null) return undefined;
 
   const payloadPayload =
     "payload" in payload &&
     typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
+    payload.payload
+      ? (payload.payload as ChartDataItem)
       : undefined;
 
   let configLabelKey: string = key;
