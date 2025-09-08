@@ -1,3 +1,4 @@
+// src/components/layout/Header.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -141,7 +142,7 @@ export function Header() {
         asChild
         disabled={state.crimes.length === 0}
       >
-        <Link href="/report">
+        <Link href="/report" target="_blank">
           <FileText className="mr-2 h-4 w-4" /> Ver Relatório
         </Link>
       </Button>
@@ -152,7 +153,7 @@ export function Header() {
   );
 
   return (
-    <header className="border-b px-4 md:px-6 sticky top-0 bg-background/80 backdrop-blur-sm z-50">
+    <header className="no-print border-b px-4 md:px-6 sticky top-0 bg-background/80 backdrop-blur-sm z-50">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side: Logo and Desktop Navigation */}
         <div className="flex items-center gap-6">

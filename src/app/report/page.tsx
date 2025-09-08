@@ -21,10 +21,11 @@ import {
   agravantesOptions,
   atenuantesOptions,
 } from "@/app/data/circunstancias";
-import causasData from "@/app/data/causas.json"; // CORREÇÃO: Importação default do JSON
+import causasData from "@/app/data/causas.json";
 import { Crime } from "@/types/crime";
 import crimesData from "@/app/data/crimes.json";
 import { CausaAplicada } from "@/lib/calculations";
+import { ExecutionTimeline } from "@/components/dosimetry/ExecutionTimeline";
 
 export default function ReportPage() {
   const { state } = useDosimetryCalculator();
@@ -40,19 +41,25 @@ export default function ReportPage() {
     <main className="container mx-auto p-4 md:p-8 bg-white text-black">
       <style jsx global>{`
         @media print {
+          @page {
+            size: A4;
+            margin: 0;
+          }
           body {
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
           }
-          .no-print {
+          .no-print,
+          header {
             display: none;
           }
           main {
-            padding: 0;
+            padding: 1cm;
             margin: 0;
+            width: 100%;
           }
           .print-card {
-            border: 1px solid #e5e7eb;
+            border: none;
             box-shadow: none;
             page-break-inside: avoid;
           }
@@ -86,7 +93,7 @@ export default function ReportPage() {
 
         {state.crimes.map((crime, index) => {
           const crimeInfo = (crimesData as Crime[]).find(
-            (c: Crime) => c.id === crime.crimeId // CORREÇÃO: Adicionada tipagem explícita
+            (c: Crime) => c.id === crime.crimeId
           );
           return (
             <Card key={crime.id} className="print-card">
@@ -196,7 +203,6 @@ export default function ReportPage() {
                       <p className="font-medium">Causas de Aumento:</p>
                       <ul className="list-disc list-inside text-sm">
                         {crime.causasAumento.map((causa: CausaAplicada) => {
-                          // CORREÇÃO: Adicionada tipagem explícita
                           const info = causasData.find(
                             (c) => c.id === causa.id
                           );
@@ -220,7 +226,6 @@ export default function ReportPage() {
                       <p className="font-medium">Causas de Diminuição:</p>
                       <ul className="list-disc list-inside text-sm">
                         {crime.causasDiminuicao.map((causa: CausaAplicada) => {
-                          // CORREÇÃO: Adicionada tipagem explícita
                           const info = causasData.find(
                             (c) => c.id === causa.id
                           );
@@ -263,6 +268,12 @@ export default function ReportPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             <p>
+              <strong>Data de Início do Cumprimento:</strong>{" "}
+              {format(new Date(state.dataInicioCumprimento), "PPP", {
+                locale: ptBR,
+              })}
+            </p>
+            <p>
               <strong>Pena Total (sem detração/remição):</strong>{" "}
               {formatPena(state.finalResults.penaTotal)}
             </p>
@@ -283,32 +294,8 @@ export default function ReportPage() {
               <strong>Regime Inicial:</strong>{" "}
               {state.finalResults.regimeInicial}
             </p>
-            <p>
-              <strong>
-                Progressão de Regime (
-                {((state.finalResults.progression?.fracao || 0) * 100).toFixed(
-                  0
-                )}
-                %):
-              </strong>{" "}
-              Cumprir {formatPena(state.finalResults.progression?.tempo)}
-            </p>
-            <p>
-              <strong>
-                Livramento Condicional (
-                {state.finalResults.livramentoCondicional?.fracao
-                  ? `${(
-                      state.finalResults.livramentoCondicional.fracao * 100
-                    ).toFixed(0)}%`
-                  : "N/A"}
-                ):
-              </strong>{" "}
-              {state.finalResults.livramentoCondicional
-                ? `Cumprir ${formatPena(
-                    state.finalResults.livramentoCondicional?.tempo
-                  )}`
-                : "Não aplicável"}
-            </p>
+            <Separator className="my-4" />
+            <ExecutionTimeline />
             <Separator className="my-4" />
             <p>
               <strong>Pode Substituir a Pena:</strong>{" "}
@@ -321,7 +308,7 @@ export default function ReportPage() {
             {state.finalResults.dataFinalPena && (
               <p>
                 <strong>Previsão de Término da Pena:</strong>{" "}
-                {format(state.finalResults.dataFinalPena, "PPP", {
+                {format(new Date(state.finalResults.dataFinalPena), "PPP", {
                   locale: ptBR,
                 })}
               </p>

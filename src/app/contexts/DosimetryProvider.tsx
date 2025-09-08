@@ -8,6 +8,7 @@ import React, {
   useMemo,
   ReactNode,
   useEffect,
+  useRef,
 } from "react";
 import causasDataRaw from "@/app/data/causas.json";
 import crimesDataRaw from "@/app/data/crimes.json";
@@ -380,6 +381,43 @@ export const DosimetryContext = createContext<DosimetryContextType>({
 
 export function DosimetryProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(dosimetryReducer, initialState);
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      const savedState = localStorage.getItem("dosimetryState");
+      if (savedState) {
+        try {
+          const parsedState: DosimetryState = JSON.parse(savedState);
+          parsedState.crimes.forEach((crime) => {
+            if (crime.dataCrime) {
+              crime.dataCrime = new Date(crime.dataCrime);
+            }
+          });
+          parsedState.detracaoPeriodos.forEach((periodo) => {
+            if (periodo.inicio) periodo.inicio = new Date(periodo.inicio);
+            if (periodo.fim) periodo.fim = new Date(periodo.fim);
+          });
+          if (parsedState.dataInicioCumprimento) {
+            parsedState.dataInicioCumprimento = new Date(
+              parsedState.dataInicioCumprimento
+            );
+          }
+          dispatch({ type: "LOAD_STATE", payload: parsedState });
+        } catch (error) {
+          console.error("Failed to parse saved state:", error);
+          localStorage.removeItem("dosimetryState");
+        }
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isInitialMount.current) {
+      localStorage.setItem("dosimetryState", JSON.stringify(state));
+    }
+  }, [state]);
 
   useEffect(() => {
     dispatch({ type: "RECALCULATE_FINALS" });
@@ -389,7 +427,7 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
     state.remicao,
     state.concurso,
     state.salarioMinimo,
-    state.dataInicioCumprimento, // Adicionado gatilho para recalcular
+    state.dataInicioCumprimento,
   ]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
