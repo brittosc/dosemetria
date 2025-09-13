@@ -400,7 +400,7 @@ export function calculateProgression(
 
   // Regras Pós-Pacote Anticrime
   let fracao = 0;
-  let baseLegal = "Art. 112 da LEP (redação da Lei 13.964/19)";
+  const baseLegal = "Art. 112 da LEP (redação da Lei 13.964/19)";
 
   if (crimeHediondoOuEquiparado) {
     if (reincidente) {

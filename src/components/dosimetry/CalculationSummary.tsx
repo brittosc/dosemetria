@@ -131,7 +131,22 @@ export function CalculationSummary() {
 
         {state.crimes.length > 1 && (
           <div className="space-y-2 pt-4 border-t">
-            <Label>Concurso de Crimes</Label>
+            <div className="flex items-center gap-2">
+              <Label>Concurso de Crimes</Label>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>
+                      Material (soma), Formal (exaspera a mais grave) ou
+                      Continuado (exaspera a mais grave).
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <Select
               value={state.concurso}
               onValueChange={(value: "material" | "formal" | "continuado") =>

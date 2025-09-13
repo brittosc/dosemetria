@@ -3801,50 +3801,12 @@
     "hediondo": true
   },
   {
-    "id": "porte_para_consumo",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "28",
-    "nome": "Porte de droga para consumo pessoal",
-    "penaMinimaMeses": 0,
-    "penaMaximaMeses": 0,
-    "violento": false,
-    "hediondo": false,
-    "outrasPenas": [
-      "Advertência sobre os efeitos das drogas",
-      "Prestação de serviços à comunidade",
-      "Medida educativa de comparecimento a programa ou curso educativo"
-    ]
-  },
-  {
-    "id": "trafico_de_drogas",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "33",
-    "nome": "Tráfico de Drogas",
-    "descricao": "Importar, exportar, remeter, preparar, produzir, fabricar, adquirir, vender, etc. Inclui as figuras equiparadas do § 1º.",
-    "penaMinimaMeses": 60,
-    "penaMaximaMeses": 180,
-    "temMulta": true,
-    "violento": false,
-    "hediondo": true
-  },
-  {
     "id": "induzimento_uso_indevido_drogas",
     "lei": "Lei nº 11.343/2006",
     "artigo": "33, § 2º",
     "nome": "Induzir, instigar ou auxiliar alguém ao uso indevido de droga",
     "penaMinimaMeses": 12,
     "penaMaximaMeses": 36,
-    "temMulta": true,
-    "violento": false,
-    "hediondo": false
-  },
-  {
-    "id": "oferecer_droga_uso_conjunto",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "33, § 3º",
-    "nome": "Oferecer droga, eventualmente e sem objetivo de lucro, para uso conjunto",
-    "penaMinimaMeses": 6,
-    "penaMaximaMeses": 12,
     "temMulta": true,
     "violento": false,
     "hediondo": false
@@ -3878,17 +3840,6 @@
     "nome": "Financiar ou custear o tráfico de drogas",
     "penaMinimaMeses": 96,
     "penaMaximaMeses": 240,
-    "temMulta": true,
-    "violento": false,
-    "hediondo": false
-  },
-  {
-    "id": "colaboracao_como_informante",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "37",
-    "nome": "Colaborar como informante para o tráfico",
-    "penaMinimaMeses": 24,
-    "penaMaximaMeses": 72,
     "temMulta": true,
     "violento": false,
     "hediondo": false
