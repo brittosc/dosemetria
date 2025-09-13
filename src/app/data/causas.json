@@ -5,6 +5,7 @@
     "paragrafo": "1º",
     "descricao": "Homicídio por motivo de relevante valor social/moral ou sob domínio de violenta emoção",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 121, § 1º, CP",
     "aplicabilidade": ["homicidio_simples"],
     "valor": {
       "tipo": "range",
@@ -19,6 +20,7 @@
     "paragrafo": "2º-B, I",
     "descricao": "Homicídio contra menor de 14 anos, se a vítima é pessoa com deficiência ou doença que aumente sua vulnerabilidade",
     "tipo": "aumento",
+    "baseLegal": "Art. 121, § 2º-B, I, CP",
     "aplicabilidade": ["homicidio_qualificado"],
     "valor": {
       "tipo": "range",
@@ -33,6 +35,7 @@
     "paragrafo": "2º-B, II",
     "descricao": "Homicídio contra menor de 14 anos, se o autor é ascendente, padrasto, etc.",
     "tipo": "aumento",
+    "baseLegal": "Art. 121, § 2º-B, II, CP",
     "aplicabilidade": ["homicidio_qualificado"],
     "valor": {
       "tipo": "fracao",
@@ -46,6 +49,7 @@
     "paragrafo": "2º",
     "descricao": "Causas de aumento de pena no Feminicídio (gestação, menor/maior de idade, presença de descendente, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 121-A, § 2º, CP",
     "aplicabilidade": ["feminicidio"],
     "valor": {
       "tipo": "range",
@@ -60,6 +64,7 @@
     "paragrafo": "3º",
     "descricao": "Pena duplicada no induzimento ao suicídio (motivo egoístico/torpe/fútil ou vítima vulnerável)",
     "tipo": "aumento",
+    "baseLegal": "Art. 122, § 3º, CP",
     "aplicabilidade": [
       "induzimento_suicidio_automutilacao",
       "resultado_lesao_grave",
@@ -77,6 +82,7 @@
     "paragrafo": "4º",
     "descricao": "Pena aumentada se a conduta é realizada por meio da rede de computadores",
     "tipo": "aumento",
+    "baseLegal": "Art. 122, § 4º, CP",
     "aplicabilidade": [
       "induzimento_suicidio_automutilacao",
       "resultado_lesao_grave",
@@ -94,6 +100,7 @@
     "paragrafo": "5º",
     "descricao": "Pena em dobro se o autor é líder, coordenador ou administrador de grupo virtual",
     "tipo": "aumento",
+    "baseLegal": "Art. 122, § 5º, CP",
     "aplicabilidade": [
       "induzimento_suicidio_automutilacao",
       "resultado_lesao_grave",
@@ -111,6 +118,7 @@
     "paragrafo": "",
     "descricao": "Aumento de pena no aborto se resulta lesão corporal de natureza grave",
     "tipo": "aumento",
+    "baseLegal": "Art. 127, CP",
     "aplicabilidade": [
       "aborto_sem_consentimento",
       "aborto_com_consentimento_terceiro"
@@ -127,6 +135,7 @@
     "paragrafo": "",
     "descricao": "Pena duplicada no aborto se resulta morte",
     "tipo": "aumento",
+    "baseLegal": "Art. 127, CP",
     "aplicabilidade": [
       "aborto_sem_consentimento",
       "aborto_com_consentimento_terceiro"
@@ -143,6 +152,7 @@
     "paragrafo": "4º",
     "descricao": "Lesão corporal por motivo de relevante valor social/moral ou sob domínio de violenta emoção",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 129, § 4º, CP",
     "aplicabilidade": [
       "lesao_corporal_simples",
       "lesao_corporal_grave",
@@ -161,6 +171,7 @@
     "paragrafo": "7º",
     "descricao": "Aumento de pena na lesão corporal culposa",
     "tipo": "aumento",
+    "baseLegal": "Art. 129, § 7º, CP",
     "aplicabilidade": ["lesao_corporal_culposa"],
     "valor": {
       "tipo": "fracao",
@@ -174,6 +185,7 @@
     "paragrafo": "10",
     "descricao": "Aumento de pena para lesão grave, gravíssima ou seguida de morte no contexto do § 9º (Violência Doméstica)",
     "tipo": "aumento",
+    "baseLegal": "Art. 129, § 10, CP",
     "aplicabilidade": [
       "lesao_corporal_grave",
       "lesao_corporal_gravissima",
@@ -191,6 +203,7 @@
     "paragrafo": "11",
     "descricao": "Aumento de pena na lesão do § 9º (Violência Doméstica) se a vítima for pessoa com deficiência",
     "tipo": "aumento",
+    "baseLegal": "Art. 129, § 11, CP",
     "aplicabilidade": ["lesao_corporal_violencia_domestica"],
     "valor": {
       "tipo": "fracao",
@@ -204,6 +217,7 @@
     "paragrafo": "único",
     "descricao": "Pena aumentada de metade na omissão de socorro com resultado lesão corporal de natureza grave",
     "tipo": "aumento",
+    "baseLegal": "Art. 135, Parágrafo único, CP",
     "aplicabilidade": ["omissao_socorro"],
     "valor": {
       "tipo": "fracao",
@@ -217,6 +231,7 @@
     "paragrafo": "único",
     "descricao": "Pena triplicada na omissão de socorro com resultado morte",
     "tipo": "aumento",
+    "baseLegal": "Art. 135, Parágrafo único, CP",
     "aplicabilidade": ["omissao_socorro"],
     "valor": {
       "tipo": "triplo",
@@ -230,6 +245,7 @@
     "paragrafo": "",
     "descricao": "Aumento de 1/3 nos crimes contra a honra (contra Presidente, funcionário público, na presença de vários, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 141, CP",
     "aplicabilidade": ["calunia", "difamacao", "injuria_simples"],
     "valor": {
       "tipo": "fracao",
@@ -243,6 +259,7 @@
     "paragrafo": "1º",
     "descricao": "Pena em dobro nos crimes contra a honra se cometido mediante paga ou promessa de recompensa",
     "tipo": "aumento",
+    "baseLegal": "Art. 141, § 1º, CP",
     "aplicabilidade": ["calunia", "difamacao", "injuria_simples"],
     "valor": {
       "tipo": "dobro",
@@ -256,6 +273,7 @@
     "paragrafo": "2º",
     "descricao": "Pena em triplo nos crimes contra a honra se cometido ou divulgado em redes sociais",
     "tipo": "aumento",
+    "baseLegal": "Art. 141, § 2º, CP",
     "aplicabilidade": ["calunia", "difamacao", "injuria_simples"],
     "valor": {
       "tipo": "triplo",
@@ -269,6 +287,7 @@
     "paragrafo": "1º",
     "descricao": "Pena em dobro no constrangimento ilegal (concurso de mais de 3 pessoas ou emprego de armas)",
     "tipo": "aumento",
+    "baseLegal": "Art. 146, § 1º, CP",
     "aplicabilidade": ["constrangimento_ilegal"],
     "valor": {
       "tipo": "dobro",
@@ -282,6 +301,7 @@
     "paragrafo": "1º",
     "descricao": "Pena em dobro na ameaça contra mulher por razões da condição do sexo feminino",
     "tipo": "aumento",
+    "baseLegal": "Art. 147, § 1º, CP",
     "aplicabilidade": ["ameaca"],
     "valor": {
       "tipo": "dobro",
@@ -295,6 +315,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de metade na perseguição (contra criança/adolescente/idoso, mulher, concurso de pessoas ou arma)",
     "tipo": "aumento",
+    "baseLegal": "Art. 147-A, § 1º, CP",
     "aplicabilidade": ["perseguicao"],
     "valor": {
       "tipo": "fracao",
@@ -308,6 +329,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de metade na redução à condição análoga à de escravo (vítima criança/adolescente ou preconceito)",
     "tipo": "aumento",
+    "baseLegal": "Art. 149, § 2º, CP",
     "aplicabilidade": ["reducao_condicao_analoga_escravo"],
     "valor": {
       "tipo": "fracao",
@@ -321,6 +343,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena no Tráfico de Pessoas (funcionário público, vítima vulnerável, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 149-A, § 1º, CP",
     "aplicabilidade": ["trafico_de_pessoas"],
     "valor": {
       "tipo": "range",
@@ -335,6 +358,7 @@
     "paragrafo": "2º",
     "descricao": "Redução de pena no Tráfico de Pessoas (agente primário e não integra organização criminosa)",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 149-A, § 2º, CP",
     "aplicabilidade": ["trafico_de_pessoas"],
     "valor": {
       "tipo": "range",
@@ -349,6 +373,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena na violação de correspondência se há dano para outrem",
     "tipo": "aumento",
+    "baseLegal": "Art. 151, § 2º, CP",
     "aplicabilidade": ["violacao_de_correspondencia"],
     "valor": {
       "tipo": "fracao",
@@ -362,6 +387,7 @@
     "paragrafo": "3º",
     "descricao": "Aumento de pena na violação de correspondência por abuso de função em serviço postal, telegráfico, etc.",
     "tipo": "aumento",
+    "baseLegal": "Art. 151, § 3º, CP",
     "aplicabilidade": ["violacao_de_correspondencia"],
     "valor": {
       "tipo": "fixa",
@@ -375,6 +401,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena se da invasão de dispositivo informático resulta prejuízo econômico",
     "tipo": "aumento",
+    "baseLegal": "Art. 154-A, § 2º, CP",
     "aplicabilidade": ["invasao_dispositivo_informatico"],
     "valor": {
       "tipo": "range",
@@ -389,6 +416,7 @@
     "paragrafo": "4º",
     "descricao": "Aumento de pena na invasão qualificada (§3º) se houver divulgação, comercialização ou transmissão dos dados",
     "tipo": "aumento",
+    "baseLegal": "Art. 154-A, § 4º, CP",
     "aplicabilidade": ["invasao_com_obtencao_de_conteudo"],
     "valor": {
       "tipo": "range",
@@ -403,6 +431,7 @@
     "paragrafo": "5º",
     "descricao": "Aumento de pena se a invasão de dispositivo informático é praticada contra autoridades públicas",
     "tipo": "aumento",
+    "baseLegal": "Art. 154-A, § 5º, CP",
     "aplicabilidade": [
       "invasao_dispositivo_informatico",
       "invasao_com_obtencao_de_conteudo"
@@ -420,6 +449,7 @@
     "paragrafo": "1º",
     "descricao": "Furto praticado durante o repouso noturno",
     "tipo": "aumento",
+    "baseLegal": "Art. 155, § 1º, CP",
     "aplicabilidade": ["furto_simples"],
     "valor": {
       "tipo": "fracao",
@@ -433,6 +463,7 @@
     "paragrafo": "2º",
     "descricao": "Furto privilegiado (réu primário e pequeno valor da coisa furtada)",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 155, § 2º, CP",
     "aplicabilidade": ["furto_simples", "furto_qualificado"],
     "valor": {
       "tipo": "range",
@@ -447,6 +478,7 @@
     "paragrafo": "4º-C, I",
     "descricao": "Aumento no furto mediante fraude eletrônica com utilização de servidor fora do Brasil",
     "tipo": "aumento",
+    "baseLegal": "Art. 155, § 4º-C, I, CP",
     "aplicabilidade": ["furto_mediante_fraude_eletronica"],
     "valor": {
       "tipo": "range",
@@ -461,6 +493,7 @@
     "paragrafo": "4º-C, II",
     "descricao": "Aumento no furto mediante fraude eletrônica contra idoso ou vulnerável",
     "tipo": "aumento",
+    "baseLegal": "Art. 155, § 4º-C, II, CP",
     "aplicabilidade": ["furto_mediante_fraude_eletronica"],
     "valor": {
       "tipo": "range_fracao_dobro",
@@ -475,6 +508,7 @@
     "paragrafo": "2º",
     "descricao": "Roubo majorado (concurso de pessoas, arma branca, transporte de valores, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 157, § 2º, CP",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "range",
@@ -489,6 +523,7 @@
     "paragrafo": "2º-A, I",
     "descricao": "Roubo majorado com emprego de arma de fogo",
     "tipo": "aumento",
+    "baseLegal": "Art. 157, § 2º-A, I, CP",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "fracao",
@@ -502,6 +537,7 @@
     "paragrafo": "2º-A, II",
     "descricao": "Roubo majorado com destruição ou rompimento de obstáculo mediante explosivo",
     "tipo": "aumento",
+    "baseLegal": "Art. 157, § 2º-A, II, CP",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "fracao",
@@ -515,6 +551,7 @@
     "paragrafo": "2º-B",
     "descricao": "Pena em dobro no roubo com emprego de arma de fogo de uso restrito ou proibido",
     "tipo": "aumento",
+    "baseLegal": "Art. 157, § 2º-B, CP",
     "aplicabilidade": ["roubo_simples"],
     "valor": {
       "tipo": "dobro",
@@ -528,6 +565,7 @@
     "paragrafo": "1º",
     "descricao": "Extorsão majorada por concurso de duas ou mais pessoas ou com emprego de arma",
     "tipo": "aumento",
+    "baseLegal": "Art. 158, § 1º, CP",
     "aplicabilidade": ["extorsao_simples"],
     "valor": {
       "tipo": "range",
@@ -542,6 +580,7 @@
     "paragrafo": "4º",
     "descricao": "Redução de pena (delação premiada) na extorsão mediante sequestro",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 159, § 4º, CP",
     "aplicabilidade": [
       "extorsao_mediante_sequestro",
       "sequestro_qualificado_duracao_vitima_bando",
@@ -561,6 +600,7 @@
     "paragrafo": "1º",
     "descricao": "Apropriação indébita majorada (em depósito necessário; na qualidade de tutor, curador, síndico, etc.; em razão de ofício, emprego ou profissão)",
     "tipo": "aumento",
+    "baseLegal": "Art. 168, § 1º, CP",
     "aplicabilidade": ["apropriacao_indebita"],
     "valor": {
       "tipo": "fracao",
@@ -574,6 +614,7 @@
     "paragrafo": "1º",
     "descricao": "Estelionato privilegiado (réu primário e pequeno prejuízo)",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 171, § 1º, CP",
     "aplicabilidade": ["estelionato_simples"],
     "valor": {
       "tipo": "range",
@@ -588,6 +629,7 @@
     "paragrafo": "2º-B",
     "descricao": "Aumento na fraude eletrônica com utilização de servidor mantido fora do Brasil",
     "tipo": "aumento",
+    "baseLegal": "Art. 171, § 2º-B, CP",
     "aplicabilidade": ["estelionato_fraude_eletronica"],
     "valor": {
       "tipo": "range",
@@ -602,6 +644,7 @@
     "paragrafo": "3º",
     "descricao": "Aumento de pena no estelionato cometido em detrimento de entidade de direito público ou de instituto de economia popular, assistência social ou beneficência",
     "tipo": "aumento",
+    "baseLegal": "Art. 171, § 3º, CP",
     "aplicabilidade": ["estelionato_simples", "estelionato_fraude_eletronica"],
     "valor": {
       "tipo": "fracao",
@@ -615,6 +658,7 @@
     "paragrafo": "4º",
     "descricao": "Aumento de pena no estelionato cometido contra idoso ou vulnerável",
     "tipo": "aumento",
+    "baseLegal": "Art. 171, § 4º, CP",
     "aplicabilidade": ["estelionato_simples", "estelionato_fraude_eletronica"],
     "valor": {
       "tipo": "range_fracao_dobro",
@@ -629,6 +673,7 @@
     "paragrafo": "6º",
     "descricao": "Pena em dobro na receptação de bens do patrimônio público",
     "tipo": "aumento",
+    "baseLegal": "Art. 180, § 6º, CP",
     "aplicabilidade": ["receptacao_simples"],
     "valor": {
       "tipo": "dobro",
@@ -642,6 +687,7 @@
     "paragrafo": "7º",
     "descricao": "Pena em dobro na receptação de fios, cabos ou equipamentos de serviços públicos ou de transporte",
     "tipo": "aumento",
+    "baseLegal": "Art. 180, § 7º, CP",
     "aplicabilidade": ["receptacao_simples", "receptacao_qualificada"],
     "valor": {
       "tipo": "dobro",
@@ -655,6 +701,7 @@
     "paragrafo": "",
     "descricao": "Aumento de pena para crimes patrimoniais contra instituições financeiras e segurança privada",
     "tipo": "aumento",
+    "baseLegal": "Art. 183-A, CP",
     "aplicabilidade": [
       "furto_simples",
       "furto_qualificado",
@@ -677,6 +724,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena na frustração de direito trabalhista se a vítima é vulnerável (menor, idosa, gestante, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 203, § 2º, CP",
     "aplicabilidade": ["frustracao_direito_trabalhista"],
     "valor": {
       "tipo": "range",
@@ -691,6 +739,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena no aliciamento de trabalhadores se a vítima é vulnerável (menor, idosa, gestante, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 207, § 2º, CP",
     "aplicabilidade": ["aliciamento_trabalhadores_intermunicipal"],
     "valor": {
       "tipo": "range",
@@ -705,6 +754,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena no ultraje a culto se há emprego de violência",
     "tipo": "aumento",
+    "baseLegal": "Art. 208, Parágrafo único, CP",
     "aplicabilidade": ["ultraje_a_culto"],
     "valor": {
       "tipo": "fracao",
@@ -718,6 +768,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena no impedimento de cerimônia funerária se há emprego de violência",
     "tipo": "aumento",
+    "baseLegal": "Art. 209, Parágrafo único, CP",
     "aplicabilidade": ["impedimento_cerimonia_funeraria"],
     "valor": {
       "tipo": "fracao",
@@ -731,6 +782,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena no assédio sexual se a vítima é menor de 18 anos",
     "tipo": "aumento",
+    "baseLegal": "Art. 216-A, § 2º, CP",
     "aplicabilidade": ["assedio_sexual"],
     "valor": {
       "tipo": "range_ate",
@@ -744,6 +796,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena se o crime é praticado por agente com relação íntima com a vítima ou com fim de vingança/humilhação",
     "tipo": "aumento",
+    "baseLegal": "Art. 218-C, § 1º, CP",
     "aplicabilidade": ["divulgacao_cena_estupro_sexo"],
     "valor": {
       "tipo": "range",
@@ -758,6 +811,7 @@
     "paragrafo": "II",
     "descricao": "Aumento de metade se o agente é ascendente, padrasto, tio, irmão, cônjuge, companheiro, tutor, curador, preceptor ou empregador da vítima ou por qualquer outro título tiver autoridade sobre ela",
     "tipo": "aumento",
+    "baseLegal": "Art. 226, II, CP",
     "aplicabilidade": [
       "estupro",
       "violacao_sexual_mediante_fraude",
@@ -780,6 +834,7 @@
     "paragrafo": "IV, a",
     "descricao": "Aumento de 1/3 a 2/3 se o crime é praticado mediante concurso de 2 ou mais agentes (Estupro Coletivo)",
     "tipo": "aumento",
+    "baseLegal": "Art. 226, IV, 'a', CP",
     "aplicabilidade": [
       "estupro",
       "violacao_sexual_mediante_fraude",
@@ -798,6 +853,7 @@
     "paragrafo": "IV, b",
     "descricao": "Aumento de 1/3 a 2/3 se o crime é praticado para controlar o comportamento social ou sexual da vítima (Estupro Corretivo)",
     "tipo": "aumento",
+    "baseLegal": "Art. 226, IV, 'b', CP",
     "aplicabilidade": [
       "estupro",
       "violacao_sexual_mediante_fraude",
@@ -816,6 +872,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena na promoção de migração ilegal se houver violência ou condição desumana/degradante",
     "tipo": "aumento",
+    "baseLegal": "Art. 232-A, § 2º, CP",
     "aplicabilidade": ["promocao_migracao_ilegal"],
     "valor": {
       "tipo": "range",
@@ -830,6 +887,7 @@
     "paragrafo": "III",
     "descricao": "Aumento de pena se do crime sexual resulta gravidez",
     "tipo": "aumento",
+    "baseLegal": "Art. 234-A, III, CP",
     "aplicabilidade": [
       "estupro",
       "violacao_sexual_mediante_fraude",
@@ -848,6 +906,7 @@
     "paragrafo": "IV",
     "descricao": "Aumento de pena se o agente transmite à vítima DST, ou se a vítima é idosa ou PCD",
     "tipo": "aumento",
+    "baseLegal": "Art. 234-A, IV, CP",
     "aplicabilidade": [
       "estupro",
       "violacao_sexual_mediante_fraude",
@@ -866,6 +925,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena no crime de Incêndio (com intuito de vantagem pecuniária ou em locais específicos como casa habitada, edifício público, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 250, § 1º, CP",
     "aplicabilidade": ["incendio"],
     "valor": {
       "tipo": "fracao",
@@ -879,6 +939,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena no crime de Explosão (com intuito de vantagem pecuniária ou em locais específicos)",
     "tipo": "aumento",
+    "baseLegal": "Art. 251, § 2º, CP",
     "aplicabilidade": ["explosao_dinamite", "explosao_outras_substancias"],
     "valor": {
       "tipo": "fracao",
@@ -892,6 +953,7 @@
     "paragrafo": "",
     "descricao": "Aumento de metade se do crime doloso de perigo comum resulta lesão corporal grave",
     "tipo": "aumento",
+    "baseLegal": "Art. 258, CP",
     "aplicabilidade": [
       "incendio",
       "explosao_dinamite",
@@ -914,6 +976,7 @@
     "paragrafo": "",
     "descricao": "Pena aplicada em dobro se do crime doloso de perigo comum resulta morte",
     "tipo": "aumento",
+    "baseLegal": "Art. 258, CP",
     "aplicabilidade": [
       "incendio",
       "explosao_dinamite",
@@ -936,6 +999,7 @@
     "paragrafo": "",
     "descricao": "Aumento de metade se do crime culposo de perigo comum resulta lesão corporal",
     "tipo": "aumento",
+    "baseLegal": "Art. 258, CP",
     "aplicabilidade": [
       "incendio_culposo",
       "explosao_culposa_dinamite",
@@ -957,6 +1021,7 @@
     "descricao": "Aplica as regras do Art. 258 se dos crimes de desastre (Art. 260 a 262) resulta lesão corporal ou morte",
     "tipo": "remissao",
     "remissao_id": "perigo_comum_doloso_com_lesao_grave",
+    "baseLegal": "Art. 263, CP",
     "aplicabilidade": [
       "desastre_ferroviario_doloso",
       "sinistro_transporte_maritimo_fluvial_aereo_doloso",
@@ -969,6 +1034,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena no atentado a serviço de utilidade pública se o dano ocorrer por subtração de material essencial",
     "tipo": "aumento",
+    "baseLegal": "Art. 265, Parágrafo único, CP",
     "aplicabilidade": ["atentado_seguranca_servico_utilidade_publica"],
     "valor": {
       "tipo": "range",
@@ -983,6 +1049,7 @@
     "paragrafo": "2º",
     "descricao": "Pena em dobro se a interrupção de serviço é cometida em calamidade pública ou mediante subtração/dano a equipamentos",
     "tipo": "aumento",
+    "baseLegal": "Art. 266, § 2º, CP",
     "aplicabilidade": ["interrupcao_servico_telegrafico_telefonico"],
     "valor": {
       "tipo": "dobro",
@@ -996,6 +1063,7 @@
     "paragrafo": "1º",
     "descricao": "Pena em dobro no crime de epidemia dolosa se do fato resulta morte",
     "tipo": "aumento",
+    "baseLegal": "Art. 267, § 1º, CP",
     "aplicabilidade": ["epidemia_dolosa"],
     "valor": {
       "tipo": "dobro",
@@ -1009,6 +1077,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena se o agente da infração sanitária é funcionário da saúde ou profissional da área (médico, etc.)",
     "tipo": "aumento",
+    "baseLegal": "Art. 268, Parágrafo único, CP",
     "aplicabilidade": ["infracao_medida_sanitaria_preventiva"],
     "valor": {
       "tipo": "fracao",
@@ -1023,6 +1092,7 @@
     "descricao": "Aplica as regras do Art. 258 (lesão grave ou morte) aos crimes contra a saúde pública (exceto epidemia)",
     "tipo": "remissao",
     "remissao_id": "perigo_comum_doloso_com_lesao_grave",
+    "baseLegal": "Art. 285, CP",
     "aplicabilidade": [
       "envenenamento_agua_alimento_doloso",
       "corrupcao_poluicao_agua_dolosa",
@@ -1042,6 +1112,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena se a associação é armada ou se houver a participação de criança ou adolescente",
     "tipo": "aumento",
+    "baseLegal": "Art. 288, Parágrafo único, CP",
     "aplicabilidade": ["associacao_criminosa"],
     "valor": {
       "tipo": "range_ate",
@@ -1055,6 +1126,7 @@
     "paragrafo": "",
     "descricao": "Aumento de pena para funcionário público que comete os crimes dos arts. 293 e 294 prevalecendo-se do cargo",
     "tipo": "aumento",
+    "baseLegal": "Art. 295, CP",
     "aplicabilidade": [
       "falsificacao_papeis_publicos",
       "petrechos_falsificacao_papeis_publicos",
@@ -1072,6 +1144,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena na falsificação de selo ou sinal público se o agente é funcionário público e comete o crime prevalecendo-se do cargo",
     "tipo": "aumento",
+    "baseLegal": "Art. 296, § 2º, CP",
     "aplicabilidade": ["falsificacao_selo_sinal_publico"],
     "valor": {
       "tipo": "fracao",
@@ -1085,6 +1158,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena na falsificação de documento público se o agente é funcionário público e comete o crime prevalecendo-se do cargo",
     "tipo": "aumento",
+    "baseLegal": "Art. 297, § 1º, CP",
     "aplicabilidade": ["falsificacao_documento_publico"],
     "valor": {
       "tipo": "fracao",
@@ -1098,6 +1172,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena na falsidade ideológica se o agente é funcionário público ou se a falsificação é de assentamento de registro civil",
     "tipo": "aumento",
+    "baseLegal": "Art. 299, Parágrafo único, CP",
     "aplicabilidade": [
       "falsidade_ideologica_doc_publico",
       "falsidade_ideologica_doc_particular"
@@ -1114,6 +1189,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena na adulteração de sinal de veículo se o agente comete o crime no exercício da função pública ou em razão dela",
     "tipo": "aumento",
+    "baseLegal": "Art. 311, § 1º, CP",
     "aplicabilidade": ["adulteracao_sinal_identificador_veiculo"],
     "valor": {
       "tipo": "fracao",
@@ -1127,6 +1203,7 @@
     "paragrafo": "3º",
     "descricao": "Aumento de pena na fraude em certames se o fato é cometido por funcionário público",
     "tipo": "aumento",
+    "baseLegal": "Art. 311-A, § 3º, CP",
     "aplicabilidade": [
       "fraudes_certames_interesse_publico",
       "fraude_certame_com_dano_adm_publica"
@@ -1143,6 +1220,7 @@
     "paragrafo": "3º",
     "descricao": "Redução de metade da pena no peculato culposo se a reparação do dano é posterior à sentença irrecorrível",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 312, § 3º, CP",
     "aplicabilidade": ["peculato_culposo"],
     "valor": {
       "tipo": "fracao",
@@ -1156,6 +1234,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena se da modificação ou alteração de sistema de informações resulta dano para a Administração Pública ou para o administrado",
     "tipo": "aumento",
+    "baseLegal": "Art. 313-B, Parágrafo único, CP",
     "aplicabilidade": ["modificacao_nao_autorizada_sistema"],
     "valor": {
       "tipo": "range",
@@ -1170,6 +1249,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena se, em consequência da vantagem, o funcionário retarda/omite ato de ofício ou o pratica infringindo dever funcional",
     "tipo": "aumento",
+    "baseLegal": "Art. 317, § 1º, CP",
     "aplicabilidade": ["corrupcao_passiva"],
     "valor": {
       "tipo": "fracao",
@@ -1183,6 +1263,7 @@
     "paragrafo": "2º",
     "descricao": "Aumento de pena quando os autores dos crimes deste Capítulo forem ocupantes de cargos em comissão ou de função de direção ou assessoramento",
     "tipo": "aumento",
+    "baseLegal": "Art. 327, § 2º, CP",
     "aplicabilidade": [
       "peculato",
       "peculato_culposo",
@@ -1217,6 +1298,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena no tráfico de influência se o agente alega ou insinua que a vantagem é também destinada ao funcionário",
     "tipo": "aumento",
+    "baseLegal": "Art. 332, Parágrafo único, CP",
     "aplicabilidade": ["trafico_de_influencia"],
     "valor": {
       "tipo": "fracao",
@@ -1230,6 +1312,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena na corrupção ativa se, em razão da vantagem, o funcionário retarda/omite ato de ofício ou o pratica infringindo dever funcional",
     "tipo": "aumento",
+    "baseLegal": "Art. 333, Parágrafo único, CP",
     "aplicabilidade": ["corrupcao_ativa"],
     "valor": {
       "tipo": "fracao",
@@ -1243,6 +1326,7 @@
     "paragrafo": "3º",
     "descricao": "Pena em dobro se o crime de descaminho é praticado em transporte aéreo, marítimo ou fluvial",
     "tipo": "aumento",
+    "baseLegal": "Art. 334, § 3º, CP",
     "aplicabilidade": ["descaminho"],
     "valor": {
       "tipo": "dobro",
@@ -1256,6 +1340,7 @@
     "paragrafo": "3º",
     "descricao": "Pena em dobro se o crime de contrabando é praticado em transporte aéreo, marítimo ou fluvial",
     "tipo": "aumento",
+    "baseLegal": "Art. 334-A, § 3º, CP",
     "aplicabilidade": ["contrabando"],
     "valor": {
       "tipo": "dobro",
@@ -1269,6 +1354,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena se o funcionário público estrangeiro retarda ou omite o ato de ofício, ou o pratica infringindo dever funcional",
     "tipo": "aumento",
+    "baseLegal": "Art. 337-B, Parágrafo único, CP",
     "aplicabilidade": ["corrupcao_ativa_transacao_internacional"],
     "valor": {
       "tipo": "fracao",
@@ -1282,6 +1368,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena se o agente alega ou insinua que a vantagem é também destinada a funcionário estrangeiro",
     "tipo": "aumento",
+    "baseLegal": "Art. 337-C, Parágrafo único, CP",
     "aplicabilidade": ["trafico_influencia_transacao_internacional"],
     "valor": {
       "tipo": "fracao",
@@ -1295,6 +1382,7 @@
     "paragrafo": "2º",
     "descricao": "Pena em dobro na omissão de dados por projetista se o crime é praticado com o fim de obter benefício",
     "tipo": "aumento",
+    "baseLegal": "Art. 337-O, § 2º, CP",
     "aplicabilidade": ["omissao_grave_dados_projetista_licitacao"],
     "valor": {
       "tipo": "dobro",
@@ -1308,6 +1396,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena na denunciação caluniosa se o agente se serve de anonimato ou de nome suposto",
     "tipo": "aumento",
+    "baseLegal": "Art. 339, § 1º, CP",
     "aplicabilidade": ["denunciacao_caluniosa"],
     "valor": {
       "tipo": "fracao",
@@ -1321,6 +1410,7 @@
     "paragrafo": "2º",
     "descricao": "Pena diminuída de metade na denunciação caluniosa se a imputação é de prática de contravenção",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 339, § 2º, CP",
     "aplicabilidade": ["denunciacao_caluniosa"],
     "valor": {
       "tipo": "fracao",
@@ -1334,6 +1424,7 @@
     "paragrafo": "1º",
     "descricao": "Aumento de pena no falso testemunho se o crime é praticado mediante suborno ou para produzir efeito em processo penal/civil com ente público",
     "tipo": "aumento",
+    "baseLegal": "Art. 342, § 1º, CP",
     "aplicabilidade": ["falso_testemunho_ou_falsa_pericia"],
     "valor": {
       "tipo": "range",
@@ -1348,6 +1439,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena na coação no curso do processo se este envolver crime contra a dignidade sexual",
     "tipo": "aumento",
+    "baseLegal": "Art. 344, Parágrafo único, CP",
     "aplicabilidade": ["coacao_no_curso_do_processo"],
     "valor": {
       "tipo": "range",
@@ -1362,6 +1454,7 @@
     "paragrafo": "único",
     "descricao": "Pena em dobro na fraude processual se a inovação se destina a produzir efeito em processo penal",
     "tipo": "aumento",
+    "baseLegal": "Art. 347, Parágrafo único, CP",
     "aplicabilidade": ["fraude_processual"],
     "valor": {
       "tipo": "dobro",
@@ -1375,6 +1468,7 @@
     "paragrafo": "único",
     "descricao": "Aumento de pena na exploração de prestígio se o agente alega ou insinua que o dinheiro também se destina a juiz, jurado, etc.",
     "tipo": "aumento",
+    "baseLegal": "Art. 357, Parágrafo único, CP",
     "aplicabilidade": ["exploracao_de_prestigio"],
     "valor": {
       "tipo": "fracao",
@@ -1389,6 +1483,7 @@
     "paragrafo": "4º",
     "descricao": "Causa de diminuição (Tráfico Privilegiado): Réu primário, de bons antecedentes, que não se dedica a atividades criminosas nem integra organização criminosa.",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 33, § 4º, Lei 11.343/2006",
     "aplicabilidade": ["trafico_de_drogas"],
     "valor": {
       "tipo": "range",
@@ -1404,6 +1499,7 @@
     "paragrafo": "",
     "descricao": "Causas de aumento de pena para os crimes dos arts. 33 a 37 (transnacionalidade, prevalecer-se de função pública, cometido em locais específicos, com violência/arma de fogo, interestadual, visando criança/adolescente, ou se o agente financia o crime).",
     "tipo": "aumento",
+    "baseLegal": "Art. 40, Lei 11.343/2006",
     "aplicabilidade": [
       "trafico_de_drogas",
       "maquinario_para_o_trafico",
@@ -1425,6 +1521,7 @@
     "paragrafo": "",
     "descricao": "Colaboração voluntária com a investigação policial e o processo criminal (Delação Premiada)",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 41, Lei 11.343/2006",
     "aplicabilidade": [
       "trafico_de_drogas",
       "maquinario_para_o_trafico",
@@ -1446,6 +1543,7 @@
     "paragrafo": "",
     "descricao": "Redução de pena por semi-imputabilidade em razão de dependência ou efeito de droga, não possuindo plena capacidade de entendimento do fato",
     "tipo": "diminuicao",
+    "baseLegal": "Art. 46, Lei 11.343/2006",
     "aplicabilidade": [
       "trafico_de_drogas",
       "maquinario_para_o_trafico",
@@ -1458,6 +1556,420 @@
       "min": 0.3333,
       "max": 0.6667,
       "fracao": "1/3 a 2/3"
+    }
+  },
+  {
+    "id": "tortura_aumento_agente_publico",
+    "lei": "Lei nº 9.455/1997",
+    "artigo": "1º",
+    "paragrafo": "4º, I",
+    "descricao": "Aumento de pena se o crime de tortura é cometido por agente público",
+    "tipo": "aumento",
+    "baseLegal": "Art. 1º, § 4º, I, Lei nº 9.455/1997",
+    "aplicabilidade": [
+      "tortura_constrangimento_obter_informacao",
+      "tortura_para_provocar_acao_criminosa",
+      "tortura_discriminacao",
+      "tortura_castigo",
+      "tortura_ato_ilegal_preso"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.3333,
+      "fracao": "1/6 a 1/3"
+    }
+  },
+  {
+    "id": "tortura_aumento_vitima_vulneravel",
+    "lei": "Lei nº 9.455/1997",
+    "artigo": "1º",
+    "paragrafo": "4º, II",
+    "descricao": "Aumento de pena se o crime é cometido contra criança, gestante, portador de deficiência, adolescente ou maior de 60 anos",
+    "tipo": "aumento",
+    "baseLegal": "Art. 1º, § 4º, II, Lei nº 9.455/1997",
+    "aplicabilidade": [
+      "tortura_constrangimento_obter_informacao",
+      "tortura_para_provocar_acao_criminosa",
+      "tortura_discriminacao",
+      "tortura_castigo",
+      "tortura_ato_ilegal_preso"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.3333,
+      "fracao": "1/6 a 1/3"
+    }
+  },
+  {
+    "id": "tortura_aumento_sequestro",
+    "lei": "Lei nº 9.455/1997",
+    "artigo": "1º",
+    "paragrafo": "4º, III",
+    "descricao": "Aumento de pena se o crime de tortura é cometido mediante sequestro",
+    "tipo": "aumento",
+    "baseLegal": "Art. 1º, § 4º, III, Lei nº 9.455/1997",
+    "aplicabilidade": [
+      "tortura_constrangimento_obter_informacao",
+      "tortura_para_provocar_acao_criminosa",
+      "tortura_discriminacao",
+      "tortura_castigo",
+      "tortura_ato_ilegal_preso"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.3333,
+      "fracao": "1/6 a 1/3"
+    }
+  },
+  {
+    "id": "aumento_pena_arma_restrita_comercio_trafico",
+    "lei": "Lei nº 10.826/2003",
+    "artigo": "19",
+    "descricao": "Aumento de pena se a arma for de uso proibido ou restrito (Comércio e Tráfico)",
+    "tipo": "aumento",
+    "baseLegal": "Art. 19, Lei nº 10.826/2003",
+    "aplicabilidade": ["comercio_ilegal_arma", "trafico_internacional_arma"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_agente_seguranca_reincidente",
+    "lei": "Lei nº 10.826/2003",
+    "artigo": "20",
+    "descricao": "Aumento de pena se o agente for integrante de órgãos de segurança ou reincidente específico",
+    "tipo": "aumento",
+    "baseLegal": "Art. 20, Lei nº 10.826/2003",
+    "aplicabilidade": [
+      "porte_ilegal_arma_permitido",
+      "disparo_arma_fogo",
+      "posse_porte_ilegal_arma_restrito",
+      "posse_porte_ilegal_arma_proibido",
+      "comercio_ilegal_arma",
+      "trafico_internacional_arma"
+    ],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_homicidio_lesao_transito",
+    "lei": "Lei nº 9.503/1997",
+    "artigo": "302, § 1º e 303, § 1º",
+    "descricao": "Aumento de pena no homicídio e lesão culposa (sem habilitação, faixa de pedestre, omissão de socorro, transporte de passageiros)",
+    "tipo": "aumento",
+    "baseLegal": "Art. 302, § 1º, CTB",
+    "aplicabilidade": [
+      "homicidio_culposo_transito",
+      "lesao_corporal_culposa_transito"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
+    }
+  },
+  {
+    "id": "aumento_pena_grave_dano_coletividade",
+    "lei": "Lei nº 8.137/1990",
+    "artigo": "12",
+    "paragrafo": "I",
+    "descricao": "Aumento de pena por ocasionar grave dano à coletividade",
+    "tipo": "aumento",
+    "baseLegal": "Art. 12, I, Lei nº 8.137/1990",
+    "aplicabilidade": [
+      "suprimir_reduzir_tributo",
+      "fraude_para_eximir_tributo",
+      "nao_recolher_tributo_descontado",
+      "apropriacao_indebita_incentivo_fiscal",
+      "aplicacao_indevida_incentivo_fiscal",
+      "uso_software_contabilidade_dupla",
+      "crime_consumo_venda_impropria"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_servidor_publico",
+    "lei": "Lei nº 8.137/1990",
+    "artigo": "12",
+    "paragrafo": "II",
+    "descricao": "Aumento de pena se o crime é cometido por servidor público no exercício de suas funções",
+    "tipo": "aumento",
+    "baseLegal": "Art. 12, II, Lei nº 8.137/1990",
+    "aplicabilidade": [
+      "suprimir_reduzir_tributo",
+      "fraude_para_eximir_tributo",
+      "nao_recolher_tributo_descontado",
+      "apropriacao_indebita_incentivo_fiscal",
+      "aplicacao_indevida_incentivo_fiscal",
+      "uso_software_contabilidade_dupla",
+      "crime_consumo_venda_impropria"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_bens_essenciais",
+    "lei": "Lei nº 8.137/1990",
+    "artigo": "12",
+    "paragrafo": "III",
+    "descricao": "Aumento de pena se o crime é praticado em relação a bens essenciais à vida ou à saúde",
+    "tipo": "aumento",
+    "baseLegal": "Art. 12, III, Lei nº 8.137/1990",
+    "aplicabilidade": ["crime_consumo_venda_impropria"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.5,
+      "fracao": "1/3 a 1/2"
+    }
+  },
+  {
+    "id": "trafico_privilegiado",
+    "lei": "Lei nº 11.343/2006",
+    "artigo": "33",
+    "paragrafo": "4º",
+    "descricao": "Tráfico Privilegiado (réu primário, bons antecedentes, não se dedica a atividades criminosas nem integra organização criminosa)",
+    "tipo": "diminuicao",
+    "baseLegal": "Art. 33, § 4º, Lei 11.343/2006",
+    "aplicabilidade": ["trafico_de_drogas"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.6667,
+      "fracao": "1/6 a 2/3"
+    }
+  },
+  {
+    "id": "trafico_majorado_geral",
+    "lei": "Lei nº 11.343/2006",
+    "artigo": "40",
+    "descricao": "Causas de aumento de pena nos crimes de tráfico (transnacionalidade, interestadualidade, etc.)",
+    "tipo": "aumento",
+    "baseLegal": "Art. 40, Lei 11.343/2006",
+    "aplicabilidade": [
+      "trafico_de_drogas",
+      "maquinario_para_trafico",
+      "associacao_para_trafico",
+      "financiamento_custeio_trafico",
+      "colaboracao_como_informante"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.6667,
+      "fracao": "1/6 a 2/3"
+    }
+  },
+  {
+    "id": "delacao_premiada_lei_drogas",
+    "lei": "Lei nº 11.343/2006",
+    "artigo": "41",
+    "descricao": "Delação Premiada na Lei de Drogas",
+    "tipo": "diminuicao",
+    "baseLegal": "Art. 41, Lei 11.343/2006",
+    "aplicabilidade": [
+      "trafico_de_drogas",
+      "maquinario_para_trafico",
+      "associacao_para_trafico",
+      "financiamento_custeio_trafico",
+      "colaboracao_como_informante"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6667,
+      "fracao": "1/3 a 2/3"
+    }
+  },
+  {
+    "id": "organizacao_criminosa_aumento_arma",
+    "lei": "Lei nº 12.850/2013",
+    "artigo": "2º",
+    "paragrafo": "2º",
+    "descricao": "Aumento de pena se há emprego de arma de fogo na organização criminosa",
+    "tipo": "aumento",
+    "baseLegal": "Art. 2º, § 2º, Lei nº 12.850/2013",
+    "aplicabilidade": ["integrar_organizacao_criminosa"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "organizacao_criminosa_aumento_agente_publico",
+    "lei": "Lei nº 12.850/2013",
+    "artigo": "2º",
+    "paragrafo": "3º",
+    "descricao": "Aumento de pena se há concurso de funcionário público e este comete o crime valendo-se do cargo",
+    "tipo": "aumento",
+    "baseLegal": "Art. 2º, § 3º, Lei nº 12.850/2013",
+    "aplicabilidade": ["integrar_organizacao_criminosa"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "organizacao_criminosa_aumento_transnacional",
+    "lei": "Lei nº 12.850/2013",
+    "artigo": "2º",
+    "paragrafo": "4º",
+    "descricao": "Aumento de pena se a organização criminosa mantém conexão com outras organizações criminosas independentes, ou se as circunstâncias do fato evidenciarem a transnacionalidade da organização",
+    "tipo": "aumento",
+    "baseLegal": "Art. 2º, § 4º, Lei nº 12.850/2013",
+    "aplicabilidade": ["integrar_organizacao_criminosa"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.6667,
+      "fracao": "1/6 a 2/3"
+    }
+  },
+  {
+    "id": "lavagem_dinheiro_aumento_reiterada_organizacao",
+    "lei": "Lei nº 9.613/1998",
+    "artigo": "1º",
+    "paragrafo": "4º",
+    "descricao": "Aumento de pena se os crimes de lavagem de dinheiro forem cometidos de forma reiterada ou por intermédio de organização criminosa",
+    "tipo": "aumento",
+    "baseLegal": "Art. 1º, § 4º, Lei nº 9.613/1998",
+    "aplicabilidade": ["lavagem_dinheiro"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6667,
+      "fracao": "1/3 a 2/3"
+    }
+  },
+  {
+    "id": "lavagem_dinheiro_delacao_premiada",
+    "lei": "Lei nº 9.613/1998",
+    "artigo": "1º",
+    "paragrafo": "5º",
+    "descricao": "Delação Premiada na Lei de Lavagem de Dinheiro",
+    "tipo": "diminuicao",
+    "baseLegal": "Art. 1º, § 5º, Lei nº 9.613/1998",
+    "aplicabilidade": ["lavagem_dinheiro"],
+    "valor": {
+      "tipo": "range",
+      "min": 0.3333,
+      "max": 0.6667,
+      "fracao": "1/3 a 2/3"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_ambiental_periodo_defeso",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "29",
+    "paragrafo": "4º, I",
+    "descricao": "Aumento de pena se o crime contra a fauna é praticado durante o período de caça ou em período de defeso",
+    "tipo": "aumento",
+    "baseLegal": "Art. 29, § 4º, I, Lei nº 9.605/1998",
+    "aplicabilidade": ["cacar_animais_silvestres"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_ambiental_noturno",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "29",
+    "paragrafo": "4º, II",
+    "descricao": "Aumento de pena se o crime contra a fauna é praticado durante a noite",
+    "tipo": "aumento",
+    "baseLegal": "Art. 29, § 4º, II, Lei nº 9.605/1998",
+    "aplicabilidade": ["cacar_animais_silvestres"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_ambiental_abuso_licenca",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "29",
+    "paragrafo": "4º, III",
+    "descricao": "Aumento de pena se o crime contra a fauna é praticado com abuso de licença",
+    "tipo": "aumento",
+    "baseLegal": "Art. 29, § 4º, III, Lei nº 9.605/1998",
+    "aplicabilidade": ["cacar_animais_silvestres"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_ambiental_unidade_conservacao",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "29",
+    "paragrafo": "4º, IV",
+    "descricao": "Aumento de pena se o crime contra a fauna é praticado em unidade de conservação",
+    "tipo": "aumento",
+    "baseLegal": "Art. 29, § 4º, IV, Lei nº 9.605/1998",
+    "aplicabilidade": ["cacar_animais_silvestres"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_ambiental_emprego_metodos_destruicao",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "29",
+    "paragrafo": "4º, V",
+    "descricao": "Aumento de pena se o crime contra a fauna é praticado com emprego de métodos ou instrumentos capazes de provocar destruição em massa",
+    "tipo": "aumento",
+    "baseLegal": "Art. 29, § 4º, V, Lei nº 9.605/1998",
+    "aplicabilidade": ["cacar_animais_silvestres"],
+    "valor": {
+      "tipo": "fracao",
+      "valor": 0.5,
+      "fracao": "metade"
+    }
+  },
+  {
+    "id": "aumento_pena_crime_maus_tratos_morte",
+    "lei": "Lei nº 9.605/1998",
+    "artigo": "32",
+    "paragrafo": "2º",
+    "descricao": "Aumento de pena se ocorre morte do animal nos crimes de maus-tratos",
+    "tipo": "aumento",
+    "baseLegal": "Art. 32, § 2º, Lei nº 9.605/1998",
+    "aplicabilidade": [
+      "maus_tratos_animais",
+      "maus_tratos_caes_gatos",
+      "experiencia_dolorosa_cruel_animal_vivo"
+    ],
+    "valor": {
+      "tipo": "range",
+      "min": 0.1667,
+      "max": 0.3333,
+      "fracao": "1/6 a 1/3"
     }
   }
 ]

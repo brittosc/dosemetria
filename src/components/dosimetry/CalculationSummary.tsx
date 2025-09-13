@@ -2,7 +2,13 @@
 
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -24,9 +30,15 @@ import {
 import { Badge } from "../ui/badge";
 import { CalculationDetails } from "./CalculationDetails";
 import { Button } from "../ui/button";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Info } from "lucide-react";
 import { DatePicker } from "../ui/date-picker";
 import { ExecutionSummary } from "./ExecutionSummary";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export function CalculationSummary() {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
@@ -38,6 +50,12 @@ export function CalculationSummary() {
 
   return (
     <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Resumo e Execução</CardTitle>
+        <CardDescription>
+          Visualize o resultado final e os detalhes da execução da pena.
+        </CardDescription>
+      </CardHeader>
       <CardContent className="space-y-4">
         <Accordion
           type="multiple"
@@ -124,22 +142,54 @@ export function CalculationSummary() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="material">
-                  Material (soma as penas)
-                </SelectItem>
-                <SelectItem value="formal">
-                  Formal (aumenta a pena mais grave)
-                </SelectItem>
+                <SelectItem value="material">Material (Art. 69, CP)</SelectItem>
+                <SelectItem value="formal">Formal (Art. 70, CP)</SelectItem>
                 <SelectItem value="continuado">
-                  Crime Continuado (aumenta a pena mais grave)
+                  Crime Continuado (Art. 71, CP)
                 </SelectItem>
               </SelectContent>
             </Select>
-            {state.concurso !== "material" && (
-              <p className="text-xs text-muted-foreground mt-2">
-                A fração de aumento é calculada automaticamente com base no
-                número de crimes.
-              </p>
+
+            {state.concurso === "formal" && (
+              <Select
+                value={state.tipoConcursoFormal}
+                onValueChange={(value: "proprio" | "improprio") =>
+                  dispatch({
+                    type: "UPDATE_TIPO_CONCURSO_FORMAL",
+                    payload: value,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="proprio">Próprio (Exasperação)</SelectItem>
+                  <SelectItem value="improprio">Impróprio (Cúmulo)</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+
+            {state.concurso === "continuado" && (
+              <Select
+                value={state.tipoCrimeContinuado}
+                onValueChange={(value: "simples" | "especifico") =>
+                  dispatch({
+                    type: "UPDATE_TIPO_CRIME_CONTINUADO",
+                    payload: value,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="simples">Simples (Exasperação)</SelectItem>
+                  <SelectItem value="especifico">
+                    Específico (Até o triplo)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             )}
           </div>
         )}

@@ -1,3 +1,5 @@
+// src/components/dosimetry/PhaseOne.tsx
+
 "use client";
 
 import { Controller, UseFormReturn } from "react-hook-form";
@@ -301,6 +303,10 @@ export const PhaseOneContent = ({
                 />
               ))}
             </div>
+            <FormDescription>
+              A fração de 1/6 é um padrão jurisprudencial, mas você pode
+              ajustá-la conforme a fundamentação do caso.
+            </FormDescription>
           </FormItem>
         </>
       )}

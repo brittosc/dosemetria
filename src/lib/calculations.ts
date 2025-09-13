@@ -1,7 +1,7 @@
 // src/lib/calculations.ts
 
 import { CrimeState, DetracaoPeriodo } from "@/app/contexts/DosimetryProvider";
-import { add, differenceInDays } from "date-fns";
+import { add, differenceInDays, isBefore } from "date-fns";
 
 export type Causa = {
   id: string;
@@ -9,6 +9,7 @@ export type Causa = {
   paragrafo?: string;
   descricao: string;
   tipo: string;
+  baseLegal: string; // Novo campo adicionado
   valor: {
     tipo:
       | "fracao"
@@ -270,17 +271,37 @@ const getAumentoConcurso = (numCrimes: number): string => {
   return "2/3";
 };
 
-export function calculateConcursoFormal(crimes: CrimeState[]): number {
+export function calculateConcursoFormal(
+  crimes: CrimeState[],
+  tipo: "proprio" | "improprio"
+): number {
   if (crimes.length === 0) return 0;
+  if (tipo === "improprio") {
+    return calculateConcursoMaterial(crimes); // Soma as penas
+  }
+  // Lógica para concurso formal próprio (exasperação)
   const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
   const fracaoAumento = getAumentoConcurso(crimes.length);
   const aumento = parseFraction(fracaoAumento);
   return penaMaisGrave * (1 + aumento);
 }
 
-export function calculateCrimeContinuado(crimes: CrimeState[]): number {
+export function calculateCrimeContinuado(
+  crimes: CrimeState[],
+  tipo: "simples" | "especifico"
+): number {
   if (crimes.length === 0) return 0;
   const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
+
+  if (tipo === "especifico") {
+    // Pode aumentar até o triplo, observando a soma das penas
+    const somaPenas = calculateConcursoMaterial(crimes);
+    // Aqui, simplificamos para o triplo, mas o ideal seria uma UI
+    // para o juiz dosar esse aumento.
+    return Math.min(penaMaisGrave * 3, somaPenas);
+  }
+
+  // Lógica para crime continuado simples
   const fracaoAumento = getAumentoConcurso(crimes.length);
   const aumento = parseFraction(fracaoAumento);
   return penaMaisGrave * (1 + aumento);
@@ -327,22 +348,36 @@ export function canSursis(
 
 export function calculatePrescription(
   penaMaxima: number,
-  causasInterruptivas: boolean
+  tipo: "punitiva" | "executoria",
+  causasInterruptivas: boolean, // Representa reincidência para executória
+  menorDe21NaDataDoFato: boolean,
+  maiorDe70NaDataDaSentenca: boolean
 ): number {
   let prazo = 0;
-  if (penaMaxima > 12 * 12) prazo = 20 * 12;
-  else if (penaMaxima > 8 * 12) prazo = 16 * 12;
-  else if (penaMaxima > 4 * 12) prazo = 12 * 12;
-  else if (penaMaxima > 2 * 12) prazo = 8 * 12;
-  else if (penaMaxima > 1 * 12) prazo = 4 * 12;
+  const penaAnos = penaMaxima / 12;
+
+  if (penaAnos > 12) prazo = 20 * 12;
+  else if (penaAnos > 8) prazo = 16 * 12;
+  else if (penaAnos > 4) prazo = 12 * 12;
+  else if (penaAnos > 2) prazo = 8 * 12;
+  else if (penaAnos > 1) prazo = 4 * 12;
   else prazo = 3 * 12;
 
-  if (causasInterruptivas) {
+  // A reincidência aumenta o prazo da prescrição da pretensão executória
+  if (tipo === "executoria" && causasInterruptivas) {
+    prazo += prazo / 3;
+  }
+
+  // Prazos prescricionais são reduzidos pela metade para menores de 21 e maiores de 70
+  if (menorDe21NaDataDoFato || maiorDe70NaDataDaSentenca) {
     prazo = prazo / 2;
   }
 
   return prazo;
 }
+
+// Data do Pacote Anticrime
+const PACOTE_ANTICRIME_DATA = new Date("2020-01-23");
 
 export function calculateProgression(
   pena: number,
@@ -350,31 +385,40 @@ export function calculateProgression(
   crimeComViolenciaOuGraveAmeaca: boolean,
   crimeHediondoOuEquiparado: boolean,
   resultadoMorte: boolean,
-  feminicidio: boolean
-): { fracao: number; tempo: number } {
-  let fracao = 0;
-
-  if (feminicidio && !reincidente) {
-    fracao = 0.55;
-  } else if (reincidente) {
-    if (crimeHediondoOuEquiparado) {
-      fracao = resultadoMorte ? 0.7 : 0.6;
-    } else if (crimeComViolenciaOuGraveAmeaca) {
-      fracao = 0.3;
-    } else {
-      fracao = 0.2;
-    }
-  } else {
-    if (crimeHediondoOuEquiparado) {
-      fracao = resultadoMorte ? 0.5 : 0.4;
-    } else if (crimeComViolenciaOuGraveAmeaca) {
-      fracao = 0.25;
-    } else {
-      fracao = 0.16;
-    }
+  feminicidio: boolean,
+  dataDoCrime?: Date
+): { fracao: number; tempo: number; baseLegal: string } {
+  // Se a data do crime for anterior ao Pacote Anticrime, usa a regra antiga (1/6)
+  if (dataDoCrime && isBefore(dataDoCrime, PACOTE_ANTICRIME_DATA)) {
+    const fracao = 1 / 6;
+    return {
+      fracao,
+      tempo: pena * fracao,
+      baseLegal: "Art. 112 da LEP (redação anterior à Lei 13.964/19)",
+    };
   }
 
-  return { fracao, tempo: pena * fracao };
+  // Regras Pós-Pacote Anticrime
+  let fracao = 0;
+  let baseLegal = "Art. 112 da LEP (redação da Lei 13.964/19)";
+
+  if (crimeHediondoOuEquiparado) {
+    if (reincidente) {
+      fracao = resultadoMorte ? 0.7 : 0.6;
+    } else {
+      fracao = resultadoMorte ? 0.5 : 0.4;
+    }
+  } else if (reincidente) {
+    fracao = crimeComViolenciaOuGraveAmeaca ? 0.3 : 0.2;
+  } else {
+    fracao = crimeComViolenciaOuGraveAmeaca ? 0.25 : 0.16;
+  }
+
+  if (feminicidio && !reincidente) {
+    fracao = 0.55; // Fração específica para feminicídio não reincidente
+  }
+
+  return { fracao, tempo: pena * fracao, baseLegal };
 }
 
 export function calculateAllProgressions(
