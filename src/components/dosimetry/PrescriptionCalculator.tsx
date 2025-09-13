@@ -1,3 +1,5 @@
+// src/components/dosimetry/PrescriptionCalculator.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -13,34 +15,56 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { calculatePrescription, formatPena } from "@/lib/calculations";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
+// CORREÇÃO: Removido o .default() para evitar ambiguidade de tipos.
+// O valor padrão será controlado pelo `defaultValues` do useForm.
 const prescriptionSchema = z.object({
-  penaMaxima: z.number().min(0, "A pena máxima deve ser positiva."),
-  causasInterruptivas: z.boolean(),
+  pena: z.number().min(0, "A pena deve ser positiva."),
+  tipo: z.enum(["punitiva", "executoria"]),
+  reincidente: z.boolean(),
+  menorDe21: z.boolean(),
+  maiorDe70: z.boolean(),
 });
+
+type PrescriptionFormValues = z.infer<typeof prescriptionSchema>;
 
 export function PrescriptionCalculator() {
   const [prescriptionResult, setPrescriptionResult] = useState<number | null>(
     null
   );
-  const form = useForm<z.infer<typeof prescriptionSchema>>({
+
+  const form = useForm<PrescriptionFormValues>({
     resolver: zodResolver(prescriptionSchema),
+    // `defaultValues` agora é a única fonte para o estado inicial.
     defaultValues: {
-      penaMaxima: 0,
-      causasInterruptivas: false,
+      pena: 0,
+      tipo: "punitiva",
+      reincidente: false,
+      menorDe21: false,
+      maiorDe70: false,
     },
   });
 
-  function onSubmit(values: z.infer<typeof prescriptionSchema>) {
+  function onSubmit(values: PrescriptionFormValues) {
     const result = calculatePrescription(
-      values.penaMaxima,
-      values.causasInterruptivas
+      values.pena,
+      values.tipo,
+      values.reincidente,
+      values.menorDe21,
+      values.maiorDe70
     );
     setPrescriptionResult(result);
   }
+
+  const tipoPenaLabel =
+    form.watch("tipo") === "punitiva"
+      ? "Pena Máxima em Abstrato (meses)"
+      : "Pena Concretamente Aplicada (meses)";
 
   return (
     <div>
@@ -48,10 +72,45 @@ export function PrescriptionCalculator() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
           <FormField
             control={form.control}
-            name="penaMaxima"
+            name="tipo"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Tipo de Prescrição</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="punitiva" />
+                      </FormControl>
+                      <FormLabel className="font-normal">
+                        Da Pretensão Punitiva
+                      </FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="executoria" />
+                      </FormControl>
+                      <FormLabel className="font-normal">
+                        Da Pretensão Executória
+                      </FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="pena"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Pena Máxima em Abstrato (meses)</FormLabel>
+                <FormLabel>{tipoPenaLabel}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -65,9 +124,31 @@ export function PrescriptionCalculator() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name="causasInterruptivas"
+            name="reincidente"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Réu reincidente?</FormLabel>
+                  <FormDescription>
+                    Aumenta o prazo da prescrição da pretensão executória em
+                    1/3.
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="menorDe21"
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
@@ -78,8 +159,29 @@ export function PrescriptionCalculator() {
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
-                    Ocorreram causas interruptivas da prescrição?
+                    Agente era menor de 21 anos na data do fato?
                   </FormLabel>
+                  <FormDescription>Reduz o prazo pela metade.</FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="maiorDe70"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    Agente era maior de 70 anos na data da sentença?
+                  </FormLabel>
+                  <FormDescription>Reduz o prazo pela metade.</FormDescription>
                 </div>
               </FormItem>
             )}
