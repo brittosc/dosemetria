@@ -14,14 +14,14 @@ export function useDosimetryCalculator() {
   const context = useContext(DosimetryContext);
   if (!context) {
     throw new Error(
-      "useDosimetryCalculator must be used within a DosimetryProvider"
+      "useDosimetryCalculator must be used within a DosimetryProvider",
     );
   }
   const { state, dispatch } = context;
 
   const selectedCrime: Crime | undefined = useMemo(
     () => crimesData.find((crime) => crime.id === state.crimes[0]?.crimeId),
-    [state.crimes]
+    [state.crimes],
   );
 
   const actions = useMemo(
@@ -30,11 +30,11 @@ export function useDosimetryCalculator() {
       removeCrime: (id: string) =>
         dispatch({ type: "REMOVE_CRIME", payload: id }),
       updateCrime: (
-        payload: Partial<DosimetryState["crimes"][0]> & { id: string }
+        payload: Partial<DosimetryState["crimes"][0]> & { id: string },
       ) => dispatch({ type: "UPDATE_CRIME", payload }),
       reset: () => dispatch({ type: "RESET" }),
     }),
-    [dispatch]
+    [dispatch],
   );
 
   const causasData = causasDataRaw as Causa[];

@@ -80,7 +80,7 @@ export function getInitialCausaValor(causa: Causa): number | string {
 
 export function calculatePhaseOne(
   penaBase: number,
-  circunstancias: Circunstancia[]
+  circunstancias: Circunstancia[],
 ): number {
   const aumentoTotal = circunstancias.reduce((acc, c) => {
     const fracao = parseFraction(c.fracao);
@@ -94,7 +94,7 @@ export function calculatePhaseTwo(
   penaPrimeiraFase: number,
   agravantes: Circunstancia[],
   atenuantes: Circunstancia[],
-  penaMinima: number
+  penaMinima: number,
 ): number {
   let penaProvisoria = penaPrimeiraFase;
 
@@ -118,7 +118,7 @@ export function calculatePhaseThree(
   penaProvisoria: number,
   causasAumento: CausaAplicada[],
   causasDiminuicao: CausaAplicada[],
-  causasData: Causa[]
+  causasData: Causa[],
 ): number {
   let penaAtual = penaProvisoria;
 
@@ -168,7 +168,7 @@ export function calculateDetracaoTotal(periodos: DetracaoPeriodo[]): number {
 
 export function calculateRemicaoTotal(
   diasTrabalhados: number,
-  horasEstudo: number
+  horasEstudo: number,
 ): number {
   const remicaoTrabalho = Math.floor(diasTrabalhados / 3);
   const remicaoEstudo = Math.floor(horasEstudo / 12);
@@ -231,7 +231,7 @@ export function formatCurrency(value: number) {
 
 export function formatValorDiaMulta(
   valor: number,
-  salarioMinimo: number
+  salarioMinimo: number,
 ): string {
   const epsilon = 0.001;
   if (Math.abs(valor - 1 / 30) < epsilon) {
@@ -247,7 +247,7 @@ export function formatValorDiaMulta(
       })}x o salário mínimo (${formatCurrency(valor * salarioMinimo)})`;
     }
     return `1/${denominator} do salário mínimo (${formatCurrency(
-      valor * salarioMinimo
+      valor * salarioMinimo,
     )})`;
   }
 
@@ -260,7 +260,7 @@ export function formatValorDiaMulta(
 export function calculateMulta(
   diasMulta: number,
   valorDiaMulta: number,
-  salarioMinimo: number
+  salarioMinimo: number,
 ): number {
   return diasMulta * valorDiaMulta * salarioMinimo;
 }
@@ -292,7 +292,7 @@ const getAumentoConcurso = (numCrimes: number): string => {
 
 export function calculateConcursoFormal(
   crimes: CrimeState[],
-  tipo: "proprio" | "improprio"
+  tipo: "proprio" | "improprio",
 ): number {
   if (crimes.length === 0) return 0;
   if (tipo === "improprio") {
@@ -307,7 +307,7 @@ export function calculateConcursoFormal(
 
 export function calculateCrimeContinuado(
   crimes: CrimeState[],
-  tipo: "simples" | "especifico"
+  tipo: "simples" | "especifico",
 ): number {
   if (crimes.length === 0) return 0;
   const penaMaisGrave = Math.max(...crimes.map((c) => c.penaDefinitiva || 0));
@@ -328,7 +328,7 @@ export function calculateCrimeContinuado(
 
 export function calculateRegimeInicial(
   pena: number,
-  reincidente: boolean
+  reincidente: boolean,
 ): string {
   const anos = pena / 12;
   if (anos > 8) {
@@ -343,7 +343,7 @@ export function calculateRegimeInicial(
 export function canSubstituirPena(
   pena: number,
   reincidente: boolean,
-  crimeComViolenciaOuGraveAmeaca: boolean
+  crimeComViolenciaOuGraveAmeaca: boolean,
 ): boolean {
   const anos = pena / 12;
   if (crimeComViolenciaOuGraveAmeaca) return false;
@@ -355,7 +355,7 @@ export function canSubstituirPena(
 export function canSursis(
   pena: number,
   reincidenteEmCrimeDoloso: boolean,
-  podeSubstituir: boolean
+  podeSubstituir: boolean,
 ): boolean {
   if (podeSubstituir) return false;
 
@@ -370,7 +370,7 @@ export function calculatePrescription(
   tipo: "punitiva" | "executoria",
   causasInterruptivas: boolean, // Representa reincidência para executória
   menorDe21NaDataDoFato: boolean,
-  maiorDe70NaDataDaSentenca: boolean
+  maiorDe70NaDataDaSentenca: boolean,
 ): number {
   let prazo = 0;
   const penaAnos = penaMaxima / 12;
@@ -405,7 +405,7 @@ export function calculateProgression(
   crimeHediondoOuEquiparado: boolean,
   resultadoMorte: boolean,
   feminicidio: boolean,
-  dataDoCrime?: Date
+  dataDoCrime?: Date,
 ): { fracao: number; tempo: number; baseLegal: string } {
   // Se a data do crime for anterior ao Pacote Anticrime, usa a regra antiga (1/6)
   if (dataDoCrime && isBefore(dataDoCrime, PACOTE_ANTICRIME_DATA)) {
@@ -443,7 +443,7 @@ export function calculateProgression(
 export function calculateAllProgressions(
   penaTotalMeses: number,
   fracao: number,
-  regimeInicial: string
+  regimeInicial: string,
 ): { regime: string; tempoCumprir: number; penaRestante: number }[] {
   if (
     penaTotalMeses <= 0 ||
@@ -485,7 +485,7 @@ export function calculateAllProgressions(
 export function calculateLivramentoCondicional(
   pena: number,
   reincidente: boolean,
-  crimeHediondo: boolean
+  crimeHediondo: boolean,
 ): { fracao: number; tempo: number; data?: Date } | null {
   const anos = pena / 12;
   if (anos <= 2) {

@@ -38,9 +38,9 @@ export function Stepper({
                     isCurrent
                       ? "bg-primary text-primary-foreground"
                       : isCompleted
-                      ? "bg-primary/50 text-primary-foreground"
-                      : "bg-muted text-muted-foreground",
-                    isDisabled && "bg-muted/50 text-muted-foreground/50"
+                        ? "bg-primary/50 text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
+                    isDisabled && "bg-muted/50 text-muted-foreground/50",
                   )}
                 >
                   {phaseNumber}
@@ -51,7 +51,7 @@ export function Stepper({
                     isCurrent
                       ? "text-primary font-semibold"
                       : "text-muted-foreground",
-                    isDisabled && "text-muted-foreground/50"
+                    isDisabled && "text-muted-foreground/50",
                   )}
                 >
                   {phase}
@@ -61,7 +61,7 @@ export function Stepper({
                 <div
                   className={cn(
                     "w-12 h-0.5 mx-2 transition-colors duration-300",
-                    isCompleted && crimeSelected ? "bg-primary" : "bg-muted"
+                    isCompleted && crimeSelected ? "bg-primary" : "bg-muted",
                   )}
                 />
               )}

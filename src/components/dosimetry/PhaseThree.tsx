@@ -88,7 +88,7 @@ export const PhaseThreeContent = ({
 
   const handleSelectCausa = (
     causaId: string,
-    tipo: "aumento" | "diminuicao"
+    tipo: "aumento" | "diminuicao",
   ) => {
     const causa = causasData.find((c: Causa) => c.id === causaId);
     if (!causa) return;
@@ -107,17 +107,17 @@ export const PhaseThreeContent = ({
 
   const handleRemoveCausa = (
     causaId: string,
-    tipo: "aumento" | "diminuicao"
+    tipo: "aumento" | "diminuicao",
   ) => {
     if (tipo === "aumento") {
       form.setValue(
         "causasAumento",
-        causasAumento.filter((c: CausaAplicada) => c.id !== causaId)
+        causasAumento.filter((c: CausaAplicada) => c.id !== causaId),
       );
     } else {
       form.setValue(
         "causasDiminuicao",
-        causasDiminuicao.filter((c: CausaAplicada) => c.id !== causaId)
+        causasDiminuicao.filter((c: CausaAplicada) => c.id !== causaId),
       );
     }
   };
@@ -125,22 +125,22 @@ export const PhaseThreeContent = ({
   const handleFractionChange = (
     id: string,
     tipo: "aumento" | "diminuicao",
-    value: number[]
+    value: number[],
   ) => {
     const newValue = value[0];
     if (tipo === "aumento") {
       form.setValue(
         "causasAumento",
         causasAumento.map((c: CausaAplicada) =>
-          c.id === id ? { ...c, valorAplicado: newValue } : c
-        )
+          c.id === id ? { ...c, valorAplicado: newValue } : c,
+        ),
       );
     } else {
       form.setValue(
         "causasDiminuicao",
         causasDiminuicao.map((c: CausaAplicada) =>
-          c.id === id ? { ...c, valorAplicado: newValue } : c
-        )
+          c.id === id ? { ...c, valorAplicado: newValue } : c,
+        ),
       );
     }
   };
@@ -148,12 +148,12 @@ export const PhaseThreeContent = ({
   const availableAumentos = causasData.filter(
     (c: Causa) =>
       c.tipo === "aumento" &&
-      !causasAumento.some((sel: CausaAplicada) => sel.id === c.id)
+      !causasAumento.some((sel: CausaAplicada) => sel.id === c.id),
   );
   const availableDiminuicoes = causasData.filter(
     (c: Causa) =>
       c.tipo === "diminuicao" &&
-      !causasDiminuicao.some((sel: CausaAplicada) => sel.id === c.id)
+      !causasDiminuicao.some((sel: CausaAplicada) => sel.id === c.id),
   );
 
   const renderCommandList = (tipo: "aumento" | "diminuicao") => (
@@ -170,7 +170,7 @@ export const PhaseThreeContent = ({
               >
                 {causa.descricao} ({causa.artigo})
               </CommandItem>
-            )
+            ),
           )}
         </CommandGroup>
       </CommandList>
@@ -224,7 +224,7 @@ export const PhaseThreeContent = ({
   const renderCausaValorInput = (
     causaInfo: Causa,
     causaAplicada: CausaAplicada,
-    tipo: "aumento" | "diminuicao"
+    tipo: "aumento" | "diminuicao",
   ) => {
     if (
       causaInfo.valor.tipo === "range" &&

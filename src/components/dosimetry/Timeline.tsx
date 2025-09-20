@@ -73,7 +73,7 @@ export function CrimeTimelineHorizontal() {
           <div className="relative flex items-center justify-start py-4">
             {sortedCrimes.map((crime, index) => {
               const crimeDefinition = (crimesData as Crime[]).find(
-                (c: Crime) => c.id === crime.crimeId
+                (c: Crime) => c.id === crime.crimeId,
               );
               const IconComponent = crimeIcons[crime.crimeId!] || Frown;
 
@@ -82,7 +82,7 @@ export function CrimeTimelineHorizontal() {
                   key={crime.id}
                   className={cn(
                     "flex flex-col items-center flex-shrink-0 relative z-10 text-center",
-                    index < sortedCrimes.length - 1 ? "w-40" : "w-auto"
+                    index < sortedCrimes.length - 1 ? "w-40" : "w-auto",
                   )}
                 >
                   {index > 0 && (
@@ -93,7 +93,7 @@ export function CrimeTimelineHorizontal() {
                     <TooltipTrigger asChild>
                       <div
                         className={cn(
-                          "flex flex-col items-center justify-center p-2 rounded-lg cursor-pointer hover:bg-muted/50 transition-colors duration-200"
+                          "flex flex-col items-center justify-center p-2 rounded-lg cursor-pointer hover:bg-muted/50 transition-colors duration-200",
                         )}
                       >
                         <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary text-primary-foreground shadow-lg mb-2">

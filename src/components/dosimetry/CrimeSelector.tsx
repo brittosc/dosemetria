@@ -67,7 +67,7 @@ export function CrimeSelector({
               <Check
                 className={cn(
                   "mr-2 h-4 w-4",
-                  crime.id === selectedCrime?.id ? "opacity-100" : "opacity-0"
+                  crime.id === selectedCrime?.id ? "opacity-100" : "opacity-0",
                 )}
               />
               {crime.nome} (Art. {crime.artigo})
@@ -86,7 +86,7 @@ export function CrimeSelector({
             variant="outline"
             className={cn(
               "w-full justify-between",
-              !selectedCrime && "text-muted-foreground"
+              !selectedCrime && "text-muted-foreground",
             )}
           >
             {selectedCrime
@@ -116,7 +116,7 @@ export function CrimeSelector({
             role="combobox"
             className={cn(
               "w-full justify-between transition-colors duration-300",
-              !selectedCrime && "text-muted-foreground"
+              !selectedCrime && "text-muted-foreground",
             )}
           >
             {selectedCrime

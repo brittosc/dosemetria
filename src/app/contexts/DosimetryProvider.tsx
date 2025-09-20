@@ -152,27 +152,27 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
   const selectedCrime = crimesData.find((c) => c.id === crime.crimeId);
   const activePena =
     selectedCrime?.qualificadoras?.find(
-      (q) => q.id === crime.selectedQualificadoraId
+      (q) => q.id === crime.selectedQualificadoraId,
     ) || selectedCrime;
   const penaMinima = activePena?.penaMinimaMeses ?? 0;
 
   const penaPrimeiraFase = calculatePhaseOne(
     crime.penaBase,
-    crime.circunstanciasJudiciais
+    crime.circunstanciasJudiciais,
   );
 
   const penaProvisoria = calculatePhaseTwo(
     penaPrimeiraFase,
     crime.agravantes,
     crime.atenuantes,
-    penaMinima
+    penaMinima,
   );
 
   const penaDefinitiva = calculatePhaseThree(
     penaProvisoria,
     crime.causasAumento,
     crime.causasDiminuicao,
-    causasDataRaw as Causa[]
+    causasDataRaw as Causa[],
   );
   return {
     ...crime,
@@ -184,7 +184,7 @@ function calculateCrimePens(crime: CrimeState): CrimeState {
 
 function dosimetryReducer(
   state: DosimetryState,
-  action: Action
+  action: Action,
 ): DosimetryState {
   switch (action.type) {
     case "RESET":
@@ -206,12 +206,14 @@ function dosimetryReducer(
       };
     case "UPDATE_CRIME": {
       const updatedCrimes = state.crimes.map((crime) =>
-        crime.id === action.payload.id ? { ...crime, ...action.payload } : crime
+        crime.id === action.payload.id
+          ? { ...crime, ...action.payload }
+          : crime,
       );
       const calculatedCrimes = updatedCrimes.map((crime) =>
         crime.id === action.payload.id && crime.crimeId
           ? calculateCrimePens(crime)
-          : crime
+          : crime,
       );
       return { ...state, crimes: calculatedCrimes };
     }
@@ -233,14 +235,14 @@ function dosimetryReducer(
       return {
         ...state,
         detracaoPeriodos: state.detracaoPeriodos.filter(
-          (p) => p.id !== action.payload
+          (p) => p.id !== action.payload,
         ),
       };
     case "UPDATE_DETRACAO_PERIODO":
       return {
         ...state,
         detracaoPeriodos: state.detracaoPeriodos.map((p) =>
-          p.id === action.payload.id ? action.payload : p
+          p.id === action.payload.id ? action.payload : p,
         ),
       };
     case "UPDATE_REMICAO":
@@ -259,13 +261,13 @@ function dosimetryReducer(
         case "formal":
           penaTotalBruta = calculateConcursoFormal(
             state.crimes,
-            state.tipoConcursoFormal
+            state.tipoConcursoFormal,
           );
           break;
         case "continuado":
           penaTotalBruta = calculateCrimeContinuado(
             state.crimes,
-            state.tipoCrimeContinuado
+            state.tipoCrimeContinuado,
           );
           break;
         case "material":
@@ -277,43 +279,43 @@ function dosimetryReducer(
       const totalDetracaoDias = calculateDetracaoTotal(state.detracaoPeriodos);
       const totalRemicaoDias = calculateRemicaoTotal(
         state.remicao.diasTrabalhados,
-        state.remicao.horasEstudo
+        state.remicao.horasEstudo,
       );
       const totalAbatimentoMeses = (totalDetracaoDias + totalRemicaoDias) / 30;
 
       const penaParaRegime = Math.max(0, penaTotalBruta - totalAbatimentoMeses);
 
       const reincidente = state.crimes.some((c) =>
-        c.agravantes.some((a) => a.id === "reincidencia")
+        c.agravantes.some((a) => a.id === "reincidencia"),
       );
 
       const crimeComViolenciaOuGraveAmeaca = state.crimes.some((crimeState) => {
         const crimeData = (crimesDataRaw as Crime[]).find(
-          (c) => c.id === crimeState.crimeId
+          (c) => c.id === crimeState.crimeId,
         );
         return crimeData?.violento ?? false;
       });
 
       const crimeHediondoOuEquiparado = state.crimes.some((crimeState) => {
         const crimeData = (crimesDataRaw as Crime[]).find(
-          (c) => c.id === crimeState.crimeId
+          (c) => c.id === crimeState.crimeId,
         );
         const qualificadoraData = crimeData?.qualificadoras?.find(
-          (q) => q.id === crimeState.selectedQualificadoraId
+          (q) => q.id === crimeState.selectedQualificadoraId,
         );
         return (qualificadoraData?.hediondo || crimeData?.hediondo) ?? false;
       });
 
       const resultadoMorte = state.crimes.some((c) => c.resultadoMorte);
       const isFeminicidio = state.crimes.some(
-        (c) => c.crimeId === "feminicidio"
+        (c) => c.crimeId === "feminicidio",
       );
 
       const regimeInicial = calculateRegimeInicial(penaParaRegime, reincidente);
       const podeSubstituir = canSubstituirPena(
         penaTotalBruta,
         reincidente,
-        crimeComViolenciaOuGraveAmeaca
+        crimeComViolenciaOuGraveAmeaca,
       );
       const podeSursis = canSursis(penaTotalBruta, reincidente, podeSubstituir);
 
@@ -322,7 +324,7 @@ function dosimetryReducer(
 
       const multaTotal = state.crimes.reduce((acc, crime) => {
         const crimeData = (crimesDataRaw as Crime[]).find(
-          (c) => c.id === crime.crimeId
+          (c) => c.id === crime.crimeId,
         );
         if (crimeData?.temMulta) {
           return (
@@ -330,7 +332,7 @@ function dosimetryReducer(
             calculateMulta(
               crime.penaMulta.diasMulta,
               crime.penaMulta.valorDiaMulta,
-              state.salarioMinimo
+              state.salarioMinimo,
             )
           );
         }
@@ -344,7 +346,7 @@ function dosimetryReducer(
           if (!latest || crime.dataCrime > latest) return crime.dataCrime;
           return latest;
         },
-        undefined
+        undefined,
       );
 
       const progression = calculateProgression(
@@ -354,19 +356,19 @@ function dosimetryReducer(
         crimeHediondoOuEquiparado,
         resultadoMorte,
         isFeminicidio,
-        dataDoCrimeMaisRecente
+        dataDoCrimeMaisRecente,
       );
 
       const progressionSteps = calculateAllProgressions(
         penaTotalBruta,
         progression.fracao,
-        regimeInicial
+        regimeInicial,
       );
 
       const livramentoCondicional = calculateLivramentoCondicional(
         penaTotalBruta,
         reincidente,
-        crimeHediondoOuEquiparado
+        crimeHediondoOuEquiparado,
       );
 
       return {
@@ -424,7 +426,7 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
           });
           if (parsedState.dataInicioCumprimento) {
             parsedState.dataInicioCumprimento = new Date(
-              parsedState.dataInicioCumprimento
+              parsedState.dataInicioCumprimento,
             );
           }
           dispatch({ type: "LOAD_STATE", payload: parsedState });

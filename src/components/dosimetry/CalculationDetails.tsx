@@ -26,7 +26,7 @@ export function CalculationDetails({
     <div className="pl-4 border-l-2 border-dashed ml-2 space-y-1">
       {circunstancias.map((circ) => {
         const circInfo = allCircunstanciasOptions.find(
-          (opt) => opt.id === circ.id
+          (opt) => opt.id === circ.id,
         );
         const label = circInfo ? circInfo.label.split(" (Art.")[0] : circ.id;
 

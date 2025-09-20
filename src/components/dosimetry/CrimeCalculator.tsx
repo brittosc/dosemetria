@@ -49,7 +49,7 @@ export function CrimeCalculator({
   const selectedCrime = crimesData.find((c: Crime) => c.id === selectedCrimeId);
   const activePena =
     selectedCrime?.qualificadoras?.find(
-      (q: Qualificadora) => q.id === selectedQualificadoraId
+      (q: Qualificadora) => q.id === selectedQualificadoraId,
     ) || selectedCrime;
 
   useEffect(() => {
@@ -60,16 +60,16 @@ export function CrimeCalculator({
         payload.circunstanciasJudiciais || []
       ).filter(Boolean) as Circunstancia[];
       payload.agravantes = (payload.agravantes || []).filter(
-        Boolean
+        Boolean,
       ) as Circunstancia[];
       payload.atenuantes = (payload.atenuantes || []).filter(
-        Boolean
+        Boolean,
       ) as Circunstancia[];
       payload.causasAumento = (payload.causasAumento || []).filter(
-        Boolean
+        Boolean,
       ) as CausaAplicada[];
       payload.causasDiminuicao = (payload.causasDiminuicao || []).filter(
-        Boolean
+        Boolean,
       ) as CausaAplicada[];
 
       dispatch({
@@ -101,7 +101,7 @@ export function CrimeCalculator({
     const finalId =
       qualificadoraId === "sem-qualificadora" ? undefined : qualificadoraId;
     const qualificadora = selectedCrime?.qualificadoras?.find(
-      (q: Qualificadora) => q.id === finalId
+      (q: Qualificadora) => q.id === finalId,
     );
     const penaBase =
       qualificadora?.penaMinimaMeses ?? selectedCrime?.penaMinimaMeses ?? 0;

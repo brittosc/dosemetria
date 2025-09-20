@@ -37,7 +37,7 @@ describe("Cálculos de Dosimetria", () => {
         penaPrimeiraFase,
         agravantes,
         [],
-        72
+        72,
       );
       expect(penaProvisoria).toBeCloseTo(163.33);
     });
@@ -49,7 +49,7 @@ describe("Cálculos de Dosimetria", () => {
         penaPrimeiraFase,
         [],
         atenuantes,
-        72
+        72,
       );
       expect(penaProvisoria).toBeCloseTo(116.67);
     });
@@ -61,7 +61,7 @@ describe("Cálculos de Dosimetria", () => {
         penaPrimeiraFase,
         [],
         atenuantes,
-        72
+        72,
       );
       expect(penaProvisoria).toBe(72);
     });
@@ -86,7 +86,7 @@ describe("Cálculos de Dosimetria", () => {
         penaProvisoria,
         causasAumento,
         [],
-        causasData
+        causasData,
       );
       expect(penaDefinitiva).toBe(160);
     });
@@ -110,7 +110,7 @@ describe("Cálculos de Dosimetria", () => {
         penaProvisoria,
         [],
         causasDiminuição,
-        causasData
+        causasData,
       );
       expect(penaDefinitiva).toBe(100);
     });

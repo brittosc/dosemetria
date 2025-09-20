@@ -247,10 +247,10 @@ export const PhaseOneContent = ({
                   render={({ field }) => {
                     const value = field.value || [];
                     const isChecked = value.some(
-                      (c: Circunstancia) => c.id === option
+                      (c: Circunstancia) => c.id === option,
                     );
                     const circunstancia = value.find(
-                      (c: Circunstancia) => c.id === option
+                      (c: Circunstancia) => c.id === option,
                     );
                     return (
                       <div className="space-y-2 rounded-md border p-3">
@@ -266,8 +266,8 @@ export const PhaseOneContent = ({
                                     ])
                                   : field.onChange(
                                       value.filter(
-                                        (c: Circunstancia) => c.id !== option
-                                      )
+                                        (c: Circunstancia) => c.id !== option,
+                                      ),
                                     );
                               }}
                             />
@@ -293,8 +293,8 @@ export const PhaseOneContent = ({
                                   value.map((c: Circunstancia) =>
                                     c.id === option
                                       ? { ...c, fracao: newFracao }
-                                      : c
-                                  )
+                                      : c,
+                                  ),
                                 );
                               }}
                               className="h-8"

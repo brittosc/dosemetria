@@ -45,10 +45,10 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
               name="agravantes"
               render={({ field }) => {
                 const isChecked = field.value?.some(
-                  (c: Circunstancia) => c.id === item.id
+                  (c: Circunstancia) => c.id === item.id,
                 );
                 const circunstancia = field.value?.find(
-                  (c: Circunstancia) => c.id === item.id
+                  (c: Circunstancia) => c.id === item.id,
                 );
                 return (
                   <div className="space-y-2 rounded-md border p-3">
@@ -64,8 +64,8 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                                 ])
                               : field.onChange(
                                   field.value?.filter(
-                                    (c: Circunstancia) => c.id !== item.id
-                                  )
+                                    (c: Circunstancia) => c.id !== item.id,
+                                  ),
                                 )
                           }
                         />
@@ -103,8 +103,8 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                               field.value.map((c: Circunstancia) =>
                                 c.id === item.id
                                   ? { ...c, fracao: newFracao }
-                                  : c
-                              )
+                                  : c,
+                              ),
                             );
                           }}
                           className="h-8"
@@ -131,10 +131,10 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
               name="atenuantes"
               render={({ field }) => {
                 const isChecked = field.value?.some(
-                  (c: Circunstancia) => c.id === item.id
+                  (c: Circunstancia) => c.id === item.id,
                 );
                 const circunstancia = field.value?.find(
-                  (c: Circunstancia) => c.id === item.id
+                  (c: Circunstancia) => c.id === item.id,
                 );
                 return (
                   <div className="space-y-2 rounded-md border p-3">
@@ -150,8 +150,8 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                                 ])
                               : field.onChange(
                                   field.value?.filter(
-                                    (c: Circunstancia) => c.id !== item.id
-                                  )
+                                    (c: Circunstancia) => c.id !== item.id,
+                                  ),
                                 )
                           }
                         />
@@ -189,8 +189,8 @@ export const PhaseTwoContent = ({ form }: PhaseTwoContentProps) => {
                               field.value.map((c: Circunstancia) =>
                                 c.id === item.id
                                   ? { ...c, fracao: newFracao }
-                                  : c
-                              )
+                                  : c,
+                              ),
                             );
                           }}
                           className="h-8"

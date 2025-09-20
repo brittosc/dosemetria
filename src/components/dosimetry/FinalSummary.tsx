@@ -65,8 +65,8 @@ export function FinalSummary() {
               {finalResults.podeSubstituir === undefined
                 ? "--"
                 : finalResults.podeSubstituir
-                ? "Sim"
-                : "Não"}
+                  ? "Sim"
+                  : "Não"}
             </p>
           </div>
           <div>
@@ -77,8 +77,8 @@ export function FinalSummary() {
               {finalResults.podeSursis === undefined
                 ? "--"
                 : finalResults.podeSursis
-                ? "Sim"
-                : "Não"}
+                  ? "Sim"
+                  : "Não"}
             </p>
           </div>
           {dataFinalPenaFormatada && (

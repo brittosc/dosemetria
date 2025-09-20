@@ -104,7 +104,7 @@ export default function ReportPage() {
 
         {state.crimes.map((crime, index) => {
           const crimeInfo = (crimesData as Crime[]).find(
-            (c: Crime) => c.id === crime.crimeId
+            (c: Crime) => c.id === crime.crimeId,
           );
           return (
             <Card key={crime.id} className="print-card">
@@ -168,7 +168,7 @@ export default function ReportPage() {
                       <ul className="list-disc list-inside text-sm">
                         {crime.agravantes.map((agr) => {
                           const info = allCircunstancias.find(
-                            (c) => c.id === agr.id
+                            (c) => c.id === agr.id,
                           );
                           return (
                             <li key={agr.id}>
@@ -185,7 +185,7 @@ export default function ReportPage() {
                       <ul className="list-disc list-inside text-sm">
                         {crime.atenuantes.map((atn) => {
                           const info = allCircunstancias.find(
-                            (c) => c.id === atn.id
+                            (c) => c.id === atn.id,
                           );
                           return (
                             <li key={atn.id}>
@@ -215,7 +215,7 @@ export default function ReportPage() {
                       <ul className="list-disc list-inside text-sm">
                         {crime.causasAumento.map((causa: CausaAplicada) => {
                           const info = causasData.find(
-                            (c) => c.id === causa.id
+                            (c) => c.id === causa.id,
                           );
                           return (
                             <li key={causa.id}>
@@ -238,7 +238,7 @@ export default function ReportPage() {
                       <ul className="list-disc list-inside text-sm">
                         {crime.causasDiminuicao.map((causa: CausaAplicada) => {
                           const info = causasData.find(
-                            (c) => c.id === causa.id
+                            (c) => c.id === causa.id,
                           );
                           return (
                             <li key={causa.id}>
