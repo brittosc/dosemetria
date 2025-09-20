@@ -1,3 +1,5 @@
+// src/app/page.tsx
+
 "use client";
 
 import { useDosimetryCalculator } from "@/hooks/useDosimetryCalculator";
@@ -17,8 +19,6 @@ export default function Home() {
 
   // Carregar do localStorage na inicialização
   useEffect(() => {
-    // Evita recarregar do localStorage em re-renders,
-    // o que aconteceria ao voltar da página /report
     if (isInitialMount.current) {
       isInitialMount.current = false;
       const savedState = localStorage.getItem("dosimetryState");
@@ -47,7 +47,6 @@ export default function Home() {
 
   // Salvar no localStorage a cada mudança
   useEffect(() => {
-    // Não salva no mount inicial se não houver crimes para não sobrescrever o estado vazio
     if (!isInitialMount.current) {
       localStorage.setItem("dosimetryState", JSON.stringify(state));
     }

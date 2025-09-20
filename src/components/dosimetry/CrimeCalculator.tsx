@@ -1,7 +1,10 @@
+// src/components/dosimetry/CrimeCalculator.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { crimeStateSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
@@ -33,10 +36,12 @@ export function CrimeCalculator({
   const { salarioMinimo } = state;
 
   const form = useForm<CrimeState>({
+    resolver: zodResolver(crimeStateSchema),
     defaultValues: crimeState,
+    mode: "onChange",
   });
 
-  const { watch, reset, getValues } = form;
+  const { watch, reset, getValues, trigger } = form;
 
   const selectedCrimeId = watch("crimeId");
   const selectedQualificadoraId = watch("selectedQualificadoraId");
@@ -112,11 +117,39 @@ export function CrimeCalculator({
   };
 
   const handlePhaseChange = (newPhase: number) => {
+    if (newPhase > 1 && !selectedCrimeId) {
+      toast.error("Nenhum crime selecionado", {
+        description: "Por favor, selecione um crime na 1ª Fase para continuar.",
+      });
+      return;
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
     setCurrentPhase(newPhase);
   };
 
-  const handleNextPhase = () => {
+  const handleNextPhase = async () => {
+    const fieldsToValidate: (keyof CrimeState)[] = [
+      "crimeId",
+      "dataCrime",
+      "penaBase",
+    ];
+    const isValid = await trigger(fieldsToValidate);
+
+    if (!isValid) {
+      const errors = form.formState.errors;
+      let errorDescription = "Por favor, corrija os erros antes de continuar.";
+
+      const errorField = fieldsToValidate.find((field) => errors[field]);
+      if (errorField && errors[errorField]?.message) {
+        errorDescription = errors[errorField]!.message as string;
+      }
+
+      toast.error("Formulário inválido", {
+        description: errorDescription,
+      });
+      return;
+    }
+
     const { penaBase } = getValues();
     const min = activePena?.penaMinimaMeses;
     const max = activePena?.penaMaximaMeses;
@@ -153,7 +186,11 @@ export function CrimeCalculator({
       <Form {...form}>
         <form onSubmit={(e) => e.preventDefault()}>
           <CardContent className="pt-6">
-            <Stepper currentPhase={currentPhase} setPhase={handlePhaseChange} />
+            <Stepper
+              currentPhase={currentPhase}
+              setPhase={handlePhaseChange}
+              crimeSelected={!!selectedCrimeId}
+            />
             <AnimatePresence mode="wait">
               {currentPhase === 1 && (
                 <motion.div

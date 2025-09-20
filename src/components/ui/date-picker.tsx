@@ -17,9 +17,11 @@ import {
 export function DatePicker({
   date,
   setDate,
+  toDate,
 }: {
   date?: Date;
   setDate: (date?: Date) => void;
+  toDate?: Date;
 }) {
   return (
     <Popover>
@@ -46,7 +48,7 @@ export function DatePicker({
           onSelect={setDate}
           initialFocus
           locale={ptBR} // Adiciona locale ptBR ao calendário
-          toDate={new Date()} // Desabilita datas futuras
+          toDate={toDate} // Desabilita datas futuras
         />
       </PopoverContent>
     </Popover>

@@ -29,7 +29,6 @@ import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { Slider } from "@/components/ui/slider";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PhaseThreeContentProps {
   form: UseFormReturn<CrimeState>;

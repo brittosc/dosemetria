@@ -101,7 +101,11 @@ export const PhaseOneContent = ({
           name="dataCrime"
           control={form.control}
           render={({ field }) => (
-            <DatePicker date={field.value} setDate={field.onChange} />
+            <DatePicker
+              date={field.value}
+              setDate={field.onChange}
+              toDate={new Date()}
+            />
           )}
         />
         <FormMessage />
