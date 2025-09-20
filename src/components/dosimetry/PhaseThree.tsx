@@ -24,11 +24,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Causa, CausaAplicada } from "@/lib/calculations";
+import { Causa, CausaAplicada, getInitialCausaValor } from "@/lib/calculations";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { CrimeState } from "@/app/contexts/DosimetryProvider";
 import { Slider } from "@/components/ui/slider";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PhaseThreeContentProps {
   form: UseFormReturn<CrimeState>;
@@ -93,19 +94,7 @@ export const PhaseThreeContent = ({
     const causa = causasData.find((c: Causa) => c.id === causaId);
     if (!causa) return;
 
-    let valorAplicado: string | number = 0.5; // Valor padrão
-    if (causa.valor.tipo === "range" && causa.valor.min !== undefined) {
-      valorAplicado = causa.valor.min;
-    } else if (causa.valor.tipo === "fracao" && causa.valor.fracao) {
-      valorAplicado = causa.valor.fracao;
-    } else if (causa.valor.tipo === "dobro") {
-      valorAplicado = 2;
-    } else if (causa.valor.tipo === "triplo") {
-      valorAplicado = 3;
-    } else if (causa.valor.valor) {
-      valorAplicado = causa.valor.valor;
-    }
-
+    const valorAplicado = getInitialCausaValor(causa);
     const novaCausa: CausaAplicada = { id: causa.id, valorAplicado };
 
     if (tipo === "aumento") {

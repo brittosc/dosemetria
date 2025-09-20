@@ -1742,64 +1742,6 @@
     }
   },
   {
-    "id": "trafico_privilegiado",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "33",
-    "paragrafo": "4º",
-    "descricao": "Tráfico Privilegiado (réu primário, bons antecedentes, não se dedica a atividades criminosas nem integra organização criminosa)",
-    "tipo": "diminuicao",
-    "baseLegal": "Art. 33, § 4º, Lei 11.343/2006",
-    "aplicabilidade": ["trafico_de_drogas"],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1667,
-      "max": 0.6667,
-      "fracao": "1/6 a 2/3"
-    }
-  },
-  {
-    "id": "trafico_majorado_geral",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "40",
-    "descricao": "Causas de aumento de pena nos crimes de tráfico (transnacionalidade, interestadualidade, etc.)",
-    "tipo": "aumento",
-    "baseLegal": "Art. 40, Lei 11.343/2006",
-    "aplicabilidade": [
-      "trafico_de_drogas",
-      "maquinario_para_trafico",
-      "associacao_para_trafico",
-      "financiamento_custeio_trafico",
-      "colaboracao_como_informante"
-    ],
-    "valor": {
-      "tipo": "range",
-      "min": 0.1667,
-      "max": 0.6667,
-      "fracao": "1/6 a 2/3"
-    }
-  },
-  {
-    "id": "delacao_premiada_lei_drogas",
-    "lei": "Lei nº 11.343/2006",
-    "artigo": "41",
-    "descricao": "Delação Premiada na Lei de Drogas",
-    "tipo": "diminuicao",
-    "baseLegal": "Art. 41, Lei 11.343/2006",
-    "aplicabilidade": [
-      "trafico_de_drogas",
-      "maquinario_para_trafico",
-      "associacao_para_trafico",
-      "financiamento_custeio_trafico",
-      "colaboracao_como_informante"
-    ],
-    "valor": {
-      "tipo": "range",
-      "min": 0.3333,
-      "max": 0.6667,
-      "fracao": "1/3 a 2/3"
-    }
-  },
-  {
     "id": "organizacao_criminosa_aumento_arma",
     "lei": "Lei nº 12.850/2013",
     "artigo": "2º",

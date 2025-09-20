@@ -10,6 +10,10 @@ const causaSchema = z.object({
   valorAplicado: z.union([z.number().min(0), z.string()]),
 });
 
+export const phaseOneSchema = z.object({
+  penaBase: z.number().min(0, "A pena base deve ser um valor positivo."),
+});
+
 export const phaseThreeSchema = z.object({
   causasAumento: z.array(causaSchema).optional(),
   causasDiminuicao: z.array(causaSchema).optional(),

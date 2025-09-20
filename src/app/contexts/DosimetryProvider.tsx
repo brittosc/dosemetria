@@ -34,6 +34,7 @@ import {
   calculateLivramentoCondicional,
 } from "@/lib/calculations";
 import { Crime } from "@/types/crime";
+import { toast } from "sonner";
 
 export interface DetracaoPeriodo {
   id: string;
@@ -142,7 +143,7 @@ const initialState: DosimetryState = {
   concurso: "material",
   tipoConcursoFormal: "proprio",
   tipoCrimeContinuado: "simples",
-  salarioMinimo: 1518,
+  salarioMinimo: parseFloat(process.env.NEXT_PUBLIC_SALARIO_MINIMO || "1518"),
   finalResults: {},
 };
 
@@ -429,6 +430,10 @@ export function DosimetryProvider({ children }: { children: ReactNode }) {
           dispatch({ type: "LOAD_STATE", payload: parsedState });
         } catch (error) {
           console.error("Failed to parse saved state:", error);
+          toast.error("Falha ao carregar o estado salvo.", {
+            description:
+              "O estado salvo parece estar corrompido. O cálculo foi redefinido.",
+          });
           localStorage.removeItem("dosimetryState");
         }
       }

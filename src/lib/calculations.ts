@@ -59,6 +59,25 @@ function parseFraction(fracao: string): number {
   return 0;
 }
 
+export function getInitialCausaValor(causa: Causa): number | string {
+  if (causa.valor.tipo === "range" && causa.valor.min !== undefined) {
+    return causa.valor.min;
+  }
+  if (causa.valor.tipo === "fracao" && causa.valor.fracao) {
+    return causa.valor.fracao;
+  }
+  if (causa.valor.tipo === "dobro") {
+    return 2;
+  }
+  if (causa.valor.tipo === "triplo") {
+    return 3;
+  }
+  if (causa.valor.valor) {
+    return causa.valor.valor;
+  }
+  return 0.5; // Valor padrão
+}
+
 export function calculatePhaseOne(
   penaBase: number,
   circunstancias: Circunstancia[]
