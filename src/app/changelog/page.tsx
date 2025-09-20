@@ -1,3 +1,5 @@
+"use client"; // Necessário para animações e hooks
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -9,16 +11,18 @@ import {
   MousePointer,
   Save,
   LucideProps,
+  Wrench,
+  AlertTriangle,
 } from "lucide-react";
-import { ForwardRefExoticComponent, RefAttributes } from "react"; // SVGSVGElement removido daqui
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+import { motion } from "framer-motion"; // Importa o framer-motion
 
 // Definição dos tipos para garantir a consistência dos dados
-// SVGSVGElement é um tipo global e não precisa ser importado.
 type ChangelogItemType = {
   icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
-  type: string;
+  type?: string;
   color: string;
   title: string;
   description: string;
@@ -32,6 +36,54 @@ type ChangelogSectionType = {
 
 // Dados completos do changelog, agora seguindo o tipo definido
 const changelogData: ChangelogSectionType[] = [
+  {
+    date: "20 de Setembro de 2025",
+    title: "Versão 0.98.2334",
+    items: [
+      {
+        icon: ShieldCheck,
+        color: "text-green-500",
+        title: "Validação de Formulário Aprimorada (Zod)",
+        description:
+          "A validação da pena-base e da data do crime foi centralizada no esquema Zod, tornando as regras de negócio mais consistentes e fáceis de manter.",
+      },
+      {
+        icon: MousePointer,
+        color: "text-purple-500",
+        title: "Melhoria de Interface (UI/UX)",
+        description:
+          "Implementado layout responsivo de duas colunas, com o resumo do cálculo fixo na lateral para melhor visualização em desktops.",
+      },
+      {
+        icon: GitBranch,
+        color: "text-blue-500",
+        title: "Navegação Guiada no Stepper",
+        description:
+          "O seletor de fases (Stepper) agora é desabilitado para etapas futuras caso nenhum crime tenha sido selecionado, guiando o usuário de forma mais intuitiva.",
+      },
+      {
+        icon: Wrench,
+        color: "text-indigo-500",
+        title: "Refatoração e Qualidade de Código",
+        description:
+          "A lógica para determinar o valor inicial de uma causa de aumento/diminuição foi centralizada. Adicionados testes unitários iniciais para as funções de cálculo.",
+      },
+      {
+        icon: Bug,
+        color: "text-red-500",
+        title: "Correção na Validação de Fases",
+        description:
+          "Corrigido um bug crítico que permitia ao usuário avançar para as próximas fases do cálculo mesmo com erros de validação (como uma data inválida).",
+      },
+      {
+        icon: AlertTriangle,
+        color: "text-yellow-500",
+        title: "Mensagens de Erro Específicas",
+        description:
+          "As notificações de erro no formulário agora são específicas, informando exatamente qual campo precisa ser corrigido.",
+      },
+    ],
+  },
   {
     date: "07 de Setembro de 2025",
     title: "Versão 0.96.2334",
@@ -133,13 +185,20 @@ export default function ChangelogPage() {
           </Button>
         </header>
 
-        <div className="relative">
+        <div className="relative mb-96">
           {/* A linha vertical da timeline */}
           <div className="absolute left-4 md:left-5 top-0 h-full w-0.5 bg-border -translate-x-1/2" />
 
           <div className="space-y-16">
             {changelogData.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="relative pl-12 md:pl-14">
+              <motion.div
+                key={sectionIndex}
+                className="relative pl-12 md:pl-14"
+                initial={{ opacity: 0, y: 250 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1.6 }}
+              >
                 {/* O ponto na timeline */}
                 <div className="absolute left-4 md:left-5 top-1 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-primary -translate-x-1/2">
                   <div className="h-3 w-3 rounded-full bg-primary-foreground" />
@@ -172,7 +231,7 @@ export default function ChangelogPage() {
                     );
                   })}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
