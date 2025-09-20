@@ -15,6 +15,13 @@ const circunstanciaSchema = z.object({
   fracao: z.string(),
 });
 
+// Adiciona uma função para obter o final do dia
+const getEndOfDay = () => {
+  const date = new Date();
+  date.setHours(23, 59, 59, 999);
+  return date;
+};
+
 export const crimeStateSchema = z.object({
   id: z.string(),
   crimeId: z.string().optional(),
@@ -22,7 +29,7 @@ export const crimeStateSchema = z.object({
   circunstanciasJudiciais: z.array(circunstanciaSchema),
   dataCrime: z
     .date()
-    .max(new Date(), { message: "A data do crime não pode ser no futuro." })
+    .max(getEndOfDay(), { message: "A data do crime não pode ser no futuro." })
     .optional(),
   selectedQualificadoraId: z.string().optional(),
   agravantes: z.array(circunstanciaSchema),
