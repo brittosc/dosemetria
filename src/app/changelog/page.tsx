@@ -38,6 +38,33 @@ type ChangelogSectionType = {
 const changelogData: ChangelogSectionType[] = [
   {
     date: "20 de Setembro de 2025",
+    title: "Versão 1.0.0 - Melhoria no Cálculo da Prescrição",
+    items: [
+      {
+        icon: ShieldCheck,
+        color: "text-green-500",
+        title: "Lógica de Cálculo da Prescrição Aprimorada",
+        description:
+          "A função de cálculo da prescrição foi refeita para considerar marcos interruptivos e suspensivos, proporcionando um resultado muito mais preciso e alinhado com a legislação.",
+      },
+      {
+        icon: MousePointer,
+        color: "text-purple-500",
+        title: "Nova Interface para a Calculadora de Prescrição",
+        description:
+          "A interface da calculadora de prescrição foi atualizada com novos campos para as datas dos marcos interruptivos, além de uma linha do tempo para visualização do cálculo.",
+      },
+      {
+        icon: Bug,
+        color: "text-red-500",
+        title: "Correção na Contagem de Prazos",
+        description:
+          "A contagem dos prazos prescricionais foi ajustada para refletir corretamente a redução pela metade para menores de 21 e maiores de 70 anos, e o aumento para reincidentes na prescrição executória.",
+      },
+    ],
+  },
+  {
+    date: "20 de Setembro de 2025",
     title: "Versão 0.98.2334",
     items: [
       {
