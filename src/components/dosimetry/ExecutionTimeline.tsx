@@ -18,18 +18,17 @@ export function ExecutionTimeline() {
     return null;
   }
 
-  // CORREÇÃO: Usa a nova data de início do cumprimento
   const dataInicial = new Date(state.dataInicioCumprimento);
 
   return (
     <div className="space-y-4">
       <ol className="relative border-l border-border ml-2">
         <li className="mb-6 ml-6">
-          <span className="absolute flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full -left-3 ring-8 ring-card dark:ring-gray-900 dark:bg-gray-700">
-            <Calendar className="w-4 h-4 text-gray-800 dark:text-gray-300" />
+          <span className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-card bg-transparent">
+            <Calendar className="w-4 h-4 text-gray-800 dark:text-neutral-300" />
           </span>
           <div className="ml-2">
-            <h3 className="flex items-center mb-1 text-md font-semibold text-foreground">
+            <h3 className="flex items-center mb-1 text-md font-semibold text-foreground mt-5">
               Início do Cumprimento
             </h3>
             <p className="block mb-2 text-sm font-normal leading-none text-muted-foreground">
@@ -41,7 +40,7 @@ export function ExecutionTimeline() {
 
         {finalResults.progressionSteps.map((prog, index) => (
           <li key={index} className="mb-6 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-card dark:ring-gray-900 dark:bg-blue-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-card bg-transparent">
               <Unlock className="w-4 h-4 text-blue-800 dark:text-blue-300" />
             </span>
             <div className="ml-2">
@@ -64,7 +63,7 @@ export function ExecutionTimeline() {
 
         {finalResults.livramentoCondicional && (
           <li className="mb-6 ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-card dark:ring-gray-900 dark:bg-green-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-card bg-transparent">
               <Sun className="w-4 h-4 text-green-800 dark:text-green-300" />
             </span>
             <div className="ml-2">
@@ -87,7 +86,7 @@ export function ExecutionTimeline() {
 
         {finalResults.dataFinalPena && (
           <li className="ml-6">
-            <span className="absolute flex items-center justify-center w-6 h-6 bg-red-100 rounded-full -left-3 ring-8 ring-card dark:ring-gray-900 dark:bg-red-900">
+            <span className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-card bg-transparent">
               <Lock className="w-4 h-4 text-red-800 dark:text-red-300" />
             </span>
             <div className="ml-2">
@@ -96,7 +95,7 @@ export function ExecutionTimeline() {
               </h3>
               <p className="block mb-2 text-sm font-normal leading-none text-muted-foreground">
                 {new Date(finalResults.dataFinalPena).toLocaleDateString(
-                  "pt-BR",
+                  "pt-BR"
                 )}
               </p>
             </div>

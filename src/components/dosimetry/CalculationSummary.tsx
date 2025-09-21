@@ -1,5 +1,3 @@
-// src/components/dosimetry/CalculationSummary.tsx
-
 "use client";
 
 import {
@@ -39,6 +37,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { motion } from "framer-motion";
+import { formatBRLCurrency } from "@/lib/utils";
 
 export function CalculationSummary() {
   const { state, dispatch, crimesData, causasData } = useDosimetryCalculator();
@@ -64,73 +64,86 @@ export function CalculationSummary() {
         >
           {state.crimes.map((crime, index) => {
             const selectedCrime = crimesData.find(
-              (c) => c.id === crime.crimeId,
+              (c) => c.id === crime.crimeId
             );
             return (
-              <AccordionItem value={crime.id} key={crime.id}>
-                <AccordionTrigger>
-                  <div className="flex justify-between w-full pr-4 items-center">
-                    <span className="text-left font-semibold">
-                      {selectedCrime?.nome || `Crime ${index + 1}`}
-                    </span>
-                    <Badge variant="secondary">
-                      {formatPena(crime.penaDefinitiva)}
-                    </Badge>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-3 px-2 text-sm">
-                  <div className="flex justify-between font-medium">
-                    <span>Pena-Base (1ª Fase):</span>
-                    <span>{formatPena(crime.penaPrimeiraFase)}</span>
-                  </div>
-                  <CalculationDetails
-                    circunstancias={crime.circunstanciasJudiciais}
-                    causas={[]}
-                    causasData={causasData}
-                    type="increase"
-                  />
+              <motion.div
+                key={crime.id}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <AccordionItem value={crime.id}>
+                  <AccordionTrigger>
+                    <div className="flex justify-between w-full pr-4 items-center">
+                      <span className="text-left font-semibold">
+                        {selectedCrime?.nome || `Crime ${index + 1}`}
+                      </span>
+                      <Badge variant="secondary">
+                        {formatPena(crime.penaDefinitiva)}
+                      </Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-3 px-2 text-sm">
+                    <div className="flex justify-between font-medium">
+                      <span>Pena-Base (1ª Fase):</span>
+                      <span>{formatPena(crime.penaPrimeiraFase)}</span>
+                    </div>
+                    <CalculationDetails
+                      circunstancias={crime.circunstanciasJudiciais}
+                      causas={[]}
+                      causasData={causasData}
+                      type="increase"
+                    />
 
-                  <div className="flex justify-between font-medium pt-2 border-t mt-2">
-                    <span>Pena Provisória (2ª Fase):</span>
-                    <span>{formatPena(crime.penaProvisoria)}</span>
-                  </div>
-                  <CalculationDetails
-                    circunstancias={crime.agravantes}
-                    causas={[]}
-                    causasData={causasData}
-                    type="increase"
-                  />
-                  <CalculationDetails
-                    circunstancias={crime.atenuantes}
-                    causas={[]}
-                    causasData={causasData}
-                    type="decrease"
-                  />
+                    <div className="flex justify-between font-medium pt-2 border-t mt-2">
+                      <span>Pena Provisória (2ª Fase):</span>
+                      <span>{formatPena(crime.penaProvisoria)}</span>
+                    </div>
+                    <CalculationDetails
+                      circunstancias={crime.agravantes}
+                      causas={[]}
+                      causasData={causasData}
+                      type="increase"
+                    />
+                    <CalculationDetails
+                      circunstancias={crime.atenuantes}
+                      causas={[]}
+                      causasData={causasData}
+                      type="decrease"
+                    />
 
-                  <div className="flex justify-between font-medium pt-2 border-t mt-2">
-                    <span>Pena Definitiva (3ª Fase):</span>
-                    <span>{formatPena(crime.penaDefinitiva)}</span>
-                  </div>
-                  <CalculationDetails
-                    circunstancias={[]}
-                    causas={crime.causasAumento}
-                    causasData={causasData}
-                    type="increase"
-                  />
-                  <CalculationDetails
-                    circunstancias={[]}
-                    causas={crime.causasDiminuicao}
-                    causasData={causasData}
-                    type="decrease"
-                  />
-                </AccordionContent>
-              </AccordionItem>
+                    <div className="flex justify-between font-medium pt-2 border-t mt-2">
+                      <span>Pena Definitiva (3ª Fase):</span>
+                      <span>{formatPena(crime.penaDefinitiva)}</span>
+                    </div>
+                    <CalculationDetails
+                      circunstancias={[]}
+                      causas={crime.causasAumento}
+                      causasData={causasData}
+                      type="increase"
+                    />
+                    <CalculationDetails
+                      circunstancias={[]}
+                      causas={crime.causasDiminuicao}
+                      causasData={causasData}
+                      type="decrease"
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             );
           })}
         </Accordion>
 
         {state.crimes.length > 1 && (
-          <div className="space-y-2 pt-4 border-t">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="space-y-2 pt-4 border-t"
+          >
             <div className="flex items-center gap-2">
               <Label>Concurso de Crimes</Label>
               <TooltipProvider>
@@ -206,22 +219,38 @@ export function CalculationSummary() {
                 </SelectContent>
               </Select>
             )}
-          </div>
+          </motion.div>
         )}
 
         {showSalarioMinimoInput && (
           <div className="space-y-2 pt-4 border-t">
-            <Label>Salário Mínimo (para cálculo da multa)</Label>
-            <Input
-              type="number"
-              value={state.salarioMinimo}
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_SALARIO_MINIMO",
-                  payload: Number(e.target.value) || 0,
-                })
-              }
-            />
+            <Label htmlFor="salario-minimo">
+              Salário Mínimo (para cálculo da multa)
+            </Label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                R$
+              </span>
+              <Input
+                id="salario-minimo"
+                type="text"
+                placeholder="1.412,00"
+                className="pl-9"
+                value={
+                  state.salarioMinimo > 0
+                    ? formatBRLCurrency(state.salarioMinimo)
+                    : ""
+                }
+                onChange={(e) => {
+                  const rawValue = e.target.value.replace(/\D/g, "");
+                  const numberValue = Number(rawValue) / 100;
+                  dispatch({
+                    type: "UPDATE_SALARIO_MINIMO",
+                    payload: numberValue,
+                  });
+                }}
+              />
+            </div>
           </div>
         )}
 
@@ -230,18 +259,18 @@ export function CalculationSummary() {
           {state.detracaoPeriodos.map((periodo) => (
             <div
               key={periodo.id}
-              className="grid grid-cols-2 gap-2 items-center"
+              className="grid grid-cols-[1fr_auto] gap-2 items-center"
             >
-              <DatePicker
-                date={periodo.inicio}
-                setDate={(date) =>
-                  dispatch({
-                    type: "UPDATE_DETRACAO_PERIODO",
-                    payload: { ...periodo, inicio: date },
-                  })
-                }
-              />
-              <div className="flex items-center gap-2">
+              <div className="grid grid-cols-2 gap-2">
+                <DatePicker
+                  date={periodo.inicio}
+                  setDate={(date) =>
+                    dispatch({
+                      type: "UPDATE_DETRACAO_PERIODO",
+                      payload: { ...periodo, inicio: date },
+                    })
+                  }
+                />
                 <DatePicker
                   date={periodo.fim}
                   setDate={(date) =>
@@ -251,20 +280,20 @@ export function CalculationSummary() {
                     })
                   }
                 />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() =>
-                    dispatch({
-                      type: "REMOVE_DETRACAO_PERIODO",
-                      payload: periodo.id,
-                    })
-                  }
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() =>
+                  dispatch({
+                    type: "REMOVE_DETRACAO_PERIODO",
+                    payload: periodo.id,
+                  })
+                }
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
             </div>
           ))}
           <Button

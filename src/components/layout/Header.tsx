@@ -1,4 +1,3 @@
-// src/components/layout/Header.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -37,15 +36,6 @@ import {
 import { PrescriptionCalculator } from "../dosimetry/PrescriptionCalculator";
 
 const navigationLinks = [{ href: "/contributors", label: "" }];
-
-const Logo = () => (
-  <Link
-    href="/"
-    className="flex items-center gap-2 text-primary hover:text-primary/90"
-  >
-    <Scale className="text-muted-foreground size-8" />
-  </Link>
-);
 
 export function Header() {
   const { state, dispatch } = useDosimetryCalculator();
@@ -93,7 +83,7 @@ export function Header() {
           }
         } catch {
           toast.error(
-            "Erro ao importar o arquivo. Verifique se o formato é válido.",
+            "Erro ao importar o arquivo. Verifique se o formato é válido."
           );
         }
       };
@@ -102,9 +92,29 @@ export function Header() {
     }
   };
 
+  const Logo = () => (
+    <Link
+      href="/"
+      onClick={(e) => {
+        if (state.crimes.length > 0) {
+          e.preventDefault(); // Impede a navegação para a home
+          handleReset();
+        }
+      }}
+      className="flex items-center gap-2 text-primary hover:text-primary/90 cursor-pointer"
+    >
+      <Scale className="text-muted-foreground size-8" />
+    </Link>
+  );
+
   const actionButtons = (
     <>
-      <Button variant="outline" size="sm" onClick={handleExport}>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={handleExport}
+        disabled={state.crimes.length === 0}
+      >
         <Download className="mr-2 h-4 w-4" /> Exportar
       </Button>
       <Button variant="outline" size="sm" asChild>
@@ -130,7 +140,7 @@ export function Header() {
           <DialogHeader>
             <DialogTitle>Cálculo de Prescrição</DialogTitle>
             <DialogDescription>
-              Calcule a prescrição com base na pena máxima em abstrato do crime.
+              Calcule a prescrição com base na pena do crime.
             </DialogDescription>
           </DialogHeader>
           <PrescriptionCalculator />

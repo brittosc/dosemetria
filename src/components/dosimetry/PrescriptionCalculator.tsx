@@ -20,9 +20,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { calculatePrescription, formatPena } from "@/lib/calculations";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { motion } from "framer-motion";
 
-// CORREÇÃO: Removido o .default() para evitar ambiguidade de tipos.
-// O valor padrão será controlado pelo `defaultValues` do useForm.
 const prescriptionSchema = z.object({
   pena: z.number().min(0, "A pena deve ser positiva."),
   tipo: z.enum(["punitiva", "executoria"]),
@@ -35,12 +34,11 @@ type PrescriptionFormValues = z.infer<typeof prescriptionSchema>;
 
 export function PrescriptionCalculator() {
   const [prescriptionResult, setPrescriptionResult] = useState<number | null>(
-    null,
+    null
   );
 
   const form = useForm<PrescriptionFormValues>({
     resolver: zodResolver(prescriptionSchema),
-    // `defaultValues` agora é a única fonte para o estado inicial.
     defaultValues: {
       pena: 0,
       tipo: "punitiva",
@@ -56,7 +54,7 @@ export function PrescriptionCalculator() {
       values.tipo,
       values.reincidente,
       values.menorDe21,
-      values.maiorDe70,
+      values.maiorDe70
     );
     setPrescriptionResult(result);
   }
@@ -90,6 +88,9 @@ export function PrescriptionCalculator() {
                         Da Pretensão Punitiva
                       </FormLabel>
                     </FormItem>
+                    <FormDescription className="pl-7 text-xs">
+                      Antes da sentença transitar em julgado.
+                    </FormDescription>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
                         <RadioGroupItem value="executoria" />
@@ -98,6 +99,9 @@ export function PrescriptionCalculator() {
                         Da Pretensão Executória
                       </FormLabel>
                     </FormItem>
+                    <FormDescription className="pl-7 text-xs">
+                      Após o trânsito em julgado da condenação.
+                    </FormDescription>
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
@@ -190,12 +194,17 @@ export function PrescriptionCalculator() {
         </form>
       </Form>
       {prescriptionResult !== null && (
-        <div className="mt-6">
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <p className="font-semibold">A prescrição ocorrerá em:</p>
           <p className="text-xl font-bold text-green-700">
             {formatPena(prescriptionResult)}
           </p>
-        </div>
+        </motion.div>
       )}
     </div>
   );
