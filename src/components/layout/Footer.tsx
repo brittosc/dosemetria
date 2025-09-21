@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="mt-16 py-8 text-center text-sm text-muted-foreground">
       <Separator className="mb-8" />
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-        <span>Calculadora de Dosimetria v0.96.2334</span>
+        <span>Calculadora de Dosimetria v1.0.0</span>
         <Link
           href="/changelog"
           className="hover:text-foreground transition-colors"

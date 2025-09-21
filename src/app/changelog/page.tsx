@@ -37,7 +37,7 @@ type ChangelogSectionType = {
 // Dados completos do changelog, agora seguindo o tipo definido
 const changelogData: ChangelogSectionType[] = [
   {
-    date: "20 de Setembro de 2025",
+    date: "21 de Setembro de 2025",
     title: "Versão 1.0.0 - Melhoria no Cálculo da Prescrição",
     items: [
       {

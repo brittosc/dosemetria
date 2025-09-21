@@ -16,19 +16,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DatePicker } from "../ui/date-picker";
 import { calculatePrescription, formatPena } from "@/lib/calculations";
 import { Separator } from "@/components/ui/separator";
-import {
-  CalendarIcon,
-  ChevronsRight,
-  Scale,
-  Clock,
-  UserCheck,
-  RotateCcw,
-} from "lucide-react";
+import { CalendarIcon, ChevronsRight, Clock, UserCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InfoTooltip } from "../ui/info-tooltip";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
 
 // Definindo o tipo dos dados do formulário
 type PrescriptionFormValues = {
@@ -115,10 +107,6 @@ export function PrescriptionCalculator() {
     form,
   ]);
 
-  const handleReset = () => {
-    form.reset(defaultValues);
-  };
-
   const tipoPenaLabel =
     tipo === "punitiva"
       ? "Pena Máxima em Abstrato"
@@ -127,22 +115,14 @@ export function PrescriptionCalculator() {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-row items-center justify-between -mt-8">
           <CardTitle></CardTitle>
-          <Button variant="ghost" size="icon" onClick={handleReset}>
-            <RotateCcw className="h-5 w-5 text-muted-foreground" />
-            <span className="sr-only">Reiniciar Calculadora</span>
-          </Button>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <div className="space-y-6">
               {/* SEÇÃO 1: PENA */}
               <div className="space-y-4">
-                <h3 className="font-semibold text-lg flex items-center">
-                  <Scale className="w-5 h-5 mr-3 text-primary" />
-                  Pena
-                </h3>
                 <FormField
                   control={form.control}
                   name="tipo"
