@@ -15,7 +15,7 @@ import { Crime, Qualificadora } from "@/types/crime";
 import { PhaseOneContent } from "./PhaseOne";
 import { PhaseTwoContent } from "./PhaseTwo";
 import { PhaseThreeContent } from "./PhaseThree";
-import { CausaAplicada, Circunstancia } from "@/lib/calculations";
+import { CausaAplicada, Circunstancia, formatPena } from "@/lib/calculations";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -49,7 +49,7 @@ export function CrimeCalculator({
   const selectedCrime = crimesData.find((c: Crime) => c.id === selectedCrimeId);
   const activePena =
     selectedCrime?.qualificadoras?.find(
-      (q: Qualificadora) => q.id === selectedQualificadoraId,
+      (q: Qualificadora) => q.id === selectedQualificadoraId
     ) || selectedCrime;
 
   useEffect(() => {
@@ -60,16 +60,16 @@ export function CrimeCalculator({
         payload.circunstanciasJudiciais || []
       ).filter(Boolean) as Circunstancia[];
       payload.agravantes = (payload.agravantes || []).filter(
-        Boolean,
+        Boolean
       ) as Circunstancia[];
       payload.atenuantes = (payload.atenuantes || []).filter(
-        Boolean,
+        Boolean
       ) as Circunstancia[];
       payload.causasAumento = (payload.causasAumento || []).filter(
-        Boolean,
+        Boolean
       ) as CausaAplicada[];
       payload.causasDiminuicao = (payload.causasDiminuicao || []).filter(
-        Boolean,
+        Boolean
       ) as CausaAplicada[];
 
       dispatch({
@@ -101,7 +101,7 @@ export function CrimeCalculator({
     const finalId =
       qualificadoraId === "sem-qualificadora" ? undefined : qualificadoraId;
     const qualificadora = selectedCrime?.qualificadoras?.find(
-      (q: Qualificadora) => q.id === finalId,
+      (q: Qualificadora) => q.id === finalId
     );
     const penaBase =
       qualificadora?.penaMinimaMeses ?? selectedCrime?.penaMinimaMeses ?? 0;
@@ -128,39 +128,45 @@ export function CrimeCalculator({
   };
 
   const handleNextPhase = async () => {
-    const fieldsToValidate: (keyof CrimeState)[] = [
-      "crimeId",
-      "dataCrime",
-      "penaBase",
-    ];
-    const isValid = await trigger(fieldsToValidate);
+    // Validação rigorosa da Fase 1 antes de avançar
+    if (currentPhase === 1) {
+      const fieldsToValidate: (keyof CrimeState)[] = [
+        "crimeId",
+        "dataCrime",
+        "penaBase",
+      ];
+      // 1. Valida o schema (tipos, campos obrigatórios)
+      const isSchemaValid = await trigger(fieldsToValidate);
 
-    if (!isValid) {
-      const errors = form.formState.errors;
-      let errorDescription = "Por favor, corrija os erros antes de continuar.";
-
-      const errorField = fieldsToValidate.find((field) => errors[field]);
-      if (errorField && errors[errorField]?.message) {
-        errorDescription = errors[errorField]!.message as string;
+      if (!isSchemaValid) {
+        toast.error("Formulário inválido", {
+          description: "Por favor, preencha os campos obrigatórios.",
+        });
+        return; // BLOQUEIA o avanço
       }
 
-      toast.error("Formulário inválido", {
-        description: errorDescription,
-      });
-      return;
+      // 2. Valida a regra de negócio (pena mínima e máxima)
+      const { penaBase } = getValues();
+      const min = activePena?.penaMinimaMeses ?? 0;
+      const max = activePena?.penaMaximaMeses ?? Infinity;
+
+      if (penaBase < min || penaBase > max) {
+        toast.error("Pena-base fora dos limites legais", {
+          description: `A pena deve ser entre ${formatPena(min)} e ${formatPena(
+            max
+          )}. O valor foi ajustado.`,
+        });
+        // Tenta corrigir o valor como última medida, mas ainda impede o avanço
+        // para forçar o usuário a ver a correção.
+        form.setValue("penaBase", penaBase < min ? min : max);
+        return; // BLOQUEIA o avanço
+      }
     }
 
-    const { penaBase } = getValues();
-    const min = activePena?.penaMinimaMeses;
-    const max = activePena?.penaMaximaMeses;
-
-    if (min != null && max != null && (penaBase < min || penaBase > max)) {
-      toast.error("Pena-base inválida", {
-        description: `O valor da pena-base deve estar entre ${min} e ${max} meses.`,
-      });
-      return;
+    // Se tudo estiver correto, avança para a próxima fase
+    if (currentPhase < 3) {
+      handlePhaseChange(currentPhase + 1);
     }
-    handlePhaseChange(currentPhase + 1);
   };
 
   const removeButton = state.crimes.length > 0 && (

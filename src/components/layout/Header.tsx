@@ -83,7 +83,7 @@ export function Header() {
           }
         } catch {
           toast.error(
-            "Erro ao importar o arquivo. Verifique se o formato é válido."
+            "Erro ao importar o arquivo. Verifique se o formato é válido.",
           );
         }
       };

@@ -10,12 +10,13 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ptBR } from "date-fns/locale";
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  captionLayout = "label",
+  captionLayout = "dropdown",
   buttonVariant = "ghost",
   formatters,
   components,
@@ -35,9 +36,17 @@ function Calendar({
         className,
       )}
       captionLayout={captionLayout}
+      fromYear={1900}
+      toYear={new Date().getFullYear()}
+      locale={ptBR}
       formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString("default", { month: "short" }),
+        formatMonthDropdown: (month) =>
+          // Corrigido: Usando toLocaleString para evitar o erro de tipo.
+          // O replace garante a primeira letra maiúscula.
+          month
+            .toLocaleString("pt-BR", { month: "long" })
+            .replace(/^\w/, (c) => c.toUpperCase()),
+        formatYearDropdown: (year) => String(year.getFullYear()),
         ...formatters,
       }}
       classNames={{

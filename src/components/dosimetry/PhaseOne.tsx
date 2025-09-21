@@ -2,6 +2,7 @@
 
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import {
   FormControl,
@@ -66,22 +67,95 @@ export const PhaseOneContent = ({
   handleQualificadoraChange,
   salarioMinimo,
 }: PhaseOneContentProps) => {
-  const handlePenaBaseBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10) || 0;
-    const min = activePena?.penaMinimaMeses;
-    const max = activePena?.penaMaximaMeses;
+  const [anos, setAnos] = useState<number | string>("");
+  const [meses, setMeses] = useState<number | string>("");
+  const [dias, setDias] = useState<number | string>("");
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-    if (min != null && value < min) {
-      form.setValue("penaBase", min);
-      toast.info("Pena-base ajustada", {
-        description: `O valor mínimo para este crime é ${min} meses.`,
-      });
-    } else if (max != null && value > max) {
-      form.setValue("penaBase", max);
-      toast.info("Pena-base ajustada", {
-        description: `O valor máximo para este crime é ${max} meses.`,
-      });
+  const penaBaseEmMeses = form.watch("penaBase");
+
+  // Efeito para sincronizar os inputs (anos, meses, dias) com o valor do formulário
+  useEffect(() => {
+    if (penaBaseEmMeses != null) {
+      const totalMesesFloat = Number(penaBaseEmMeses);
+      const anosCalc = Math.floor(totalMesesFloat / 12);
+      const mesesRestantes = totalMesesFloat % 12;
+      const mesesCalc = Math.floor(mesesRestantes);
+      const diasCalc = Math.round((mesesRestantes - mesesCalc) * 30);
+
+      setAnos(anosCalc || "");
+      setMeses(mesesCalc || "");
+      setDias(diasCalc || "");
+    } else {
+      setAnos("");
+      setMeses("");
+      setDias("");
     }
+  }, [penaBaseEmMeses]);
+
+  // Efeito para validação automática em tempo real (com debounce)
+  useEffect(() => {
+    // Limpa o timeout anterior sempre que o valor muda
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    // Inicia um novo timeout para validar após o usuário parar de digitar
+    debounceTimeout.current = setTimeout(() => {
+      if (activePena && penaBaseEmMeses != null) {
+        const min = activePena.penaMinimaMeses ?? 0;
+        const max = activePena.penaMaximaMeses ?? Infinity;
+
+        if (penaBaseEmMeses < min) {
+          form.setValue("penaBase", min);
+          toast.info("Pena-base ajustada para o mínimo legal", {
+            description: `O valor inserido era inferior a ${formatPena(min)}.`,
+          });
+        } else if (penaBaseEmMeses > max) {
+          form.setValue("penaBase", max);
+          toast.info("Pena-base ajustada para o máximo legal", {
+            description: `O valor inserido era superior a ${formatPena(max)}.`,
+          });
+        }
+      }
+    }, 750); // Atraso de 750ms
+
+    // Limpeza ao desmontar o componente
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, [penaBaseEmMeses, activePena, form]);
+
+  const handlePenaChange = (
+    novosAnos: string,
+    novosMeses: string,
+    novosDias: string
+  ) => {
+    const anosNum = Number(novosAnos) || 0;
+    const mesesNum = Number(novosMeses) || 0;
+    const diasNum = Number(novosDias) || 0;
+    const totalMeses = anosNum * 12 + mesesNum + diasNum / 30;
+    form.setValue("penaBase", totalMeses, { shouldValidate: true });
+  };
+
+  const handleAnosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value;
+    setAnos(valor);
+    handlePenaChange(valor, String(meses), String(dias));
+  };
+
+  const handleMesesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value;
+    setMeses(valor);
+    handlePenaChange(String(anos), valor, String(dias));
+  };
+
+  const handleDiasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value;
+    setDias(valor);
+    handlePenaChange(String(anos), String(meses), valor);
   };
 
   return (
@@ -143,21 +217,27 @@ export const PhaseOneContent = ({
             )}
 
           <FormItem>
-            <FormLabel>Pena-Base (em meses)</FormLabel>
-            <Controller
-              name="penaBase"
-              control={form.control}
-              render={({ field }) => (
-                <Input
-                  type="number"
-                  {...field}
-                  onBlur={handlePenaBaseBlur}
-                  onChange={(e) => {
-                    field.onChange(parseInt(e.target.value, 10) || 0);
-                  }}
-                />
-              )}
-            />
+            <FormLabel>Pena-Base</FormLabel>
+            <div className="grid grid-cols-3 items-center gap-2">
+              <Input
+                type="number"
+                placeholder="Anos"
+                value={anos}
+                onChange={handleAnosChange}
+              />
+              <Input
+                type="number"
+                placeholder="Meses"
+                value={meses}
+                onChange={handleMesesChange}
+              />
+              <Input
+                type="number"
+                placeholder="Dias"
+                value={dias}
+                onChange={handleDiasChange}
+              />
+            </div>
             {activePena &&
               activePena.penaMinimaMeses !== null &&
               activePena.penaMaximaMeses !== null && (
@@ -247,10 +327,10 @@ export const PhaseOneContent = ({
                   render={({ field }) => {
                     const value = field.value || [];
                     const isChecked = value.some(
-                      (c: Circunstancia) => c.id === option,
+                      (c: Circunstancia) => c.id === option
                     );
                     const circunstancia = value.find(
-                      (c: Circunstancia) => c.id === option,
+                      (c: Circunstancia) => c.id === option
                     );
                     return (
                       <div className="space-y-2 rounded-md border p-3">
@@ -266,8 +346,8 @@ export const PhaseOneContent = ({
                                     ])
                                   : field.onChange(
                                       value.filter(
-                                        (c: Circunstancia) => c.id !== option,
-                                      ),
+                                        (c: Circunstancia) => c.id !== option
+                                      )
                                     );
                               }}
                             />
@@ -293,8 +373,8 @@ export const PhaseOneContent = ({
                                   value.map((c: Circunstancia) =>
                                     c.id === option
                                       ? { ...c, fracao: newFracao }
-                                      : c,
-                                  ),
+                                      : c
+                                  )
                                 );
                               }}
                               className="h-8"

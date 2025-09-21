@@ -95,7 +95,7 @@ export function ExecutionTimeline() {
               </h3>
               <p className="block mb-2 text-sm font-normal leading-none text-muted-foreground">
                 {new Date(finalResults.dataFinalPena).toLocaleDateString(
-                  "pt-BR"
+                  "pt-BR",
                 )}
               </p>
             </div>

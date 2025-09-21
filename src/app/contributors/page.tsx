@@ -26,10 +26,17 @@ const contributors = [
     linkText: "Perfil no Instagram",
   },
   {
-    name: "Michel Juarez da Silva Souza",
-    avatarUrl: "/michel.png",
-    role: "Analista de Qualidade",
+    name: "Leandro Alfredo da Rosa",
+    avatarUrl: "/leandro.png",
+    role: "Consultoria Jurídica e Validação dos Cálculos",
+    url: "https://www.instagram.com/leandroa.rosa/",
+    linkText: "Perfil no Instagram",
   },
+  // {
+  //   name: "Michel Juarez da Silva Souza",
+  //   avatarUrl: "/michel.png",
+  //   role: "Analista de Qualidade",
+  // },
 ];
 
 export default function ContributorsPage() {
@@ -64,7 +71,7 @@ export default function ContributorsPage() {
               </Avatar>
               <div>
                 <CardTitle>{contributor.name}</CardTitle>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground mt-1">
                   {contributor.role}
                 </p>
                 {contributor.url && contributor.linkText && (
@@ -72,7 +79,7 @@ export default function ContributorsPage() {
                     href={contributor.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-500 hover:underline"
+                    className="text-sm text-blue-500"
                   >
                     {contributor.linkText}
                   </a>

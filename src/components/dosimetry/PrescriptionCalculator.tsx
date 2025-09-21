@@ -34,7 +34,7 @@ type PrescriptionFormValues = z.infer<typeof prescriptionSchema>;
 
 export function PrescriptionCalculator() {
   const [prescriptionResult, setPrescriptionResult] = useState<number | null>(
-    null
+    null,
   );
 
   const form = useForm<PrescriptionFormValues>({
@@ -54,7 +54,7 @@ export function PrescriptionCalculator() {
       values.tipo,
       values.reincidente,
       values.menorDe21,
-      values.maiorDe70
+      values.maiorDe70,
     );
     setPrescriptionResult(result);
   }

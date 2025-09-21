@@ -64,7 +64,7 @@ export function CalculationSummary() {
         >
           {state.crimes.map((crime, index) => {
             const selectedCrime = crimesData.find(
-              (c) => c.id === crime.crimeId
+              (c) => c.id === crime.crimeId,
             );
             return (
               <motion.div
