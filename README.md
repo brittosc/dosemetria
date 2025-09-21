@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚖️ Calculadora de Dosimetria da Pena
 
-## Getting Started
+Uma ferramenta open-source completa e intuitiva para auxiliar profissionais e estudantes de Direito no cálculo da dosimetria da pena, de acordo com o Código Penal Brasileiro.
 
-First, run the development server:
+Este projeto foi criado para simplificar e trazer mais precisão a um dos processos mais complexos do Direito Penal, oferecendo uma interface limpa, cálculos automáticos e detalhamento completo de cada etapa.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**[Acesse a demonstração ao vivo aqui\!](https://dosimetria.grupobritto.com.br/)**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-----
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Funcionalidades Principais
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A Calculadora de Dosimetria é repleta de funcionalidades pensadas para o dia a dia do profissional de direito:
 
-## Learn More
+  - **Cálculo Trifásico Completo**: Realize o cálculo da pena passando pela Pena-Base (1ª fase), Pena Provisória (2ª fase) e Pena Definitiva (3ª fase).
+  - **Concurso de Crimes**: Suporte para Concurso Material, Formal (Próprio e Impróprio) e Crime Continuado.
+  - **Detração e Remição**: Abata automaticamente os períodos de prisão provisória e os dias remidos por trabalho ou estudo.
+  - **Cálculo de Multa**: Calcule o valor da multa com base no salário mínimo vigente.
+  - **Regime Inicial e Benefícios**: Determine automaticamente o regime inicial de cumprimento (Fechado, Semiaberto, Aberto) e verifique a possibilidade de **Substituição da Pena** (PRD) ou **Suspensão Condicional** (Sursis).
+  - **Linha do Tempo da Execução**: Visualize uma linha do tempo interativa com as previsões de progressão de regime e livramento condicional.
+  - **Calculadora de Prescrição**: Uma ferramenta dedicada para calcular a prescrição da pretensão punitiva e executória.
+  - **Exportar e Importar**: Salve seus cálculos em um arquivo JSON e importe-os posteriormente para continuar de onde parou.
+  - **Relatório para Impressão**: Gere uma página de relatório limpa e organizada, pronta para impressão ou para salvar como PDF.
+  - **Interface Moderna e Responsiva**: Use em qualquer dispositivo, seja no computador, tablet ou celular.
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Tecnologias Utilizadas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este projeto foi construído com as mais modernas tecnologias de desenvolvimento web para garantir performance, escalabilidade e uma ótima experiência de usuário.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Tecnologia | Descrição |
+| :--- | :--- |
+| **Next.js** | Framework React para produção, com renderização no servidor e geração de sites estáticos. |
+| **TypeScript** | Superset do JavaScript que adiciona tipagem estática, tornando o código mais robusto. |
+| **Tailwind CSS** | Framework de CSS utility-first para criar interfaces customizadas rapidamente. |
+| **shadcn/ui** | Coleção de componentes de UI reusáveis e acessíveis. |
+| **React Hook Form** | Gerenciamento de formulários performático e flexível. |
+| **Zod** | Validação de esquemas e tipos de dados. |
+| **Framer Motion** | Biblioteca para criação de animações fluidas e complexas. |
+| **React Context** | Para gerenciamento de estado global da aplicação. |
 
-## Deploy on Vercel
+## 🏁 Começando
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Siga os passos abaixo para rodar o projeto em seu ambiente de desenvolvimento local.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Pré-requisitos:**
+
+  - [Node.js](https://nodejs.org/) (versão 18 ou superior)
+  - [npm](https://www.google.com/search?q=https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
+
+**Instalação:**
+
+1.  **Clone o repositório:**
+
+    ```bash
+    git clone https://github.com/brittosc/dosemetria.git
+    cd dosemetria
+    ```
+
+2.  **Instale as dependências:**
+
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
+
+3.  **Execute o servidor de desenvolvimento:**
+
+    ```bash
+    npm run dev
+    # ou
+    yarn dev
+    ```
+
+4.  **Abra o navegador:**
+    Acesse [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) para ver a aplicação em funcionamento.
+
+## 🤝 Como Contribuir
+
+Contribuições são o que tornam a comunidade open-source um lugar incrível para aprender, inspirar e criar. Qualquer contribuição que você fizer será **muito bem-vinda**.
+
+Se você tem alguma sugestão para melhorar o projeto, siga estes passos:
+
+1.  Faça um **Fork** do projeto.
+2.  Crie uma nova **Branch** para sua funcionalidade (`git checkout -b feature/AmazingFeature`).
+3.  Faça o **Commit** de suas mudanças (`git commit -m 'Add some AmazingFeature'`).
+4.  Faça o **Push** para a Branch (`git push origin feature/AmazingFeature`).
+5.  Abra um **Pull Request**.
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+-----
+
+Feito com ❤️ por **brittosc**
