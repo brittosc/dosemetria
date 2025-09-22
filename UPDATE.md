@@ -17,7 +17,7 @@
 1. npm run lint
 2. npm run lint:fix
 
-3. npm run format:check
-4. npm run format
+3. npm run prettier:check
+4. npm run prettier:fix
 
-5. npm run nlint
+5. npm test
